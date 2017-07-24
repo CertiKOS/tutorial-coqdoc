@@ -1,0 +1,538 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>liblayers.lib.Lift</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library liblayers.lib.Lift</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#"><span class="id" title="library">Coq.Program.Basics</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Relations.Relations.html#"><span class="id" title="library">Coq.Relations.Relations</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#"><span class="id" title="library">Coq.Classes.RelationClasses</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationPairs.html#"><span class="id" title="library">Coq.Classes.RelationPairs</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#"><span class="id" title="library">Coq.Classes.Morphisms</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.lib.ExtensionalityAxioms.html#"><span class="id" title="library">ExtensionalityAxioms</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.lib.Lens.html#"><span class="id" title="library">Lens</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.lib.Functor.html#"><span class="id" title="library">Functor</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.lib.PowersetMonad.html#"><span class="id" title="library">PowersetMonad</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab393"></a><h1 class="section">Lifting operations</h1>
+
+<div class="paragraph"> </div>
+
+ Because <span class="inlinecode"><span class="id" title="var">Mem.MemoryModel</span></span> contains so many theorems, we need some
+  systematic way to lift the memory operations along a lens, so that
+  the lifting of the theorems is convenient to automate.
+
+<div class="paragraph"> </div>
+
+  The signature of most of the memory operations are variations on
+  the theme <span class="inlinecode"><a class="idref" href="liblayers.simrel.MemWithData.html#mem"><span class="id" title="projection">mem</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="compcert.x86.Op.html#EVAL_INJECT.F"><span class="id" title="variable">F</span></a></span> <span class="inlinecode"><a class="idref" href="liblayers.simrel.MemWithData.html#mem"><span class="id" title="projection">mem</span></a></span>, where <span class="inlinecode"><a class="idref" href="compcert.x86.Op.html#EVAL_INJECT.F"><span class="id" title="variable">F</span></a></span> is a functor such as <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a></span>
+  or <span class="inlinecode">-</span> <span class="inlinecode">×</span> <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Numbers.BinNums.html#Z"><span class="id" title="inductive">Z</span></a></span>. Using the functor's <span class="inlinecode"><a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="projection">fmap</span></a></span> and the lens operations,
+  we can define a generic lifting operator as in the following. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="Lift"><span class="id" title="record">Lift</span></a> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} π `{π<span class="id" title="var">ops</span>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lift.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lift.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="liblayers.lib.Lift.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a>} <span class="id" title="var">A</span> <span class="id" title="var">B</span> := { <a name="lift"><span class="id" title="projection">lift</span></a>: <a class="idref" href="liblayers.lib.Lift.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#B"><span class="id" title="variable">B</span></a> }.<br/>
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} π {π<span class="id" title="var">ops</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">Lift</span>} <span class="id" title="var">_</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="LIFT"><span class="id" title="section">LIFT</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} `{<span class="id" title="var">HSV</span>: <a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <a class="idref" href="liblayers.lib.Lift.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lift.html#V"><span class="id" title="variable">V</span></a>} `{<span class="id" title="var">HF</span>: <a class="idref" href="liblayers.lib.Functor.html#Functor"><span class="id" title="class">Functor</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="lens_lift"><span class="id" title="instance">lens_lift</span></a>: <a class="idref" href="liblayers.lib.Lift.html#Lift"><span class="id" title="class">Lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#c28fd3a7d7ce95dc2482f42984c0803f"><span class="id" title="variable">π</span></a> (<a class="idref" href="liblayers.lib.Lift.html#LIFT.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFT.F"><span class="id" title="variable">F</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFT.V"><span class="id" title="variable">V</span></a>) (<a class="idref" href="liblayers.lib.Lift.html#LIFT.S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFT.F"><span class="id" title="variable">F</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFT.S"><span class="id" title="variable">S</span></a>) := {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <span class="id" title="var">f</span> <span class="id" title="var">s</span> := <a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">v</span> ⇒ <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lift.html#c28fd3a7d7ce95dc2482f42984c0803f"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a>) (<a class="idref" href="liblayers.lib.Lift.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="liblayers.lib.Lift.html#c28fd3a7d7ce95dc2482f42984c0803f"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a>))<br/>
+&nbsp;&nbsp;}.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lift.html#LIFT"><span class="id" title="section">LIFT</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Typeclass resolution needs some help to figure out those functors
+  by unification. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="LIFTINSTANCES"><span class="id" title="section">LIFTINSTANCES</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} `{<span class="id" title="var">HSV</span>: <a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <a class="idref" href="liblayers.lib.Lift.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lift.html#V"><span class="id" title="variable">V</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="lift_const"><span class="id" title="instance">lift_const</span></a> <span class="id" title="var">A</span>: <a class="idref" href="liblayers.lib.Lift.html#Lift"><span class="id" title="class">Lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#ae811a19d7c91a0481b171539cda04aa"><span class="id" title="variable">π</span></a> (<a class="idref" href="liblayers.lib.Lift.html#LIFTINSTANCES.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#A"><span class="id" title="variable">A</span></a>) (<a class="idref" href="liblayers.lib.Lift.html#LIFTINSTANCES.S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#A"><span class="id" title="variable">A</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#lens_lift"><span class="id" title="instance">lens_lift</span></a> (<span class="id" title="var">F</span> := (<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> ⇒ <span class="id" title="var">A</span>)).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="lift_prod"><span class="id" title="instance">lift_prod</span></a> <span class="id" title="var">A</span>: <a class="idref" href="liblayers.lib.Lift.html#Lift"><span class="id" title="class">Lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#ae811a19d7c91a0481b171539cda04aa"><span class="id" title="variable">π</span></a> (<a class="idref" href="liblayers.lib.Lift.html#LIFTINSTANCES.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTINSTANCES.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#d19c7eafd0e2d195d10df94b392087b5"><span class="id" title="notation">×</span></a> <a class="idref" href="liblayers.lib.Lift.html#A"><span class="id" title="variable">A</span></a>) (<a class="idref" href="liblayers.lib.Lift.html#LIFTINSTANCES.S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTINSTANCES.S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#d19c7eafd0e2d195d10df94b392087b5"><span class="id" title="notation">×</span></a> <a class="idref" href="liblayers.lib.Lift.html#A"><span class="id" title="variable">A</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#lens_lift"><span class="id" title="instance">lens_lift</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="lift_powerset"><span class="id" title="instance">lift_powerset</span></a>: <a class="idref" href="liblayers.lib.Lift.html#Lift"><span class="id" title="class">Lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#ae811a19d7c91a0481b171539cda04aa"><span class="id" title="variable">π</span></a> (<a class="idref" href="liblayers.lib.Lift.html#LIFTINSTANCES.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTINSTANCES.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>) (<a class="idref" href="liblayers.lib.Lift.html#LIFTINSTANCES.S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTINSTANCES.S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#lens_lift"><span class="id" title="instance">lens_lift</span></a> (<span class="id" title="var">F</span> := (<span class="id" title="keyword">fun</span> <span class="id" title="var">X</span> ⇒ <a class="idref" href="liblayers.lib.Lift.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>)).<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lift.html#LIFTINSTANCES"><span class="id" title="section">LIFTINSTANCES</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab394"></a><h2 class="section">The <span class="inlinecode"><span class="id" title="var">lift_peel</span></span> tactic</h2>
+
+<div class="paragraph"> </div>
+
+ This is the main tactic we use: it lifts a theorem <span class="inlinecode"><span class="id" title="var">Hf</span></span> of
+  the underlying memory model by "peeling off" its structure
+  recursively to prove the lifted goal. The leaf goals are
+  handled with the caller-provided tactic <span class="inlinecode"><span class="id" title="var">leaftac</span></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">lift_peel_intro</span> π <span class="id" title="var">recurse</span> <span class="id" title="var">Hf</span> <span class="id" title="var">x</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intro</span> <span class="id" title="var">x</span>;<br/>
+&nbsp;&nbsp;(<span class="id" title="tactic">specialize</span> (<span class="id" title="var">Hf</span> <span class="id" title="var">x</span>) ||<br/>
+&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">Hf</span> (π <span class="id" title="var">x</span>)) ||<br/>
+&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">match</span> <span class="id" title="var">type</span> <span class="id" title="var">of</span> <span class="id" title="var">Hf</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">H</span>: ?<span class="id" title="var">T</span>), <span class="id" title="var">_</span> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">H'</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="var">H</span> <span class="id" title="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">H'</span>: <span class="id" title="var">T</span>) <span class="id" title="tactic">by</span> <span class="id" title="var">recurse</span> <span class="id" title="var">x</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">Hf</span> <span class="id" title="var">H'</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">clear</span> <span class="id" title="var">H'</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>));<br/>
+&nbsp;&nbsp;<span class="id" title="var">recurse</span> <span class="id" title="var">Hf</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">lift_peel_exists</span> π <span class="id" title="var">recurse</span> <span class="id" title="var">Hf</span> <span class="id" title="var">x</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">Hf'</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="var">Hf</span> <span class="id" title="keyword">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hf</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">x</span> <span class="id" title="var">Hf'</span>];<br/>
+&nbsp;&nbsp;(<span class="id" title="tactic">∃</span> <span class="id" title="var">x</span> || <span class="id" title="tactic">eexists</span> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <span class="id" title="var">_</span> <span class="id" title="var">x</span> <span class="id" title="var">_</span>));<br/>
+&nbsp;&nbsp;<span class="id" title="var">recurse</span> <span class="id" title="var">Hf'</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">lift_peel_conj</span> π <span class="id" title="var">recurse</span> <span class="id" title="var">Hf</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">Hl</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="var">Hf</span> "l" <span class="id" title="keyword">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">Hr</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="var">Hf</span> "r" <span class="id" title="keyword">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hf</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">Hl</span> <span class="id" title="var">Hr</span>];<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>; [<span class="id" title="var">recurse</span> <span class="id" title="var">Hl</span> | <span class="id" title="var">recurse</span> <span class="id" title="var">Hr</span>].<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">lift_peel</span> π <span class="id" title="var">Hf</span> <span class="id" title="var">leaftac</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">recurse</span> <span class="id" title="var">Hf</span> := <span class="id" title="var">lift_peel</span> π <span class="id" title="var">Hf</span> <span class="id" title="var">leaftac</span> <span class="id" title="keyword">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">try</span> <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| |- <span class="id" title="keyword">∀</span> (<span class="id" title="var">x</span>: <span class="id" title="var">_</span>), <span class="id" title="var">_</span> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">x</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="var">x</span> <span class="id" title="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">lift_peel_intro</span> π <span class="id" title="var">recurse</span> <span class="id" title="var">Hf</span> <span class="id" title="var">x</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| |- <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">∃</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">(</span></a><span class="id" title="var">x</span>: <span class="id" title="var">_</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">),</span></a> <span class="id" title="var">_</span> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">x</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="var">x</span> <span class="id" title="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">lift_peel_exists</span> π <span class="id" title="var">recurse</span> <span class="id" title="var">Hf</span> <span class="id" title="var">x</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| |- <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Specif.html#72ca3fac4636a1b19c963b12162882cf"><span class="id" title="notation">{</span></a> <span class="id" title="var">x</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Specif.html#72ca3fac4636a1b19c963b12162882cf"><span class="id" title="notation">:</span></a> <span class="id" title="var">_</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Specif.html#72ca3fac4636a1b19c963b12162882cf"><span class="id" title="notation">|</span></a> <span class="id" title="var">_</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Specif.html#72ca3fac4636a1b19c963b12162882cf"><span class="id" title="notation">}</span></a> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">x</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="var">x</span> <span class="id" title="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">lift_peel_exists</span> π <span class="id" title="var">recurse</span> <span class="id" title="var">Hf</span> <span class="id" title="var">x</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| |- <span class="id" title="var">_</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d82a7d96d3659d805ffe732283716822"><span class="id" title="notation">∧</span></a> <span class="id" title="var">_</span> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">lift_peel_conj</span> π <span class="id" title="var">recurse</span> <span class="id" title="var">Hf</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| |- ?<span class="id" title="var">T</span> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">leaftac</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Now the goal is to come up with an appropriate leaf tactic which
+  will be able to prove some theorems instanciated with the lifted
+  operations using the original version. 
+<div class="paragraph"> </div>
+
+<a name="lab395"></a><h2 class="section">Expressing everything in terms of <span class="inlinecode"><a class="idref" href="compcert.backend.CminorSel.html#lift"><span class="id" title="definition">lift</span></a></span></h2>
+
+<div class="paragraph"> </div>
+
+ As a first step, in order to be able to apply general theorems
+  about it, we will want to make sure the goal and premises are all
+  stated in terms of <span class="inlinecode"><a class="idref" href="compcert.backend.CminorSel.html#lift"><span class="id" title="definition">lift</span></a></span>. In order to do this, we use the rule
+  below to make sure that the <span class="inlinecode"><span class="id" title="tactic">simpl</span></span> tactic stops whenever <span class="inlinecode"><a class="idref" href="compcert.backend.CminorSel.html#lift"><span class="id" title="definition">lift</span></a></span> is
+  reached. Then <span class="inlinecode"><span class="id" title="tactic">simpl</span></span> allows us to unfold typeclass methods which
+  are defined in terms of lift (the most common case). 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> : <span class="id" title="tactic">simpl</span> <span class="id" title="var">never</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+There are also derived operations (such as <span class="inlinecode"><a class="idref" href="compcert.common.Memtype.html#Mem.free_list"><span class="id" title="definition">free_list</span></a></span> for
+  instance), which are defined in terms of the typeclass methods.
+  In such cases, we usually want to prove that lifting such operations
+  is equivalent to applying them to a lifted typeclass instance.
+  Then we can rewrite them in terms of <span class="inlinecode"><a class="idref" href="compcert.backend.CminorSel.html#lift"><span class="id" title="definition">lift</span></a></span> as well. Such proofs are
+  collected into the "lift" rewrite database. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">lift_norm</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">progress</span> (<span class="id" title="tactic">simpl</span> <span class="id" title="keyword">in</span> *; <span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">lift</span> <span class="id" title="keyword">in</span> *).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Unfortunately there is no <span class="inlinecode"><span class="id" title="var">Create</span></span> <span class="inlinecode"><span class="id" title="var">HintDb</span></span> command for rewrite
+  databases, so we have to create it by adding a fake entry. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Hint Rewrite</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#injective_projections"><span class="id" title="lemma">injective_projections</span></a> <span class="id" title="keyword">using</span> <span class="id" title="tactic">fail</span> : <span class="id" title="var">lift</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab396"></a><h2 class="section">Simplifying occurences of <span class="inlinecode"><a class="idref" href="compcert.backend.CminorSel.html#lift"><span class="id" title="definition">lift</span></a></span></h2>
+
+<div class="paragraph"> </div>
+
+ Once everything is stated in terms of lift, futher rewriting rules
+  from the <span class="inlinecode"><span class="id" title="var">lift_simpl</span></span> database can be applied. In particular, the
+  theorems below try to ensure that the goal and hypotheses are stated
+  in terms of <span class="inlinecode"><a class="idref" href="compcert.backend.Locations.html#Locmap.get"><span class="id" title="definition">get</span></a></span> and <span class="inlinecode"><a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a></span> rather than in terms of <span class="inlinecode"><a class="idref" href="compcert.backend.CminorSel.html#lift"><span class="id" title="definition">lift</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">lift_simpl</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">progress</span> (<span class="id" title="var">lift_norm</span>; <span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">lift_simpl</span> <span class="id" title="keyword">in</span> *; <span class="id" title="var">lens_simpl</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="LIFTOPTION"><span class="id" title="section">LIFTOPTION</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} `{<span class="id" title="var">HSV</span>: <a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <a class="idref" href="liblayers.lib.Lift.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lift.html#V"><span class="id" title="variable">V</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="lift_option_eq_unlift"><span class="id" title="lemma">lift_option_eq_unlift</span></a> (<span class="id" title="var">f</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTOPTION.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTOPTION.V"><span class="id" title="variable">V</span></a>) (<span class="id" title="var">s</span> <span class="id" title="var">s'</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTOPTION.S"><span class="id" title="variable">S</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">f</span> (<a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a> <span class="id" title="var">s</span>)); <span class="id" title="tactic">try</span> <span class="id" title="tactic">discriminate</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">lens</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a name="lift_option_eq_same_context"><span class="id" title="lemma">lift_option_eq_same_context</span></a> (<span class="id" title="var">f</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTOPTION.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTOPTION.V"><span class="id" title="variable">V</span></a>) (<span class="id" title="var">s</span> <span class="id" title="var">s'</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTOPTION.S"><span class="id" title="variable">S</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> <a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">case</span> (<span class="id" title="var">f</span> (<a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a> <span class="id" title="var">s</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> ? <span class="id" title="var">H</span>; <span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">symmetry</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Lens.html#lens_set_same_context"><span class="id" title="lemma">lens_set_same_context</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">discriminate</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a name="lift_option_eq_intro"><span class="id" title="lemma">lift_option_eq_intro</span></a> (<span class="id" title="var">f</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTOPTION.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTOPTION.V"><span class="id" title="variable">V</span></a>) (<span class="id" title="var">s</span> <span class="id" title="var">s'</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTOPTION.S"><span class="id" title="variable">S</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> <a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">Hc</span> <span class="id" title="var">Hv</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">Hv</span>; <span class="id" title="tactic">clear</span> <span class="id" title="var">Hv</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">f_equal</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">Hc</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Lens.html#lens_set_get"><span class="id" title="method">lens_set_get</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a name="lift_option_eq_iff"><span class="id" title="lemma">lift_option_eq_iff</span></a> <span class="id" title="var">f</span> <span class="id" title="var">s</span> <span class="id" title="var">s'</span> `{!<a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a>}:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#df1ced36fc33ce188051218bca314374"><span class="id" title="notation">↔</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d82a7d96d3659d805ffe732283716822"><span class="id" title="notation">∧</span></a> <a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> <a class="idref" href="liblayers.lib.Lift.html#dae02b6dcad0b83705ea329bbc7ff788"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Lift.html#lift_option_eq_unlift"><span class="id" title="lemma">lift_option_eq_unlift</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">eapply</span> <a class="idref" href="liblayers.lib.Lift.html#lift_option_eq_same_context"><span class="id" title="lemma">lift_option_eq_same_context</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">eassumption</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> [<span class="id" title="var">Hf</span> <span class="id" title="var">Hc</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="liblayers.lib.Lift.html#lift_option_eq_intro"><span class="id" title="lemma">lift_option_eq_intro</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lift.html#LIFTOPTION"><span class="id" title="section">LIFTOPTION</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="LIFTPROD"><span class="id" title="section">LIFTPROD</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} `{<span class="id" title="var">Hgs</span>: <a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <a class="idref" href="liblayers.lib.Lift.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lift.html#V"><span class="id" title="variable">V</span></a>} {<span class="id" title="var">A</span>: <span class="id" title="keyword">Type</span>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a name="lift_prod_eq_unlift"><span class="id" title="lemma">lift_prod_eq_unlift</span></a> (<span class="id" title="var">f</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#d19c7eafd0e2d195d10df94b392087b5"><span class="id" title="notation">×</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">s</span> <span class="id" title="var">s'</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.S"><span class="id" title="variable">S</span></a>) (<span class="id" title="var">a</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.A"><span class="id" title="variable">A</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.lib.Lift.html#a"><span class="id" title="variable">a</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.lib.Lift.html#a"><span class="id" title="variable">a</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">f</span> (<a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <span class="id" title="var">s</span>)) <span class="id" title="keyword">as</span> [<span class="id" title="var">v'</span> <span class="id" title="var">a'</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">lens</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a name="lift_prod_eq_same_context"><span class="id" title="lemma">lift_prod_eq_same_context</span></a> (<span class="id" title="var">f</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#d19c7eafd0e2d195d10df94b392087b5"><span class="id" title="notation">×</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">s</span> <span class="id" title="var">s'</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.S"><span class="id" title="variable">S</span></a>) (<span class="id" title="var">a</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.A"><span class="id" title="variable">A</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.lib.Lift.html#a"><span class="id" title="variable">a</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> <a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">f</span> (<a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <span class="id" title="var">s</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intro</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">symmetry</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Lens.html#lens_set_same_context"><span class="id" title="lemma">lens_set_same_context</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a name="lift_prod_eq_intro"><span class="id" title="lemma">lift_prod_eq_intro</span></a> (<span class="id" title="var">f</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#d19c7eafd0e2d195d10df94b392087b5"><span class="id" title="notation">×</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">s</span> <span class="id" title="var">s'</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.S"><span class="id" title="variable">S</span></a>) (<span class="id" title="var">a</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.A"><span class="id" title="variable">A</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> <a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.lib.Lift.html#a"><span class="id" title="variable">a</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.lib.Lift.html#a"><span class="id" title="variable">a</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">Hc</span> <span class="id" title="var">Hv</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">f</span> (<a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <span class="id" title="var">s</span>)) <span class="id" title="keyword">as</span> [<span class="id" title="var">v'</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">Hv</span>; <span class="id" title="tactic">subst</span>; <span class="id" title="tactic">clear</span> <span class="id" title="var">Hv</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">Hc</span>; <span class="id" title="tactic">clear</span> <span class="id" title="var">Hc</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">lens</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a name="lift_prod_eq_iff"><span class="id" title="lemma">lift_prod_eq_iff</span></a> (<span class="id" title="var">f</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#d19c7eafd0e2d195d10df94b392087b5"><span class="id" title="notation">×</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">s</span> <span class="id" title="var">s'</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.S"><span class="id" title="variable">S</span></a>) (<span class="id" title="var">a</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD.A"><span class="id" title="variable">A</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.lib.Lift.html#a"><span class="id" title="variable">a</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#df1ced36fc33ce188051218bca314374"><span class="id" title="notation">↔</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.lib.Lift.html#a"><span class="id" title="variable">a</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d82a7d96d3659d805ffe732283716822"><span class="id" title="notation">∧</span></a> <a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> <a class="idref" href="liblayers.lib.Lift.html#d0c46ad9293c331960799384bd9247b5"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="liblayers.lib.Lift.html#s'"><span class="id" title="variable">s'</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Lift.html#lift_prod_eq_unlift"><span class="id" title="lemma">lift_prod_eq_unlift</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">eapply</span> <a class="idref" href="liblayers.lib.Lift.html#lift_prod_eq_same_context"><span class="id" title="lemma">lift_prod_eq_same_context</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">eassumption</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> [<span class="id" title="var">Hf</span> <span class="id" title="var">Hc</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Lift.html#lift_prod_eq_intro"><span class="id" title="lemma">lift_prod_eq_intro</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lift.html#LIFTPROD"><span class="id" title="section">LIFTPROD</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="LIFTREL"><span class="id" title="section">LIFTREL</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} `{<a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <a class="idref" href="liblayers.lib.Lift.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lift.html#V"><span class="id" title="variable">V</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="lift_relation_unlift"><span class="id" title="instance">lift_relation_unlift</span></a> (<span class="id" title="var">R</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Relations.Relation_Definitions.html#relation"><span class="id" title="definition">relation</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTREL.V"><span class="id" title="variable">V</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#subrelation"><span class="id" title="class">subrelation</span></a> (<a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#R"><span class="id" title="variable">R</span></a>) (<a class="idref" href="liblayers.lib.Lift.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationPairs.html#b7307a2daf1c51b1b6389d78119fcea9"><span class="id" title="notation">@@</span></a> <a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a>)%<span class="id" title="var">signature</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationPairs.html#RelCompFun"><span class="id" title="definition">RelCompFun</span></a>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">s1</span> <span class="id" title="var">s2</span> <span class="id" title="var">Hs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">Hs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">lens</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="lift_relation_same_context"><span class="id" title="instance">lift_relation_same_context</span></a> (<span class="id" title="var">R</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Relations.Relation_Definitions.html#relation"><span class="id" title="definition">relation</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTREL.V"><span class="id" title="variable">V</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#subrelation"><span class="id" title="class">subrelation</span></a> (<a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#R"><span class="id" title="variable">R</span></a>) (<a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> <a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">s1</span> <span class="id" title="var">s2</span> <span class="id" title="var">Hs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">Hs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">lens</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="lift_relation_intro"><span class="id" title="lemma">lift_relation_intro</span></a> (<span class="id" title="var">R</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTREL.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTREL.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>) (<span class="id" title="var">s1</span> <span class="id" title="var">s2</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTREL.S"><span class="id" title="variable">S</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> <a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s1"><span class="id" title="variable">s1</span></a> <a class="idref" href="liblayers.lib.Lift.html#s2"><span class="id" title="variable">s2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#R"><span class="id" title="variable">R</span></a> (<a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s1"><span class="id" title="variable">s1</span></a>) (<a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s2"><span class="id" title="variable">s2</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> (<span class="id" title="var">Lift</span> := <a class="idref" href="liblayers.lib.Lift.html#lift_powerset"><span class="id" title="instance">lift_powerset</span></a>) <a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="liblayers.lib.Lift.html#s1"><span class="id" title="variable">s1</span></a> <a class="idref" href="liblayers.lib.Lift.html#s2"><span class="id" title="variable">s2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">Hc</span> <span class="id" title="var">Hv</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">replace</span> <span class="id" title="var">s2</span> <span class="id" title="keyword">with</span> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> (<a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> <span class="id" title="var">s2</span>) <span class="id" title="var">s1</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">change</span> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> (<a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> <span class="id" title="var">s2</span>) <span class="id" title="var">s1</span>) <span class="id" title="keyword">with</span> ((<span class="id" title="keyword">fun</span> <span class="id" title="var">v</span> ⇒ <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#v"><span class="id" title="variable">v</span></a> <span class="id" title="var">s1</span>) (<a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> <span class="id" title="var">s2</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="liblayers.lib.PowersetMonad.html#powerset_fmap_intro"><span class="id" title="constructor">powerset_fmap_intro</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">rewrite</span> <span class="id" title="var">Hc</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">lens</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="lift_relation_iff"><span class="id" title="lemma">lift_relation_iff</span></a> (<span class="id" title="var">R</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTREL.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#LIFTREL.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>) (<span class="id" title="var">s1</span> <span class="id" title="var">s2</span>: <a class="idref" href="liblayers.lib.Lift.html#LIFTREL.S"><span class="id" title="variable">S</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="liblayers.lib.Lift.html#s1"><span class="id" title="variable">s1</span></a> <a class="idref" href="liblayers.lib.Lift.html#s2"><span class="id" title="variable">s2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#df1ced36fc33ce188051218bca314374"><span class="id" title="notation">↔</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#R"><span class="id" title="variable">R</span></a> (<a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s1"><span class="id" title="variable">s1</span></a>) (<a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s2"><span class="id" title="variable">s2</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d82a7d96d3659d805ffe732283716822"><span class="id" title="notation">∧</span></a> <a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> <a class="idref" href="liblayers.lib.Lift.html#bef13b54de75968a7b3a1a978b8b559d"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lift.html#s1"><span class="id" title="variable">s1</span></a> <a class="idref" href="liblayers.lib.Lift.html#s2"><span class="id" title="variable">s2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Lift.html#lift_relation_unlift"><span class="id" title="instance">lift_relation_unlift</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">eapply</span> <a class="idref" href="liblayers.lib.Lift.html#lift_relation_same_context"><span class="id" title="instance">lift_relation_same_context</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">eassumption</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> [<span class="id" title="var">Hv</span> <span class="id" title="var">Hc</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Lift.html#lift_relation_intro"><span class="id" title="lemma">lift_relation_intro</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lift.html#LIFTREL"><span class="id" title="section">LIFTREL</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Rewrite</span><br/>
+&nbsp;&nbsp;@<a class="idref" href="liblayers.lib.Lift.html#lift_option_eq_iff"><span class="id" title="lemma">lift_option_eq_iff</span></a><br/>
+&nbsp;&nbsp;@<a class="idref" href="liblayers.lib.Lift.html#lift_prod_eq_iff"><span class="id" title="lemma">lift_prod_eq_iff</span></a><br/>
+&nbsp;&nbsp;@<a class="idref" href="liblayers.lib.Lift.html#lift_relation_iff"><span class="id" title="lemma">lift_relation_iff</span></a><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">using</span> <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span> : <span class="id" title="var">lift_simpl</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab397"></a><h2 class="section">Solving the residual goals</h2>
+
+<div class="paragraph"> </div>
+
+ The rewriting rules above likely leaves us with several conjunctions.
+  We destruct them to make sure that the components are readily available. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">split_conjuncts</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| [ <span class="id" title="var">H</span>: <span class="id" title="var">_</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d82a7d96d3659d805ffe732283716822"><span class="id" title="notation">∧</span></a> <span class="id" title="var">_</span> |- <span class="id" title="var">_</span> ] ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">Hl</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="var">H</span> "l" <span class="id" title="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">Hr</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="var">H</span> "r" <span class="id" title="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">Hl</span> <span class="id" title="var">Hr</span>]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Hopefully, the residual goal can then easily be solved with
+  <span class="inlinecode"><span class="id" title="tactic">eauto</span></span>, given a few hints in the "lift" database which we use to
+  solve corner cases. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Hint Extern</span> 10 (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ⇒<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">congruence</span> : <span class="id" title="var">lift</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Extern</span> 0 (<a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ⇒<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">congruence</span> || <span class="id" title="tactic">reflexivity</span> : <span class="id" title="var">lift</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+As a last resort, we unfold <span class="inlinecode"><a class="idref" href="compcert.backend.CminorSel.html#lift"><span class="id" title="definition">lift</span></a></span> and try to normalize the
+  result. Hopefully we'll get something easily solvable. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">lift_unfold</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">progress</span> (<span class="id" title="var">lift_simpl</span>; <span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <span class="id" title="keyword">in</span> *).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We're now ready to define our leaf tactic, and use it in
+  conjunction with <span class="inlinecode"><span class="id" title="var">peel</span></span> to solve the goals automatically. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">lift_auto</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">lift_simpl</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">split_conjuncts</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">eauto</span> 10 <span class="id" title="keyword">with</span> <span class="id" title="var">lift</span> <span class="id" title="var">typeclass_instances</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">lift_unfold</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">eauto</span> 10 <span class="id" title="keyword">with</span> <span class="id" title="var">lift</span> <span class="id" title="var">typeclass_instances</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The <span class="inlinecode"><span class="id" title="var">lift_partial</span></span> variant allows for some unsolved leaves. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">lift_partial</span> π <span class="id" title="var">f</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">pose</span> <span class="id" title="var">proof</span> <span class="id" title="var">f</span> <span class="id" title="keyword">as</span> <span class="id" title="var">Hf</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">lift_peel</span> π <span class="id" title="var">Hf</span> <span class="id" title="var">lift_auto</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The <span class="inlinecode"><a class="idref" href="compcert.backend.CminorSel.html#lift"><span class="id" title="definition">lift</span></a></span> variant demands 100
+</div>
+<div class="code">
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">lift</span> π <span class="id" title="var">f</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="var">now</span> <span class="id" title="var">lift_partial</span> π <span class="id" title="var">f</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab398"></a><h2 class="section">Properties of lifted operations</h2>
+
+<div class="paragraph"> </div>
+
+ Lifting commutes with lens composition 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="COMPOSE"><span class="id" title="section">COMPOSE</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Existing</span> <span class="id" title="var">Instances</span> <span class="id" title="var">lens_compose</span> <span class="id" title="var">compose_lensops</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>} (π: <a class="idref" href="liblayers.lib.Lift.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#B"><span class="id" title="variable">B</span></a>) (ρ: <a class="idref" href="liblayers.lib.Lift.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#C"><span class="id" title="variable">C</span></a>) `{<span class="id" title="var">H</span>π: <a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="liblayers.lib.Lift.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a>} `{<span class="id" title="var">H</span>ρ: <a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="liblayers.lib.Lift.html#1af91fb19f8f622aa9ec8998986a6bf9"><span class="id" title="variable">ρ</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<span class="id" title="var">HF</span>: <a class="idref" href="liblayers.lib.Functor.html#Functor"><span class="id" title="class">Functor</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> (<span class="id" title="var">f</span>: <a class="idref" href="liblayers.lib.Lift.html#COMPOSE.C"><span class="id" title="variable">C</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lift.html#COMPOSE.F"><span class="id" title="variable">F</span></a> <a class="idref" href="liblayers.lib.Lift.html#COMPOSE.C"><span class="id" title="variable">C</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="lift_compose"><span class="id" title="lemma">lift_compose</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#compose"><span class="id" title="definition">compose</span></a> <a class="idref" href="liblayers.lib.Lift.html#033fc81facb0cd0ce4b57d33b31e7d32"><span class="id" title="variable">ρ</span></a> <a class="idref" href="liblayers.lib.Lift.html#af96978f30061d409e3e3ad8f65f40c3"><span class="id" title="variable">π</span></a>) <a class="idref" href="liblayers.lib.Lift.html#COMPOSE.f"><span class="id" title="variable">f</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#af96978f30061d409e3e3ad8f65f40c3"><span class="id" title="variable">π</span></a> (<a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a> <a class="idref" href="liblayers.lib.Lift.html#033fc81facb0cd0ce4b57d33b31e7d32"><span class="id" title="variable">ρ</span></a> <a class="idref" href="liblayers.lib.Lift.html#COMPOSE.f"><span class="id" title="variable">f</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lift.html#lift"><span class="id" title="method">lift</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Logic.FunctionalExtensionality.html#functional_extensionality"><span class="id" title="lemma">functional_extensionality</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">a</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#compose"><span class="id" title="definition">Basics.compose</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lift.html#COMPOSE"><span class="id" title="section">COMPOSE</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>liblayers.simrel.SimrelFunctor</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library liblayers.simrel.SimrelFunctor</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="liblayers.simrel.SimrelCategory.html#"><span class="id" title="library">SimrelCategory</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab504"></a><h1 class="section">Simrel functors</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="SIMREL_FUNCTOR"><span class="id" title="section">SIMREL_FUNCTOR</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<span class="id" title="var">Hmem</span>: <a class="idref" href="liblayers.simrel.MemWithData.html#BaseMemoryModel"><span class="id" title="class">BaseMemoryModel</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab505"></a><h2 class="section">Relations without worlds</h2>
+
+<div class="paragraph"> </div>
+
+ By "<span class="inlinecode"><a class="idref" href="liblayers.simrel.SimrelDefinition.html#simrel"><span class="id" title="record">simrel</span></a></span> functor", we mean <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a></span> <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#D1"><span class="id" title="variable">D1</span></a></span> <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#D2"><span class="id" title="variable">D2</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.backend.Locations.html#R"><span class="id" title="constructor">R</span></a></span> relations indexed
+    by <span class="inlinecode"><a class="idref" href="liblayers.simrel.SimrelDefinition.html#simrel"><span class="id" title="record">simrel</span></a></span>s, usually between types <span class="inlinecode"><a class="idref" href="compcert.flocq.Appli.Fappli_IEEE.html#T"><span class="id" title="variable">T</span></a></span> <span class="inlinecode"><a class="idref" href="coqrel.RelOperators.html#D"><span class="id" title="variable">D</span></a></span> indexed by <span class="inlinecode"><a class="idref" href="liblayers.simrel.AbstractData.html#layerdata"><span class="id" title="record">layerdata</span></a></span>,
+    so that <span class="inlinecode"><a class="idref" href="compcert.flocq.Appli.Fappli_IEEE.html#T"><span class="id" title="variable">T</span></a></span> and <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a></span> are the object and morphism components of a
+    functor from the category of <span class="inlinecode"><a class="idref" href="liblayers.simrel.AbstractData.html#layerdata"><span class="id" title="record">layerdata</span></a></span> and <span class="inlinecode"><a class="idref" href="liblayers.simrel.SimrelDefinition.html#simrel"><span class="id" title="record">simrel</span></a></span>s into the
+    category of <span class="inlinecode"><span class="id" title="keyword">Type</span></span>s and <span class="inlinecode"><a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a></span>ations. 
+<div class="paragraph"> </div>
+
+<a name="lab506"></a><h3 class="section">Definition</h3>
+
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="simrel_rel"><span class="id" title="definition">simrel_rel</span></a> (<span class="id" title="var">T</span>: <a class="idref" href="liblayers.simrel.AbstractData.html#layerdata"><span class="id" title="record">layerdata</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Type</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">D1</span> <span class="id" title="var">D2</span> (<span class="id" title="var">R</span>: <a class="idref" href="liblayers.simrel.SimrelDefinition.html#simrel"><span class="id" title="record">simrel</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a>), <a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a> (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a>) (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Class</span> <a name="SimrelFunctor"><span class="id" title="record">SimrelFunctor</span></a> {<span class="id" title="var">T</span>} (<span class="id" title="var">RR</span>: <a class="idref" href="liblayers.simrel.SimrelFunctor.html#simrel_rel"><span class="id" title="definition">simrel_rel</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#T"><span class="id" title="variable">T</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="simrel_functor_equiv"><span class="id" title="projection">simrel_functor_equiv</span></a> :&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#RR"><span class="id" title="variable">RR</span></a> (<a class="idref" href="coqrel.Relators.html#121f19e13d350c3a792fb7c67ae4a001"><span class="id" title="notation">forallr</span></a> <a class="idref" href="coqrel.Relators.html#121f19e13d350c3a792fb7c67ae4a001"><span class="id" title="notation">-,</span></a> <a class="idref" href="coqrel.Relators.html#121f19e13d350c3a792fb7c67ae4a001"><span class="id" title="notation">forallr</span></a> <a class="idref" href="coqrel.Relators.html#121f19e13d350c3a792fb7c67ae4a001"><span class="id" title="notation">-,</span></a> <a class="idref" href="liblayers.simrel.SimrelEquivalence.html#simrel_equiv"><span class="id" title="definition">simrel_equiv</span></a> <a class="idref" href="coqrel.RelDefinitions.html#e7acdf91669d82873f44a60e56ad44ff"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="coqrel.RelDefinitions.html#subrel"><span class="id" title="definition">subrel</span></a>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="simrel_functor_id"><span class="id" title="projection">simrel_functor_id</span></a> <span class="id" title="var">D</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.simrel.SimrelFunctor.html#RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="liblayers.simrel.SimrelCategory.html#simrel_id"><span class="id" title="definition">simrel_id</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="simrel_functor_compose"><span class="id" title="projection">simrel_functor_compose</span></a> <span class="id" title="var">D1</span> <span class="id" title="var">D2</span> <span class="id" title="var">D3</span> <span class="id" title="var">R12</span> <span class="id" title="var">R23</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.simrel.SimrelFunctor.html#RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D3"><span class="id" title="variable">D3</span></a> (<a class="idref" href="liblayers.simrel.SimrelCategory.html#simrel_compose"><span class="id" title="definition">simrel_compose</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R12"><span class="id" title="variable">R12</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R23"><span class="id" title="variable">R23</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelOperators.html#rel_compose"><span class="id" title="definition">rel_compose</span></a> (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R12"><span class="id" title="variable">R12</span></a>) (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D3"><span class="id" title="variable">D3</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R23"><span class="id" title="variable">R23</span></a>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+NB: Note that in order for <span class="inlinecode"><a class="idref" href="liblayers.simrel.SimrelFunctor.html#simrel_functor_equiv"><span class="id" title="projection">simrel_functor_equiv</span></a></span> to be used for
+    <span class="inlinecode"><a class="idref" href="coqrel.Monotonicity.html#monotonicity"><span class="id" title="projection">monotonicity</span></a></span> queries, the user needs to define an instance of
+    <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#Params"><span class="id" title="class">Params</span></a></span> <span class="inlinecode"><span class="id" title="var">_</span></span> <span class="inlinecode">5</span> for their relation. 
+<div class="paragraph"> </div>
+
+<a name="lab507"></a><h3 class="section">Properties</h3>
+
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a name="SIMREL_FUNCTOR.SIMREL_FUNCTOR_PROPERTIES"><span class="id" title="section">SIMREL_FUNCTOR_PROPERTIES</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<span class="id" title="var">HRR</span>: <a class="idref" href="liblayers.simrel.SimrelFunctor.html#SimrelFunctor"><span class="id" title="class">SimrelFunctor</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="simrel_functor_id_refl"><span class="id" title="instance">simrel_functor_id_refl</span></a> <span class="id" title="var">D</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Reflexive"><span class="id" title="class">Reflexive</span></a> (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTOR_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="liblayers.simrel.SimrelCategory.html#simrel_id"><span class="id" title="definition">simrel_id</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#simrel_functor_id"><span class="id" title="method">simrel_functor_id</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="simrel_functor_id_corefl"><span class="id" title="instance">simrel_functor_id_corefl</span></a> <span class="id" title="var">D</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelClasses.html#Coreflexive"><span class="id" title="class">Coreflexive</span></a> (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTOR_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="liblayers.simrel.SimrelCategory.html#simrel_id"><span class="id" title="definition">simrel_id</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#simrel_functor_id"><span class="id" title="method">simrel_functor_id</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="simrel_functor_compose_htrans"><span class="id" title="instance">simrel_functor_compose_htrans</span></a> <span class="id" title="var">D1</span> <span class="id" title="var">D2</span> <span class="id" title="var">D3</span> <span class="id" title="var">R12</span> <span class="id" title="var">R23</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#HTransitive"><span class="id" title="class">HTransitive</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTOR_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R12"><span class="id" title="variable">R12</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTOR_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D3"><span class="id" title="variable">D3</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R23"><span class="id" title="variable">R23</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTOR_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D3"><span class="id" title="variable">D3</span></a> (<a class="idref" href="liblayers.simrel.SimrelCategory.html#simrel_compose"><span class="id" title="definition">simrel_compose</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R12"><span class="id" title="variable">R12</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R23"><span class="id" title="variable">R23</span></a>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#simrel_functor_compose"><span class="id" title="method">simrel_functor_compose</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="simrel_functor_compose_rtrans"><span class="id" title="instance">simrel_functor_compose_rtrans</span></a> <span class="id" title="var">D1</span> <span class="id" title="var">D2</span> <span class="id" title="var">D3</span> <span class="id" title="var">R12</span> <span class="id" title="var">R23</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#RTransitive"><span class="id" title="class">RTransitive</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTOR_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R12"><span class="id" title="variable">R12</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTOR_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D3"><span class="id" title="variable">D3</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R23"><span class="id" title="variable">R23</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTOR_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D3"><span class="id" title="variable">D3</span></a> (<a class="idref" href="liblayers.simrel.SimrelCategory.html#simrel_compose"><span class="id" title="definition">simrel_compose</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R12"><span class="id" title="variable">R12</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R23"><span class="id" title="variable">R23</span></a>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#simrel_functor_compose"><span class="id" title="method">simrel_functor_compose</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTOR_PROPERTIES"><span class="id" title="section">SIMREL_FUNCTOR_PROPERTIES</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab508"></a><h2 class="section">Relations indexed by <span class="inlinecode"><a class="idref" href="liblayers.simrel.SimrelDefinition.html#simrel_world"><span class="id" title="projection">simrel_world</span></a></span>s</h2>
+
+<div class="paragraph"> </div>
+
+ A slightly more complicated version of this involves relations
+    <span class="inlinecode"><span class="id" title="keyword">match</span></span> <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#D1"><span class="id" title="variable">D1</span></a></span> <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#D2"><span class="id" title="variable">D2</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.backend.Locations.html#R"><span class="id" title="constructor">R</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.flocq.Core.Fcore_Zaux.html#w"><span class="id" title="variable">w</span></a></span> which are also indexed by a <span class="inlinecode"><a class="idref" href="compcert.flocq.Core.Fcore_Zaux.html#w"><span class="id" title="variable">w</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="liblayers.simrel.SimrelDefinition.html#simrel_world"><span class="id" title="projection">simrel_world</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.backend.Locations.html#R"><span class="id" title="constructor">R</span></a></span>.
+    In this case the target category is technically the category of
+    <span class="inlinecode"><span class="id" title="keyword">Type</span></span>s and world-indexed <span class="inlinecode"><a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a></span>s.
+
+<div class="paragraph"> </div>
+
+    Note that unfortunately, because the basic <span class="inlinecode"><a class="idref" href="liblayers.simrel.SimrelDefinition.html#match_val"><span class="id" title="inductive">match_val</span></a></span>, <span class="inlinecode"><a class="idref" href="liblayers.simrel.SimrelDefinition.html#match_mem"><span class="id" title="projection">match_mem</span></a></span>
+    and so on are defined in terms of <span class="inlinecode"><a class="idref" href="liblayers.simrel.SimrelDefinition.html#simrel_components"><span class="id" title="record">simrel_components</span></a></span> rather than
+    <span class="inlinecode"><a class="idref" href="liblayers.simrel.SimrelDefinition.html#simrel"><span class="id" title="record">simrel</span></a></span>, they cannot be declared as <span class="inlinecode"><a class="idref" href="liblayers.simrel.SimrelFunctor.html#SimrelFunctorW"><span class="id" title="record">SimrelFunctorW</span></a></span>. 
+<div class="paragraph"> </div>
+
+<a name="lab509"></a><h3 class="section">Definition</h3>
+
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="simrel_wrel"><span class="id" title="definition">simrel_wrel</span></a> (<span class="id" title="var">T</span>: <a class="idref" href="liblayers.simrel.AbstractData.html#layerdata"><span class="id" title="record">layerdata</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Type</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">D1</span> <span class="id" title="var">D2</span> (<span class="id" title="var">R</span>: <a class="idref" href="liblayers.simrel.SimrelDefinition.html#simrel"><span class="id" title="record">simrel</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a>), <a class="idref" href="liblayers.simrel.SimrelDefinition.html#simrel_world"><span class="id" title="projection">simrel_world</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a> (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a>) (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="simrel_world_equiv"><span class="id" title="definition">simrel_world_equiv</span></a> {<span class="id" title="var">D1</span> <span class="id" title="var">D2</span>} {<span class="id" title="var">R1</span> <span class="id" title="var">R2</span>: <a class="idref" href="liblayers.simrel.SimrelDefinition.html#simrel"><span class="id" title="record">simrel</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a>} <span class="id" title="var">f</span>: <a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">w1</span> <span class="id" title="var">w2</span> ⇒ <a class="idref" href="liblayers.simrel.SimrelEquivalence.html#simrel_equiv_fw"><span class="id" title="projection">simrel_equiv_fw</span></a> (<span class="id" title="var">R1</span>:=<a class="idref" href="liblayers.simrel.SimrelFunctor.html#R1"><span class="id" title="variable">R1</span></a>) (<span class="id" title="var">R2</span>:=<a class="idref" href="liblayers.simrel.SimrelFunctor.html#R2"><span class="id" title="variable">R2</span></a>) <a class="idref" href="liblayers.simrel.SimrelFunctor.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w1"><span class="id" title="variable">w1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w2"><span class="id" title="variable">w2</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Class</span> <a name="SimrelFunctorW"><span class="id" title="record">SimrelFunctorW</span></a> {<span class="id" title="var">T</span>} (<span class="id" title="var">RR</span>: <a class="idref" href="liblayers.simrel.SimrelFunctor.html#simrel_wrel"><span class="id" title="definition">simrel_wrel</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#T"><span class="id" title="variable">T</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="simrel_functor_wequiv"><span class="id" title="projection">simrel_functor_wequiv</span></a> <span class="id" title="var">D1</span> <span class="id" title="var">D2</span> (<span class="id" title="var">RA</span> <span class="id" title="var">RB</span>: <a class="idref" href="liblayers.simrel.SimrelDefinition.html#simrel"><span class="id" title="record">simrel</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a>) <span class="id" title="var">f</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.simrel.SimrelEquivalence.html#SimulationRelationEquivalence"><span class="id" title="class">SimulationRelationEquivalence</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#RA"><span class="id" title="variable">RA</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#RB"><span class="id" title="variable">RB</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Related"><span class="id" title="class">Related</span></a> (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#RA"><span class="id" title="variable">RA</span></a>) (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#RB"><span class="id" title="variable">RB</span></a>) (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#simrel_world_equiv"><span class="id" title="definition">simrel_world_equiv</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="coqrel.RelDefinitions.html#subrel"><span class="id" title="definition">subrel</span></a>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="simrel_functor_wid_def"><span class="id" title="projection">simrel_functor_wid_def</span></a> <span class="id" title="var">D</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.simrel.SimrelFunctor.html#RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="liblayers.simrel.SimrelCategory.html#simrel_id"><span class="id" title="definition">simrel_id</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#tt"><span class="id" title="constructor">tt</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="simrel_functor_wcompose_def"><span class="id" title="projection">simrel_functor_wcompose_def</span></a> <span class="id" title="var">D1</span> <span class="id" title="var">D2</span> <span class="id" title="var">D3</span> <span class="id" title="var">R12</span> <span class="id" title="var">R23</span> <span class="id" title="var">w12</span> <span class="id" title="var">w23</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.simrel.SimrelFunctor.html#RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D3"><span class="id" title="variable">D3</span></a> (<a class="idref" href="liblayers.simrel.SimrelCategory.html#simrel_compose"><span class="id" title="definition">simrel_compose</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R12"><span class="id" title="variable">R12</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R23"><span class="id" title="variable">R23</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.simrel.SimrelFunctor.html#w12"><span class="id" title="variable">w12</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w23"><span class="id" title="variable">w23</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelOperators.html#rel_compose"><span class="id" title="definition">rel_compose</span></a> (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R12"><span class="id" title="variable">R12</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w12"><span class="id" title="variable">w12</span></a>) (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D3"><span class="id" title="variable">D3</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R23"><span class="id" title="variable">R23</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w23"><span class="id" title="variable">w23</span></a>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Note that except for <span class="inlinecode"><a class="idref" href="liblayers.simrel.SimrelDefinition.html#match_mem"><span class="id" title="projection">match_mem</span></a></span>, most are covariant in the
+    world index: a larger world yields a larger relation. So in
+    addition to <span class="inlinecode"><a class="idref" href="liblayers.simrel.SimrelFunctor.html#SimrelFunctorW"><span class="id" title="record">SimrelFunctorW</span></a></span> you may want to define an instance
+    <span class="inlinecode"><span class="id" title="var">match_foo_acc</span>:</span> <span class="inlinecode"><a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a></span> <span class="inlinecode">(<a class="idref" href="liblayers.simrel.SimrelFunctor.html#RR"><span class="id" title="variable">RR</span></a></span> <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#D1"><span class="id" title="variable">D1</span></a></span> <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#D2"><span class="id" title="variable">D2</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.backend.Locations.html#R"><span class="id" title="constructor">R</span></a>)</span> <span class="inlinecode">((≤)</span> <span class="inlinecode">++&gt;</span> <span class="inlinecode"><a class="idref" href="coqrel.RelDefinitions.html#subrel"><span class="id" title="definition">subrel</span></a>)</span>. 
+<div class="paragraph"> </div>
+
+<a name="lab510"></a><h3 class="section">Properties</h3>
+
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a name="SIMREL_FUNCTOR.SIMREL_FUNCTORW_PROPERTIES"><span class="id" title="section">SIMREL_FUNCTORW_PROPERTIES</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<span class="id" title="var">HRR</span>: <a class="idref" href="liblayers.simrel.SimrelFunctor.html#SimrelFunctorW"><span class="id" title="class">SimrelFunctorW</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+These more broadly applicable versions of the functor
+      equations use a variable for the world on the left-hand side. 
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="simrel_functor_wid"><span class="id" title="lemma">simrel_functor_wid</span></a> <span class="id" title="var">D</span> <span class="id" title="var">w</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTORW_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="liblayers.simrel.SimrelCategory.html#simrel_id"><span class="id" title="definition">simrel_id</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w"><span class="id" title="variable">w</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">w</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#simrel_functor_wid_def"><span class="id" title="method">simrel_functor_wid_def</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="simrel_functor_wcompose"><span class="id" title="lemma">simrel_functor_wcompose</span></a> <span class="id" title="var">D1</span> <span class="id" title="var">D2</span> <span class="id" title="var">D3</span> <span class="id" title="var">R12</span> <span class="id" title="var">R23</span> <span class="id" title="var">w</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTORW_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D3"><span class="id" title="variable">D3</span></a> (<a class="idref" href="liblayers.simrel.SimrelCategory.html#simrel_compose"><span class="id" title="definition">simrel_compose</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R12"><span class="id" title="variable">R12</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R23"><span class="id" title="variable">R23</span></a>) <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w"><span class="id" title="variable">w</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelOperators.html#rel_compose"><span class="id" title="definition">rel_compose</span></a> (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTORW_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R12"><span class="id" title="variable">R12</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w"><span class="id" title="variable">w</span></a>)) (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTORW_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D3"><span class="id" title="variable">D3</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R23"><span class="id" title="variable">R23</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#snd"><span class="id" title="definition">snd</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w"><span class="id" title="variable">w</span></a>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">w</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#simrel_functor_wcompose_def"><span class="id" title="method">simrel_functor_wcompose_def</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Relation property instances. 
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="simrel_functor_wid_refl"><span class="id" title="instance">simrel_functor_wid_refl</span></a> <span class="id" title="var">D</span> <span class="id" title="var">w</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Reflexive"><span class="id" title="class">Reflexive</span></a> (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTORW_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="liblayers.simrel.SimrelCategory.html#simrel_id"><span class="id" title="definition">simrel_id</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w"><span class="id" title="variable">w</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#simrel_functor_wid"><span class="id" title="lemma">simrel_functor_wid</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="simrel_functor_wid_corefl"><span class="id" title="instance">simrel_functor_wid_corefl</span></a> <span class="id" title="var">D</span> <span class="id" title="var">w</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelClasses.html#Coreflexive"><span class="id" title="class">Coreflexive</span></a> (<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTORW_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="liblayers.simrel.SimrelCategory.html#simrel_id"><span class="id" title="definition">simrel_id</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w"><span class="id" title="variable">w</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#simrel_functor_wid"><span class="id" title="lemma">simrel_functor_wid</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="simrel_functor_wcompose_htrans"><span class="id" title="instance">simrel_functor_wcompose_htrans</span></a> <span class="id" title="var">D1</span> <span class="id" title="var">D2</span> <span class="id" title="var">D3</span> <span class="id" title="var">R12</span> <span class="id" title="var">R23</span> <span class="id" title="var">w</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#HTransitive"><span class="id" title="class">HTransitive</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTORW_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R12"><span class="id" title="variable">R12</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w"><span class="id" title="variable">w</span></a>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTORW_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D3"><span class="id" title="variable">D3</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R23"><span class="id" title="variable">R23</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#snd"><span class="id" title="definition">snd</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w"><span class="id" title="variable">w</span></a>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTORW_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D3"><span class="id" title="variable">D3</span></a> (<a class="idref" href="liblayers.simrel.SimrelCategory.html#simrel_compose"><span class="id" title="definition">simrel_compose</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R12"><span class="id" title="variable">R12</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R23"><span class="id" title="variable">R23</span></a>) <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w"><span class="id" title="variable">w</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#simrel_functor_wcompose"><span class="id" title="lemma">simrel_functor_wcompose</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="simrel_functor_wcompose_rtrans"><span class="id" title="instance">simrel_functor_wcompose_rtrans</span></a> <span class="id" title="var">D1</span> <span class="id" title="var">D2</span> <span class="id" title="var">D3</span> <span class="id" title="var">R12</span> <span class="id" title="var">R23</span> <span class="id" title="var">w</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#RTransitive"><span class="id" title="class">RTransitive</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTORW_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R12"><span class="id" title="variable">R12</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w"><span class="id" title="variable">w</span></a>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTORW_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D2"><span class="id" title="variable">D2</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D3"><span class="id" title="variable">D3</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R23"><span class="id" title="variable">R23</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#snd"><span class="id" title="definition">snd</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w"><span class="id" title="variable">w</span></a>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTORW_PROPERTIES.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D1"><span class="id" title="variable">D1</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#D3"><span class="id" title="variable">D3</span></a> (<a class="idref" href="liblayers.simrel.SimrelCategory.html#simrel_compose"><span class="id" title="definition">simrel_compose</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R12"><span class="id" title="variable">R12</span></a> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#R23"><span class="id" title="variable">R23</span></a>) <a class="idref" href="liblayers.simrel.SimrelFunctor.html#w"><span class="id" title="variable">w</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#simrel_functor_wcompose"><span class="id" title="lemma">simrel_functor_wcompose</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR.SIMREL_FUNCTORW_PROPERTIES"><span class="id" title="section">SIMREL_FUNCTORW_PROPERTIES</span></a>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.simrel.SimrelFunctor.html#SIMREL_FUNCTOR"><span class="id" title="section">SIMREL_FUNCTOR</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

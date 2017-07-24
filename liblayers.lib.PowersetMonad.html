@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>liblayers.lib.PowersetMonad</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library liblayers.lib.PowersetMonad</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.lib.ExtensionalityAxioms.html#"><span class="id" title="library">ExtensionalityAxioms</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.lib.Functor.html#"><span class="id" title="library">Functor</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.lib.Monad.html#"><span class="id" title="library">Monad</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab391"></a><h1 class="section"><span class="inlinecode">-</span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span> is a <span class="inlinecode"><a class="idref" href="liblayers.lib.Functor.html#Functor"><span class="id" title="record">Functor</span></a></span></h1>
+
+<div class="paragraph"> </div>
+
+ <span class="inlinecode"><a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="projection">fmap</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.backend.Bounds.html#BOUNDS.f"><span class="id" title="variable">f</span></a></span> <span class="inlinecode"><span class="id" title="var">pA</span></span> is the image of the "set" <span class="inlinecode"><span class="id" title="var">pA</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="compcert.x86.Op.html#SOUNDNESS.A"><span class="id" title="variable">A</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span> by the
+  function <span class="inlinecode"><a class="idref" href="compcert.backend.Bounds.html#BOUNDS.f"><span class="id" title="variable">f</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <a name="powerset_fmap"><span class="id" title="inductive">powerset_fmap</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">f</span>: <a class="idref" href="liblayers.lib.PowersetMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.PowersetMonad.html#B"><span class="id" title="variable">B</span></a>) (<span class="id" title="var">pA</span>: <a class="idref" href="liblayers.lib.PowersetMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>): <span class="id" title="var">B</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="powerset_fmap_intro"><span class="id" title="constructor">powerset_fmap_intro</span></a> <span class="id" title="var">a</span>: <span class="id" title="var">pA</span> <a class="idref" href="liblayers.lib.PowersetMonad.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.PowersetMonad.html#powerset_fmap"><span class="id" title="inductive">powerset_fmap</span></a> <span class="id" title="var">f</span> <span class="id" title="var">pA</span> (<span class="id" title="var">f</span> <a class="idref" href="liblayers.lib.PowersetMonad.html#a"><span class="id" title="variable">a</span></a>).<br/>
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="liblayers.lib.PowersetMonad.html#powerset_fmap_intro"><span class="id" title="constructor">powerset_fmap_intro</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">f</span> <span class="id" title="var">pA</span>} <span class="id" title="var">a</span> <span class="id" title="var">_</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="powerset_functor_ops"><span class="id" title="instance">powerset_functor_ops</span></a>: <a class="idref" href="liblayers.lib.Functor.html#FunctorOps"><span class="id" title="class">FunctorOps</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">X</span> ⇒ <a class="idref" href="liblayers.lib.PowersetMonad.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>) := {<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <span class="id" title="var">A</span> <span class="id" title="var">B</span> := <a class="idref" href="liblayers.lib.PowersetMonad.html#powerset_fmap"><span class="id" title="inductive">powerset_fmap</span></a><br/>
+}.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="powerset_functor"><span class="id" title="instance">powerset_functor</span></a>: <a class="idref" href="liblayers.lib.Functor.html#Functor"><span class="id" title="class">Functor</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">X</span> ⇒ <a class="idref" href="liblayers.lib.PowersetMonad.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">pA</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Logic.FunctionalExtensionality.html#functional_extensionality"><span class="id" title="lemma">functional_extensionality</span></a>; <span class="id" title="tactic">intro</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.ExtensionalityAxioms.html#prop_ext"><span class="id" title="axiom">prop_ext</span></a>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intro</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intro</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">fold</span> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#id"><span class="id" title="definition">id</span></a> <span class="id" title="var">x</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> <span class="id" title="var">f</span> <span class="id" title="var">g</span> <span class="id" title="var">pA</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Logic.FunctionalExtensionality.html#functional_extensionality"><span class="id" title="lemma">functional_extensionality</span></a>; <span class="id" title="tactic">intro</span> <span class="id" title="var">c</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.ExtensionalityAxioms.html#prop_ext"><span class="id" title="axiom">prop_ext</span></a>; <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intro</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intro</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">H0</span>; <span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">change</span> (<span class="id" title="var">f</span> (<span class="id" title="var">g</span> <span class="id" title="var">a0</span>)) <span class="id" title="keyword">with</span> ((<span class="id" title="keyword">fun</span> <span class="id" title="var">y</span> ⇒ <span class="id" title="var">f</span> (<span class="id" title="var">g</span> <a class="idref" href="liblayers.lib.PowersetMonad.html#y"><span class="id" title="variable">y</span></a>)) <span class="id" title="var">a0</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.PowersetMonad.html#powerset_fmap_intro"><span class="id" title="constructor">powerset_fmap_intro</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab392"></a><h1 class="section"><span class="inlinecode">-</span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span> is also a monad</h1>
+
+<div class="paragraph"> </div>
+
+ The operation <span class="inlinecode"><a class="idref" href="liblayers.lib.Monad.html#ret"><span class="id" title="projection">ret</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.lib.Intv.html#FOLD.a"><span class="id" title="variable">a</span></a></span> constructs the singleton {<span class="inlinecode"><a class="idref" href="compcert.lib.Intv.html#FOLD.a"><span class="id" title="variable">a</span></a></span>} and is simply
+  the predicate <span class="inlinecode"><a class="idref" href="compcert.x86.Asm.html#PregEq.eq"><span class="id" title="definition">eq</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.lib.Intv.html#FOLD.a"><span class="id" title="variable">a</span></a></span>. On the other hand, <span class="inlinecode"><a class="idref" href="liblayers.lib.Monad.html#bind"><span class="id" title="projection">bind</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.backend.Locations.html#R"><span class="id" title="constructor">R</span></a></span> <span class="inlinecode"><span class="id" title="var">pA</span></span> is the image of
+  the set <span class="inlinecode"><span class="id" title="var">pA</span></span> by the relation <span class="inlinecode"><a class="idref" href="compcert.backend.Locations.html#R"><span class="id" title="constructor">R</span></a>:</span> <span class="inlinecode"><a class="idref" href="compcert.x86.Op.html#SOUNDNESS.A"><span class="id" title="variable">A</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="compcert.common.AST.html#TRANSF_PARTIAL_FUNDEF.B"><span class="id" title="variable">B</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <a name="pred_bind"><span class="id" title="inductive">pred_bind</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">R</span>: <a class="idref" href="liblayers.lib.PowersetMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.PowersetMonad.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>) (<span class="id" title="var">pA</span>: <a class="idref" href="liblayers.lib.PowersetMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>) (<span class="id" title="var">b</span>: <a class="idref" href="liblayers.lib.PowersetMonad.html#B"><span class="id" title="variable">B</span></a>): <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;| <a name="pred_bind_intro"><span class="id" title="constructor">pred_bind_intro</span></a> <span class="id" title="var">a</span>: <span class="id" title="var">pA</span> <a class="idref" href="liblayers.lib.PowersetMonad.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="var">R</span> <a class="idref" href="liblayers.lib.PowersetMonad.html#a"><span class="id" title="variable">a</span></a> <span class="id" title="var">b</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.PowersetMonad.html#pred_bind"><span class="id" title="inductive">pred_bind</span></a> <span class="id" title="var">R</span> <span class="id" title="var">pA</span> <span class="id" title="var">b</span>.<br/>
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="liblayers.lib.PowersetMonad.html#pred_bind_intro"><span class="id" title="constructor">pred_bind_intro</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">R</span> <span class="id" title="var">pA</span> <span class="id" title="var">b</span>} <span class="id" title="var">a</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="pred_monad_ops"><span class="id" title="instance">pred_monad_ops</span></a>: <a class="idref" href="liblayers.lib.Monad.html#MonadOps"><span class="id" title="class">MonadOps</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">X</span> ⇒ <a class="idref" href="liblayers.lib.PowersetMonad.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>) := {<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Monad.html#ret"><span class="id" title="method">ret</span></a> <span class="id" title="var">A</span> := <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a>;<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Monad.html#bind"><span class="id" title="method">bind</span></a> <span class="id" title="var">A</span> <span class="id" title="var">B</span> := <a class="idref" href="liblayers.lib.PowersetMonad.html#pred_bind"><span class="id" title="inductive">pred_bind</span></a><br/>
+}.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="pred_monad"><span class="id" title="instance">pred_monad</span></a>: <a class="idref" href="liblayers.lib.Monad.html#Monad"><span class="id" title="class">Monad</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">X</span> ⇒ <a class="idref" href="liblayers.lib.PowersetMonad.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Monad.html#bind"><span class="id" title="method">bind</span></a>, <a class="idref" href="liblayers.lib.Monad.html#ret"><span class="id" title="method">ret</span></a>; <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Logic.FunctionalExtensionality.html#functional_extensionality"><span class="id" title="lemma">functional_extensionality</span></a>; <span class="id" title="tactic">intro</span> <span class="id" title="var">pA</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Logic.FunctionalExtensionality.html#functional_extensionality"><span class="id" title="lemma">functional_extensionality</span></a>; <span class="id" title="tactic">intro</span> <span class="id" title="var">b</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.ExtensionalityAxioms.html#prop_ext"><span class="id" title="axiom">prop_ext</span></a>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">intro</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">x</span> <span class="id" title="var">Hx</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (<a class="idref" href="liblayers.lib.PowersetMonad.html#pred_bind_intro"><span class="id" title="constructor">pred_bind_intro</span></a> <span class="id" title="var">x</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">x</span> <span class="id" title="var">Hx</span> <span class="id" title="var">Hxy</span>]; <span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (<a class="idref" href="liblayers.lib.PowersetMonad.html#powerset_fmap_intro"><span class="id" title="constructor">powerset_fmap_intro</span></a> <span class="id" title="var">x</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Logic.FunctionalExtensionality.html#functional_extensionality"><span class="id" title="lemma">functional_extensionality</span></a>; <span class="id" title="tactic">intro</span> <span class="id" title="var">y</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.ExtensionalityAxioms.html#prop_ext"><span class="id" title="axiom">prop_ext</span></a>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">intro</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> (<a class="idref" href="liblayers.lib.PowersetMonad.html#pred_bind_intro"><span class="id" title="constructor">pred_bind_intro</span></a> <span class="id" title="var">x</span>); <span class="id" title="var">now</span> <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Logic.FunctionalExtensionality.html#functional_extensionality"><span class="id" title="lemma">functional_extensionality</span></a>; <span class="id" title="tactic">intro</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.ExtensionalityAxioms.html#prop_ext"><span class="id" title="axiom">prop_ext</span></a>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">intro</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">congruence</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> (<a class="idref" href="liblayers.lib.PowersetMonad.html#pred_bind_intro"><span class="id" title="constructor">pred_bind_intro</span></a> <span class="id" title="var">x</span>); <span class="id" title="var">now</span> <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Logic.FunctionalExtensionality.html#functional_extensionality"><span class="id" title="lemma">functional_extensionality</span></a>; <span class="id" title="tactic">intro</span> <span class="id" title="var">z</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.ExtensionalityAxioms.html#prop_ext"><span class="id" title="axiom">prop_ext</span></a>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">intro</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">y</span> [<span class="id" title="var">x</span> <span class="id" title="var">Hx</span> <span class="id" title="var">Hxy</span>] <span class="id" title="var">Hyz</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (<a class="idref" href="liblayers.lib.PowersetMonad.html#pred_bind_intro"><span class="id" title="constructor">pred_bind_intro</span></a> <span class="id" title="var">x</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> (<a class="idref" href="liblayers.lib.PowersetMonad.html#pred_bind_intro"><span class="id" title="constructor">pred_bind_intro</span></a> <span class="id" title="var">y</span>); <span class="id" title="var">now</span> <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">x</span> <span class="id" title="var">Hx</span> [<span class="id" title="var">y</span> <span class="id" title="var">Hxy</span> <span class="id" title="var">Hyz</span>]].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (<a class="idref" href="liblayers.lib.PowersetMonad.html#pred_bind_intro"><span class="id" title="constructor">pred_bind_intro</span></a> <span class="id" title="var">y</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> (<a class="idref" href="liblayers.lib.PowersetMonad.html#pred_bind_intro"><span class="id" title="constructor">pred_bind_intro</span></a> <span class="id" title="var">x</span>); <span class="id" title="var">now</span> <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">assumption</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="powerset_inv_ret"><span class="id" title="instance">powerset_inv_ret</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Monad.html#MonadInvRet"><span class="id" title="class">MonadInvRet</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">X</span> ⇒ <a class="idref" href="liblayers.lib.PowersetMonad.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Monad.html#bind"><span class="id" title="method">bind</span></a>, <a class="idref" href="liblayers.lib.Monad.html#ret"><span class="id" title="method">ret</span></a> <span class="id" title="keyword">in</span> *; <span class="id" title="tactic">simpl</span> <span class="id" title="keyword">in</span> ×.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="powerset_inv_bind_weak"><span class="id" title="instance">powerset_inv_bind_weak</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Monad.html#MonadInvBindWeak"><span class="id" title="class">MonadInvBindWeak</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">X</span> ⇒ <a class="idref" href="liblayers.lib.PowersetMonad.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">f</span> <span class="id" title="var">ma</span> <span class="id" title="var">b</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Monad.html#bind"><span class="id" title="method">bind</span></a>, <a class="idref" href="liblayers.lib.Monad.html#ret"><span class="id" title="method">ret</span></a> <span class="id" title="keyword">in</span> *; <span class="id" title="tactic">simpl</span> <span class="id" title="keyword">in</span> ×.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">pose</span> <span class="id" title="var">proof</span> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq_refl"><span class="id" title="constructor">eq_refl</span></a> <span class="id" title="var">b</span>) <span class="id" title="keyword">as</span> <span class="id" title="var">Hab</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">H</span> <span class="id" title="keyword">in</span> <span class="id" title="var">Hab</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">Hab</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">a</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Logic.FunctionalExtensionality.html#functional_extensionality"><span class="id" title="lemma">functional_extensionality</span></a>; <span class="id" title="tactic">intros</span> <span class="id" title="var">b'</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.ExtensionalityAxioms.html#prop_ext"><span class="id" title="axiom">prop_ext</span></a>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">intro</span> <span class="id" title="var">Hb'</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">econstructor</span>; <span class="id" title="var">eassumption</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">congruence</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

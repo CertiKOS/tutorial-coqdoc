@@ -1,0 +1,759 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>liblayers.lib.Lens</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library liblayers.lib.Lens</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#"><span class="id" title="library">Coq.Program.Basics</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#"><span class="id" title="library">Coq.Classes.Morphisms</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#"><span class="id" title="library">Coq.Classes.RelationClasses</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationPairs.html#"><span class="id" title="library">Coq.Classes.RelationPairs</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Setoids.Setoid.html#"><span class="id" title="library">Coq.Setoids.Setoid</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab378"></a><h1 class="section">Interface</h1>
+
+<div class="paragraph"> </div>
+
+ Lenses are identified by the corresponding projection, which is
+  also used to define the <span class="inlinecode"><a class="idref" href="compcert.backend.Locations.html#Locmap.get"><span class="id" title="definition">get</span></a></span> operation. Note that because we use
+  the letter <span class="inlinecode"><a class="idref" href="compcert.backend.Locations.html#S"><span class="id" title="constructor">S</span></a></span> to denote the source type, which conflicts with the
+  successor function on <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a></span> from the standard library, we need to
+  use a verbose style below to avoid arguments being named <span class="inlinecode"><span class="id" title="var">S0</span></span> or
+  something such. (This is an obvious software engineering quirk
+  with the way Coq generates identifier.) 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="LensOps"><span class="id" title="record">LensOps</span></a> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>: <span class="id" title="keyword">Type</span>} (π: <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a>) := {<br/>
+&nbsp;&nbsp;<a name="set"><span class="id" title="projection">set</span></a>: <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a><br/>
+}.<br/>
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} π {<span class="id" title="var">_</span>} <span class="id" title="var">_</span> <span class="id" title="var">_</span> : <span class="id" title="tactic">simpl</span> <span class="id" title="var">never</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="LensSetGet"><span class="id" title="record">LensSetGet</span></a> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} π<br/>
+&nbsp;&nbsp;`{<span class="id" title="var">lens_ops</span>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a>} :=<br/>
+{<br/>
+&nbsp;&nbsp;<a name="lens_set_get"><span class="id" title="projection">lens_set_get</span></a> <span class="id" title="var">s</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a> (<a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>) <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a><br/>
+}.<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="LensGetSet"><span class="id" title="record">LensGetSet</span></a> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} π<br/>
+&nbsp;&nbsp;`{<span class="id" title="var">lens_ops</span>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a>} :=<br/>
+{<br/>
+&nbsp;&nbsp;<a name="lens_get_set"><span class="id" title="projection">lens_get_set</span></a> <span class="id" title="var">v</span> <span class="id" title="var">s</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#v"><span class="id" title="variable">v</span></a><br/>
+}.<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="LensSetSet"><span class="id" title="record">LensSetSet</span></a> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} π<br/>
+&nbsp;&nbsp;`{<span class="id" title="var">lens_set</span>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a>} :=<br/>
+{<br/>
+&nbsp;&nbsp;<a name="lens_set_set"><span class="id" title="projection">lens_set_set</span></a> <span class="id" title="var">u</span> <span class="id" title="var">v</span> <span class="id" title="var">s</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#u"><span class="id" title="variable">u</span></a> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#u"><span class="id" title="variable">u</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a><br/>
+}.<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="Lens"><span class="id" title="record">Lens</span></a> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} π `{<span class="id" title="var">lens_ops</span>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a>} := {<br/>
+&nbsp;&nbsp;<a name="lens_lens_set_get"><span class="id" title="projection">lens_lens_set_get</span></a> :&gt; <a class="idref" href="liblayers.lib.Lens.html#LensSetGet"><span class="id" title="class">LensSetGet</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a>;<br/>
+&nbsp;&nbsp;<a name="lens_lens_get_set"><span class="id" title="projection">lens_lens_get_set</span></a> :&gt; <a class="idref" href="liblayers.lib.Lens.html#LensGetSet"><span class="id" title="class">LensGetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a>;<br/>
+&nbsp;&nbsp;<a name="lens_lens_set_set"><span class="id" title="projection">lens_lens_set_set</span></a> :&gt; <a class="idref" href="liblayers.lib.Lens.html#LensSetSet"><span class="id" title="class">LensSetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a><br/>
+}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab379"></a><h1 class="section">Theory</h1>
+
+<div class="paragraph"> </div>
+
+<a name="lab380"></a><h2 class="section">Getters are measures, cf. <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationPairs.html#"><span class="id" title="library">Coq.Classes.RelationPairs</span></a></span></h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="lens_get_measure"><span class="id" title="instance">lens_get_measure</span></a> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} `{<a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a>}:<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationPairs.html#Measure"><span class="id" title="class">Measure</span></a> (<a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab381"></a><h2 class="section">The <span class="inlinecode"><a class="idref" href="liblayers.lib.Lens.html#modify"><span class="id" title="definition">modify</span></a></span> operation</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="MODIFY"><span class="id" title="section">MODIFY</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">S</span> <span class="id" title="var">V</span> π} `{<span class="id" title="var">HSV</span>: <a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="modify"><span class="id" title="definition">modify</span></a> (<span class="id" title="var">f</span>: <a class="idref" href="liblayers.lib.Lens.html#MODIFY.V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#MODIFY.V"><span class="id" title="variable">V</span></a>) (<span class="id" title="var">s</span>: <a class="idref" href="liblayers.lib.Lens.html#MODIFY.S"><span class="id" title="variable">S</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#0849025f4cbb6dc52b079b6153a3ccff"><span class="id" title="variable">π</span></a> (<a class="idref" href="liblayers.lib.Lens.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="liblayers.lib.Lens.html#0849025f4cbb6dc52b079b6153a3ccff"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>)) <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="lens_unfold_modify"><span class="id" title="lemma">lens_unfold_modify</span></a> <span class="id" title="var">f</span> <span class="id" title="var">s</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#modify"><span class="id" title="definition">modify</span></a> <a class="idref" href="liblayers.lib.Lens.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#0849025f4cbb6dc52b079b6153a3ccff"><span class="id" title="variable">π</span></a> (<a class="idref" href="liblayers.lib.Lens.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="liblayers.lib.Lens.html#0849025f4cbb6dc52b079b6153a3ccff"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>)) <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lens.html#MODIFY"><span class="id" title="section">MODIFY</span></a>.<br/>
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="liblayers.lib.Lens.html#modify"><span class="id" title="definition">modify</span></a> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} π {<span class="id" title="var">_</span>} <span class="id" title="var">_</span> <span class="id" title="var">_</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab382"></a><h2 class="section">The <span class="inlinecode"><a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a></span> relation</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="SAMECONTEXT"><span class="id" title="section">SAMECONTEXT</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">S</span> <span class="id" title="var">V</span> π} `{<span class="id" title="var">lens_ops</span>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a>} `{<span class="id" title="var">HSV</span>: <a class="idref" href="liblayers.lib.Lens.html#LensSetSet"><span class="id" title="class">LensSetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="same_context"><span class="id" title="definition">same_context</span></a>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Relations.Relation_Definitions.html#relation"><span class="id" title="definition">relation</span></a> <a class="idref" href="liblayers.lib.Lens.html#SAMECONTEXT.S"><span class="id" title="variable">S</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">s</span> <span class="id" title="var">t</span> ⇒ <span class="id" title="keyword">∀</span> <span class="id" title="var">v</span>, <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#71f45527b3e14d1bdcf06c1c90d8c365"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#71f45527b3e14d1bdcf06c1c90d8c365"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="liblayers.lib.Lens.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="lens_set_same_context"><span class="id" title="lemma">lens_set_same_context</span></a> <span class="id" title="var">v</span> <span class="id" title="var">s</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#71f45527b3e14d1bdcf06c1c90d8c365"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>) <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intro</span> <span class="id" title="var">u</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Lens.html#lens_set_set"><span class="id" title="method">lens_set_set</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="lens_modify_same_context"><span class="id" title="lemma">lens_modify_same_context</span></a> <span class="id" title="var">f</span> <span class="id" title="var">s</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> (<a class="idref" href="liblayers.lib.Lens.html#modify"><span class="id" title="definition">modify</span></a> <a class="idref" href="liblayers.lib.Lens.html#71f45527b3e14d1bdcf06c1c90d8c365"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>) <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intro</span> <span class="id" title="var">u</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lens.html#modify"><span class="id" title="definition">modify</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Lens.html#lens_set_set"><span class="id" title="method">lens_set_set</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="same_context_equiv"><span class="id" title="instance">same_context_equiv</span></a>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Equivalence"><span class="id" title="class">Equivalence</span></a> <a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">s</span> <span class="id" title="var">v</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">s</span> <span class="id" title="var">t</span> <span class="id" title="var">Hst</span> <span class="id" title="var">u</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">symmetry</span>; <span class="id" title="var">now</span> <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">s1</span> <span class="id" title="var">s2</span> <span class="id" title="var">s3</span> <span class="id" title="var">H12</span> <span class="id" title="var">H23</span> <span class="id" title="var">u</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">transitivity</span> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#71f45527b3e14d1bdcf06c1c90d8c365"><span class="id" title="variable">π</span></a> <span class="id" title="var">u</span> <span class="id" title="var">s2</span>); <span class="id" title="var">now</span> <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="same_context_set_mor"><span class="id" title="instance">same_context_set_mor</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#Proper"><span class="id" title="class">Proper</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#5bcff5fca4c3a87e683dd8ca07bab63f"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#5bcff5fca4c3a87e683dd8ca07bab63f"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a>) (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#71f45527b3e14d1bdcf06c1c90d8c365"><span class="id" title="variable">π</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">u</span> <span class="id" title="var">v</span> <span class="id" title="var">Huv</span> <span class="id" title="var">s</span> <span class="id" title="var">t</span> <span class="id" title="var">Hst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">Hst</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="same_context_modify_mor"><span class="id" title="instance">same_context_modify_mor</span></a> <span class="id" title="var">f</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#Proper"><span class="id" title="class">Proper</span></a> (<a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#5bcff5fca4c3a87e683dd8ca07bab63f"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a>) (<a class="idref" href="liblayers.lib.Lens.html#modify"><span class="id" title="definition">modify</span></a> <a class="idref" href="liblayers.lib.Lens.html#71f45527b3e14d1bdcf06c1c90d8c365"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#f"><span class="id" title="variable">f</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">s</span> <span class="id" title="var">t</span> <span class="id" title="var">Hst</span> <span class="id" title="var">u</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lens.html#modify"><span class="id" title="definition">modify</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> !<a class="idref" href="liblayers.lib.Lens.html#lens_set_set"><span class="id" title="method">lens_set_set</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">Hst</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lens.html#SAMECONTEXT"><span class="id" title="section">SAMECONTEXT</span></a>.<br/>
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} π {<span class="id" title="var">_</span>} <span class="id" title="var">_</span> <span class="id" title="var">_</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab383"></a><h2 class="section">Consequences of <span class="inlinecode"><a class="idref" href="liblayers.lib.Lens.html#LensGetSet"><span class="id" title="record">LensGetSet</span></a></span></h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="GETSET"><span class="id" title="section">GETSET</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} `{<span class="id" title="var">Hgs</span>: <a class="idref" href="liblayers.lib.Lens.html#LensGetSet"><span class="id" title="class">LensGetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="lens_get_modify"><span class="id" title="lemma">lens_get_modify</span></a> <span class="id" title="var">f</span> <span class="id" title="var">s</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#bff95a50d2607cee22be948d54fa0195"><span class="id" title="variable">π</span></a> (<a class="idref" href="liblayers.lib.Lens.html#modify"><span class="id" title="definition">modify</span></a> <a class="idref" href="liblayers.lib.Lens.html#bff95a50d2607cee22be948d54fa0195"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="liblayers.lib.Lens.html#bff95a50d2607cee22be948d54fa0195"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Lens.html#lens_get_set"><span class="id" title="method">lens_get_set</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a name="lens_eq_set"><span class="id" title="lemma">lens_eq_set</span></a> (<span class="id" title="var">s</span>: <a class="idref" href="liblayers.lib.Lens.html#GETSET.S"><span class="id" title="variable">S</span></a>) (<span class="id" title="var">u</span> <span class="id" title="var">v</span>: <a class="idref" href="liblayers.lib.Lens.html#GETSET.V"><span class="id" title="variable">V</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#bff95a50d2607cee22be948d54fa0195"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#u"><span class="id" title="variable">u</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#bff95a50d2607cee22be948d54fa0195"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#df1ced36fc33ce188051218bca314374"><span class="id" title="notation">↔</span></a> <a class="idref" href="liblayers.lib.Lens.html#u"><span class="id" title="variable">u</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#v"><span class="id" title="variable">v</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">rewrite</span> &lt;- (<a class="idref" href="liblayers.lib.Lens.html#lens_get_set"><span class="id" title="method">lens_get_set</span></a> <span class="id" title="var">u</span> <span class="id" title="var">s</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- (<a class="idref" href="liblayers.lib.Lens.html#lens_get_set"><span class="id" title="method">lens_get_set</span></a> <span class="id" title="var">v</span> <span class="id" title="var">s</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#f_equal"><span class="id" title="lemma">f_equal</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">apply</span> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#f_equal"><span class="id" title="lemma">f_equal</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> ⇒ <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#bff95a50d2607cee22be948d54fa0195"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="var">s</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lens.html#GETSET"><span class="id" title="section">GETSET</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab384"></a><h2 class="section">Consequences of <span class="inlinecode"><a class="idref" href="liblayers.lib.Lens.html#LensSetGet"><span class="id" title="record">LensSetGet</span></a></span></h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="SETGET"><span class="id" title="section">SETGET</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">S</span> <span class="id" title="var">V</span>} `{<span class="id" title="var">HSV</span>: <a class="idref" href="liblayers.lib.Lens.html#LensSetGet"><span class="id" title="class">LensSetGet</span></a> <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="lens_same_context_eq"><span class="id" title="lemma">lens_same_context_eq</span></a> <span class="id" title="var">s1</span> <span class="id" title="var">s2</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> <a class="idref" href="liblayers.lib.Lens.html#d0d7733065e8c165deb37d92ac9995eb"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#s1"><span class="id" title="variable">s1</span></a> <a class="idref" href="liblayers.lib.Lens.html#s2"><span class="id" title="variable">s2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#d0d7733065e8c165deb37d92ac9995eb"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#s1"><span class="id" title="variable">s1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#d0d7733065e8c165deb37d92ac9995eb"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#s2"><span class="id" title="variable">s2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#s1"><span class="id" title="variable">s1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#s2"><span class="id" title="variable">s2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">Hc</span> <span class="id" title="var">Hv</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- (<a class="idref" href="liblayers.lib.Lens.html#lens_set_get"><span class="id" title="method">lens_set_get</span></a> <span class="id" title="var">s1</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- (<a class="idref" href="liblayers.lib.Lens.html#lens_set_get"><span class="id" title="method">lens_set_get</span></a> <span class="id" title="var">s2</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">Hv</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">Hc</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lens.html#SETGET"><span class="id" title="section">SETGET</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab385"></a><h2 class="section">Orthogonal lenses</h2>
+
+<div class="paragraph"> </div>
+
+ We say that two lenses on <span class="inlinecode"><a class="idref" href="compcert.backend.Locations.html#S"><span class="id" title="constructor">S</span></a></span> are orthogonal when they give us
+  access to two independent parts of the larger structure <span class="inlinecode"><a class="idref" href="compcert.backend.Locations.html#S"><span class="id" title="constructor">S</span></a></span>,
+  ie. modifying one will not affect the other. The property
+  <span class="inlinecode"><a class="idref" href="liblayers.lib.Lens.html#lens_ortho_setr_setl"><span class="id" title="projection">lens_ortho_setr_setl</span></a></span> below is sufficient to express this.
+
+<div class="paragraph"> </div>
+
+  Note that for any two orthogonal lenses <span class="inlinecode">π</span> and <span class="inlinecode">ρ</span>, you should
+  never declare instances of both <span class="inlinecode"><span class="id" title="var">OrthogonalLenses</span></span> <span class="inlinecode">π</span> <span class="inlinecode">ρ</span> and
+  <span class="inlinecode"><span class="id" title="var">OrthogonalLenses</span></span> <span class="inlinecode">ρ</span> <span class="inlinecode">π</span>, since that would produce a loop in the
+  <span class="inlinecode"><span class="id" title="tactic">autorewrite</span></span> rules, which use <span class="inlinecode"><span class="id" title="var">ortho_lenses_set_set</span></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="Orthogonal"><span class="id" title="record">Orthogonal</span></a> {<span class="id" title="var">S</span> <span class="id" title="var">U</span> <span class="id" title="var">V</span>} (π: <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#U"><span class="id" title="variable">U</span></a>) (ρ: <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a>)<br/>
+&nbsp;&nbsp;`{π<span class="id" title="var">s</span>: !<a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a>}<br/>
+&nbsp;&nbsp;`{ρ<span class="id" title="var">s</span>: !<a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#1af91fb19f8f622aa9ec8998986a6bf9"><span class="id" title="variable">ρ</span></a>}: <span class="id" title="keyword">Prop</span> :=<br/>
+{<br/>
+&nbsp;&nbsp;<a name="lens_ortho_setr_setl"><span class="id" title="projection">lens_ortho_setr_setl</span></a> <span class="id" title="var">u</span> <span class="id" title="var">v</span> <span class="id" title="var">s</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#1af91fb19f8f622aa9ec8998986a6bf9"><span class="id" title="variable">ρ</span></a> <a class="idref" href="liblayers.lib.Lens.html#v"><span class="id" title="variable">v</span></a> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#u"><span class="id" title="variable">u</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#u"><span class="id" title="variable">u</span></a> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#1af91fb19f8f622aa9ec8998986a6bf9"><span class="id" title="variable">ρ</span></a> <a class="idref" href="liblayers.lib.Lens.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>)<br/>
+}.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="ORTHOGONAL_LENSES"><span class="id" title="section">ORTHOGONAL_LENSES</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">S</span> <span class="id" title="var">U</span> <span class="id" title="var">V</span>} (π: <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#U"><span class="id" title="variable">U</span></a>) (ρ: <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{π<span class="id" title="var">ops</span>: !<a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#6e33786de970579f42adcb3317a39dc3"><span class="id" title="variable">π</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{ρ<span class="id" title="var">ops</span>: !<a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#24080b335f4255dd290ae27a65b4852b"><span class="id" title="variable">ρ</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<span class="id" title="var">H</span>πρ: !<a class="idref" href="liblayers.lib.Lens.html#Orthogonal"><span class="id" title="class">Orthogonal</span></a> <a class="idref" href="liblayers.lib.Lens.html#6e33786de970579f42adcb3317a39dc3"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#24080b335f4255dd290ae27a65b4852b"><span class="id" title="variable">ρ</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="lens_ortho_getl_setr"><span class="id" title="lemma">lens_ortho_getl_setr</span></a> `{<span class="id" title="var">H</span>π<span class="id" title="var">gs</span>: !<a class="idref" href="liblayers.lib.Lens.html#LensGetSet"><span class="id" title="class">LensGetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#6e33786de970579f42adcb3317a39dc3"><span class="id" title="variable">π</span></a>} `{<span class="id" title="var">H</span>π<span class="id" title="var">sg</span>: !<a class="idref" href="liblayers.lib.Lens.html#LensSetGet"><span class="id" title="class">LensSetGet</span></a> <a class="idref" href="liblayers.lib.Lens.html#6e33786de970579f42adcb3317a39dc3"><span class="id" title="variable">π</span></a>} <span class="id" title="var">s</span> <span class="id" title="var">v</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#6e33786de970579f42adcb3317a39dc3"><span class="id" title="variable">π</span></a> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#24080b335f4255dd290ae27a65b4852b"><span class="id" title="variable">ρ</span></a> <a class="idref" href="liblayers.lib.Lens.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#6e33786de970579f42adcb3317a39dc3"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- (<a class="idref" href="liblayers.lib.Lens.html#lens_set_get"><span class="id" title="method">lens_set_get</span></a> (π := <a class="idref" href="liblayers.lib.Lens.html#6e33786de970579f42adcb3317a39dc3"><span class="id" title="variable">π</span></a>) <span class="id" title="var">s</span>) <span class="id" title="tactic">at</span> 1.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.lib.Lens.html#lens_ortho_setr_setl"><span class="id" title="method">lens_ortho_setr_setl</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.lib.Lens.html#lens_get_set"><span class="id" title="method">lens_get_set</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="lens_ortho_getr_setl"><span class="id" title="lemma">lens_ortho_getr_setl</span></a> `{<span class="id" title="var">H</span>ρ<span class="id" title="var">gs</span>: !<a class="idref" href="liblayers.lib.Lens.html#LensGetSet"><span class="id" title="class">LensGetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#24080b335f4255dd290ae27a65b4852b"><span class="id" title="variable">ρ</span></a>} `{<span class="id" title="var">H</span>ρ<span class="id" title="var">sg</span>: !<a class="idref" href="liblayers.lib.Lens.html#LensSetGet"><span class="id" title="class">LensSetGet</span></a> <a class="idref" href="liblayers.lib.Lens.html#24080b335f4255dd290ae27a65b4852b"><span class="id" title="variable">ρ</span></a>} <span class="id" title="var">s</span> <span class="id" title="var">u</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#24080b335f4255dd290ae27a65b4852b"><span class="id" title="variable">ρ</span></a> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#6e33786de970579f42adcb3317a39dc3"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#u"><span class="id" title="variable">u</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#24080b335f4255dd290ae27a65b4852b"><span class="id" title="variable">ρ</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- (<a class="idref" href="liblayers.lib.Lens.html#lens_set_get"><span class="id" title="method">lens_set_get</span></a> (π := <a class="idref" href="liblayers.lib.Lens.html#24080b335f4255dd290ae27a65b4852b"><span class="id" title="variable">ρ</span></a>) <span class="id" title="var">s</span>) <span class="id" title="tactic">at</span> 1.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <a class="idref" href="liblayers.lib.Lens.html#lens_ortho_setr_setl"><span class="id" title="method">lens_ortho_setr_setl</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.lib.Lens.html#lens_get_set"><span class="id" title="method">lens_get_set</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lens.html#ORTHOGONAL_LENSES"><span class="id" title="section">ORTHOGONAL_LENSES</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Rewrite</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="liblayers.lib.Lens.html#lens_get_set"><span class="id" title="method">lens_get_set</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="liblayers.lib.Lens.html#lens_set_get"><span class="id" title="method">lens_set_get</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="liblayers.lib.Lens.html#lens_set_set"><span class="id" title="method">lens_set_set</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="liblayers.lib.Lens.html#lens_unfold_modify"><span class="id" title="lemma">lens_unfold_modify</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="liblayers.lib.Lens.html#lens_eq_set"><span class="id" title="lemma">lens_eq_set</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="liblayers.lib.Lens.html#lens_set_same_context"><span class="id" title="lemma">lens_set_same_context</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="liblayers.lib.Lens.html#lens_modify_same_context"><span class="id" title="lemma">lens_modify_same_context</span></a><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">using</span> <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span> : <span class="id" title="var">lens</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab386"></a><h1 class="section">Tactics</h1>
+
+<div class="paragraph"> </div>
+
+ The <span class="inlinecode"><span class="id" title="tactic">autorewrite</span></span> base above can be used for normalization,
+  however it is unable to handle some of the theorems related to
+  orthogonal lenses.
+
+<div class="paragraph"> </div>
+
+  For example, we want to use <span class="inlinecode"><a class="idref" href="liblayers.lib.Lens.html#lens_ortho_getl_setr"><span class="id" title="lemma">lens_ortho_getl_setr</span></a></span> to rewrite
+  occurences of <span class="inlinecode"><a class="idref" href="liblayers.compcertx.ClightXSemantics.html#ab410a966ac148e9b78c65c6cdf301fd"><span class="id" title="variable">α</span></a></span> <span class="inlinecode">(<span class="id" title="tactic">set</span></span> <span class="inlinecode"><span class="id" title="var">β</span></span> <span class="inlinecode"><a class="idref" href="compcert.lib.Maps.html#v"><span class="id" title="variable">v</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.common.Errors.html#s"><span class="id" title="variable">s</span></a>)</span>, where <span class="inlinecode"><a class="idref" href="liblayers.compcertx.ClightXSemantics.html#ab410a966ac148e9b78c65c6cdf301fd"><span class="id" title="variable">α</span></a></span> and <span class="inlinecode"><span class="id" title="var">β</span></span> are orthogonal
+  lenses, into simply <span class="inlinecode"><a class="idref" href="liblayers.compcertx.ClightXSemantics.html#ab410a966ac148e9b78c65c6cdf301fd"><span class="id" title="variable">α</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.common.Errors.html#s"><span class="id" title="variable">s</span></a></span>. However, our usual trick for combining
+  <span class="inlinecode"><span class="id" title="tactic">autorewrite</span></span> and typeclass resolution does not work, because the
+  instance of <span class="inlinecode"><a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="record">LensOps</span></a></span> <span class="inlinecode"><a class="idref" href="liblayers.compcertx.ClightXSemantics.html#ab410a966ac148e9b78c65c6cdf301fd"><span class="id" title="variable">α</span></a></span> cannot be obtained by unification when using
+  <span class="inlinecode">@<a class="idref" href="liblayers.lib.Lens.html#lens_ortho_getl_setr"><span class="id" title="lemma">lens_ortho_getl_setr</span></a></span>, which means the premises contain
+  existentials and we would need <span class="inlinecode"><span class="id" title="var">erewrite</span></span>.
+
+<div class="paragraph"> </div>
+
+  Furthermore, we wish to normalize series of nested <span class="inlinecode"><span class="id" title="tactic">set</span></span> so that
+  their order matches the declared instances of <span class="inlinecode"><a class="idref" href="liblayers.lib.Lens.html#Orthogonal"><span class="id" title="record">Orthogonal</span></a></span>. However,
+  rewriting with <span class="inlinecode">@<a class="idref" href="liblayers.lib.Lens.html#lens_ortho_setr_setl"><span class="id" title="projection">lens_ortho_setr_setl</span></a></span> will only match the first
+  pair, and fail if they are already in the right order (because a
+  corresponding instance of <span class="inlinecode"><a class="idref" href="liblayers.lib.Lens.html#Orthogonal"><span class="id" title="record">Orthogonal</span></a></span> won't be found).
+
+<div class="paragraph"> </div>
+
+  So we use the tactic below to apply those explicitely in addition
+  to using <span class="inlinecode"><span class="id" title="tactic">autorewrite</span></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">lens_norm_ortho</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">progress</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">H</span>: <span class="id" title="keyword">context</span> [<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> ?<span class="id" title="var">β</span> ?<span class="id" title="var">v</span> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> ?<span class="id" title="var">α</span> ?<span class="id" title="var">u</span> ?<span class="id" title="var">s</span>)] |- <span class="id" title="var">_</span> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (<a class="idref" href="liblayers.lib.Lens.html#lens_ortho_setr_setl"><span class="id" title="method">lens_ortho_setr_setl</span></a> <span class="id" title="var">u</span> <span class="id" title="var">v</span> <span class="id" title="var">s</span>) <span class="id" title="keyword">in</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |- <span class="id" title="keyword">context</span> [<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> ?<span class="id" title="var">β</span> ?<span class="id" title="var">v</span> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> ?<span class="id" title="var">α</span> ?<span class="id" title="var">u</span> ?<span class="id" title="var">s</span>)] ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (<a class="idref" href="liblayers.lib.Lens.html#lens_ortho_setr_setl"><span class="id" title="method">lens_ortho_setr_setl</span></a> <span class="id" title="var">u</span> <span class="id" title="var">v</span> <span class="id" title="var">s</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">H</span>: <span class="id" title="keyword">context</span> [?<span class="id" title="var">α</span> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> ?<span class="id" title="var">β</span> ?<span class="id" title="var">v</span> ?<span class="id" title="var">s</span>)] |- <span class="id" title="var">_</span> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (<a class="idref" href="liblayers.lib.Lens.html#lens_ortho_getl_setr"><span class="id" title="lemma">lens_ortho_getl_setr</span></a> <span class="id" title="var">α</span> <span class="id" title="var">β</span> <span class="id" title="var">s</span> <span class="id" title="var">v</span>) <span class="id" title="keyword">in</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |- <span class="id" title="keyword">context</span> [?<span class="id" title="var">α</span> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> ?<span class="id" title="var">β</span> ?<span class="id" title="var">v</span> ?<span class="id" title="var">s</span>)] ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (<a class="idref" href="liblayers.lib.Lens.html#lens_ortho_getl_setr"><span class="id" title="lemma">lens_ortho_getl_setr</span></a> <span class="id" title="var">α</span> <span class="id" title="var">β</span> <span class="id" title="var">s</span> <span class="id" title="var">v</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">H</span>: <span class="id" title="keyword">context</span> [?<span class="id" title="var">β</span> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> ?<span class="id" title="var">α</span> ?<span class="id" title="var">u</span> ?<span class="id" title="var">s</span>)] |- <span class="id" title="var">_</span> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (<a class="idref" href="liblayers.lib.Lens.html#lens_ortho_getr_setl"><span class="id" title="lemma">lens_ortho_getr_setl</span></a> <span class="id" title="var">α</span> <span class="id" title="var">β</span> <span class="id" title="var">s</span> <span class="id" title="var">u</span>) <span class="id" title="keyword">in</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |- <span class="id" title="keyword">context</span> [?<span class="id" title="var">β</span> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> ?<span class="id" title="var">α</span> ?<span class="id" title="var">u</span> ?<span class="id" title="var">s</span>)] ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (<a class="idref" href="liblayers.lib.Lens.html#lens_ortho_getr_setl"><span class="id" title="lemma">lens_ortho_getr_setl</span></a> <span class="id" title="var">α</span> <span class="id" title="var">β</span> <span class="id" title="var">s</span> <span class="id" title="var">u</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">lens_norm</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">progress</span> (<span class="id" title="tactic">simpl</span> <span class="id" title="keyword">in</span> *;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">lens_norm_ortho</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">lens</span> <span class="id" title="keyword">in</span> *).<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">lens_simpl</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">progress</span> (<span class="id" title="var">lens_norm</span>; <span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">lens_simpl</span> <span class="id" title="keyword">in</span> *).<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">lens_unfold</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">progress</span> (<span class="id" title="var">lens_simpl</span>; <span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <span class="id" title="keyword">in</span> *).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab387"></a><h1 class="section">Instances</h1>
+
+<div class="paragraph"> </div>
+
+<a name="lab388"></a><h2 class="section">Pairs</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="PAIR"><span class="id" title="section">PAIR</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="fst_lensops"><span class="id" title="instance">fst_lensops</span></a> <span class="id" title="var">A</span> <span class="id" title="var">B</span>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> (@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="liblayers.lib.Lens.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.lib.Lens.html#B"><span class="id" title="variable">B</span></a>) := {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <span class="id" title="var">a</span> <span class="id" title="var">x</span> := <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Lens.html#a"><span class="id" title="variable">a</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#snd"><span class="id" title="definition">snd</span></a> <a class="idref" href="liblayers.lib.Lens.html#x"><span class="id" title="variable">x</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="fst_lens"><span class="id" title="instance">fst_lens</span></a> <span class="id" title="var">A</span> <span class="id" title="var">B</span>: <a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> (@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="liblayers.lib.Lens.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.lib.Lens.html#B"><span class="id" title="variable">B</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">intuition</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="snd_lensops"><span class="id" title="instance">snd_lensops</span></a> <span class="id" title="var">A</span> <span class="id" title="var">B</span>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> (@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#snd"><span class="id" title="definition">snd</span></a> <a class="idref" href="liblayers.lib.Lens.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.lib.Lens.html#B"><span class="id" title="variable">B</span></a>) := {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <span class="id" title="var">b</span> <span class="id" title="var">x</span> := <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="liblayers.lib.Lens.html#x"><span class="id" title="variable">x</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.lib.Lens.html#b"><span class="id" title="variable">b</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="snd_lens"><span class="id" title="instance">snd_lens</span></a> <span class="id" title="var">A</span> <span class="id" title="var">B</span>: <a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> (@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#snd"><span class="id" title="definition">snd</span></a> <a class="idref" href="liblayers.lib.Lens.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.lib.Lens.html#B"><span class="id" title="variable">B</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">intuition</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Here are some product-specific theorems. 
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="fst_same_context_eq_snd"><span class="id" title="lemma">fst_same_context_eq_snd</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">x</span> <span class="id" title="var">y</span>: <a class="idref" href="liblayers.lib.Lens.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#d19c7eafd0e2d195d10df94b392087b5"><span class="id" title="notation">×</span></a> <a class="idref" href="liblayers.lib.Lens.html#B"><span class="id" title="variable">B</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> (@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="liblayers.lib.Lens.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.lib.Lens.html#B"><span class="id" title="variable">B</span></a>) <a class="idref" href="liblayers.lib.Lens.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="liblayers.lib.Lens.html#y"><span class="id" title="variable">y</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#df1ced36fc33ce188051218bca314374"><span class="id" title="notation">↔</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#snd"><span class="id" title="definition">snd</span></a> <a class="idref" href="liblayers.lib.Lens.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#snd"><span class="id" title="definition">snd</span></a> <a class="idref" href="liblayers.lib.Lens.html#y"><span class="id" title="variable">y</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">a1</span> <span class="id" title="var">b1</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">y</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">a2</span> <span class="id" title="var">b2</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">intro</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">specialize</span> (<span class="id" title="var">H</span> <span class="id" title="var">a1</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intro</span> <span class="id" title="var">a</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">compute</span> <span class="id" title="keyword">in</span> ×.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">congruence</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="snd_same_context_eq_fst"><span class="id" title="lemma">snd_same_context_eq_fst</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">x</span> <span class="id" title="var">y</span>: <a class="idref" href="liblayers.lib.Lens.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#d19c7eafd0e2d195d10df94b392087b5"><span class="id" title="notation">×</span></a> <a class="idref" href="liblayers.lib.Lens.html#B"><span class="id" title="variable">B</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> (@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#snd"><span class="id" title="definition">snd</span></a> <a class="idref" href="liblayers.lib.Lens.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.lib.Lens.html#B"><span class="id" title="variable">B</span></a>) <a class="idref" href="liblayers.lib.Lens.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="liblayers.lib.Lens.html#y"><span class="id" title="variable">y</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#df1ced36fc33ce188051218bca314374"><span class="id" title="notation">↔</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="liblayers.lib.Lens.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="liblayers.lib.Lens.html#y"><span class="id" title="variable">y</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">a1</span> <span class="id" title="var">b1</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">y</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">a2</span> <span class="id" title="var">b2</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">intro</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">specialize</span> (<span class="id" title="var">H</span> <span class="id" title="var">b1</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intro</span> <span class="id" title="var">b</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">compute</span> <span class="id" title="keyword">in</span> ×.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">congruence</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lens.html#PAIR"><span class="id" title="section">PAIR</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Rewrite</span><br/>
+&nbsp;&nbsp;@<a class="idref" href="liblayers.lib.Lens.html#fst_same_context_eq_snd"><span class="id" title="lemma">fst_same_context_eq_snd</span></a><br/>
+&nbsp;&nbsp;@<a class="idref" href="liblayers.lib.Lens.html#snd_same_context_eq_fst"><span class="id" title="lemma">snd_same_context_eq_fst</span></a><br/>
+&nbsp;&nbsp;: <span class="id" title="var">lens_simpl</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab389"></a><h2 class="section">Composing lens</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="COMPOSE"><span class="id" title="section">COMPOSE</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>} (π: <a class="idref" href="liblayers.lib.Lens.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#B"><span class="id" title="variable">B</span></a>) (ρ: <a class="idref" href="liblayers.lib.Lens.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#C"><span class="id" title="variable">C</span></a>) `{<span class="id" title="var">H</span>π: <a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="liblayers.lib.Lens.html#31bf0b12546409e15021243132fc7574"><span class="id" title="variable">π</span></a>} `{<span class="id" title="var">H</span>ρ: <a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="liblayers.lib.Lens.html#1af91fb19f8f622aa9ec8998986a6bf9"><span class="id" title="variable">ρ</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="compose_lensops"><span class="id" title="instance">compose_lensops</span></a>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#compose"><span class="id" title="definition">compose</span></a> <a class="idref" href="liblayers.lib.Lens.html#033fc81facb0cd0ce4b57d33b31e7d32"><span class="id" title="variable">ρ</span></a> <a class="idref" href="liblayers.lib.Lens.html#af96978f30061d409e3e3ad8f65f40c3"><span class="id" title="variable">π</span></a>) := {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <span class="id" title="var">c</span> <span class="id" title="var">a</span> := <a class="idref" href="liblayers.lib.Lens.html#modify"><span class="id" title="definition">modify</span></a> <a class="idref" href="liblayers.lib.Lens.html#af96978f30061d409e3e3ad8f65f40c3"><span class="id" title="variable">π</span></a> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#033fc81facb0cd0ce4b57d33b31e7d32"><span class="id" title="variable">ρ</span></a> <a class="idref" href="liblayers.lib.Lens.html#c"><span class="id" title="variable">c</span></a>) <a class="idref" href="liblayers.lib.Lens.html#a"><span class="id" title="variable">a</span></a><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="lens_compose_get_simpl"><span class="id" title="lemma">lens_compose_get_simpl</span></a> <span class="id" title="var">a</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#compose"><span class="id" title="definition">compose</span></a> <a class="idref" href="liblayers.lib.Lens.html#033fc81facb0cd0ce4b57d33b31e7d32"><span class="id" title="variable">ρ</span></a> <a class="idref" href="liblayers.lib.Lens.html#af96978f30061d409e3e3ad8f65f40c3"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#033fc81facb0cd0ce4b57d33b31e7d32"><span class="id" title="variable">ρ</span></a> (<a class="idref" href="liblayers.lib.Lens.html#af96978f30061d409e3e3ad8f65f40c3"><span class="id" title="variable">π</span></a> <a class="idref" href="liblayers.lib.Lens.html#a"><span class="id" title="variable">a</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="lens_compose_set_simpl"><span class="id" title="lemma">lens_compose_set_simpl</span></a> <span class="id" title="var">c</span> <span class="id" title="var">a</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#compose"><span class="id" title="definition">compose</span></a> <a class="idref" href="liblayers.lib.Lens.html#033fc81facb0cd0ce4b57d33b31e7d32"><span class="id" title="variable">ρ</span></a> <a class="idref" href="liblayers.lib.Lens.html#af96978f30061d409e3e3ad8f65f40c3"><span class="id" title="variable">π</span></a>) <a class="idref" href="liblayers.lib.Lens.html#c"><span class="id" title="variable">c</span></a> <a class="idref" href="liblayers.lib.Lens.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#modify"><span class="id" title="definition">modify</span></a> <a class="idref" href="liblayers.lib.Lens.html#af96978f30061d409e3e3ad8f65f40c3"><span class="id" title="variable">π</span></a> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#033fc81facb0cd0ce4b57d33b31e7d32"><span class="id" title="variable">ρ</span></a> <a class="idref" href="liblayers.lib.Lens.html#c"><span class="id" title="variable">c</span></a>) <a class="idref" href="liblayers.lib.Lens.html#a"><span class="id" title="variable">a</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="lens_compose_get_set"><span class="id" title="instance">lens_compose_get_set</span></a>: <a class="idref" href="liblayers.lib.Lens.html#LensGetSet"><span class="id" title="class">LensGetSet</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#compose"><span class="id" title="definition">compose</span></a> <a class="idref" href="liblayers.lib.Lens.html#033fc81facb0cd0ce4b57d33b31e7d32"><span class="id" title="variable">ρ</span></a> <a class="idref" href="liblayers.lib.Lens.html#af96978f30061d409e3e3ad8f65f40c3"><span class="id" title="variable">π</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>; <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.lib.Lens.html#lens_compose_get_simpl"><span class="id" title="lemma">lens_compose_get_simpl</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.lib.Lens.html#lens_compose_set_simpl"><span class="id" title="lemma">lens_compose_set_simpl</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">lens</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="lens_compose_set_get"><span class="id" title="instance">lens_compose_set_get</span></a>: <a class="idref" href="liblayers.lib.Lens.html#LensSetGet"><span class="id" title="class">LensSetGet</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#compose"><span class="id" title="definition">compose</span></a> <a class="idref" href="liblayers.lib.Lens.html#033fc81facb0cd0ce4b57d33b31e7d32"><span class="id" title="variable">ρ</span></a> <a class="idref" href="liblayers.lib.Lens.html#af96978f30061d409e3e3ad8f65f40c3"><span class="id" title="variable">π</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>; <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.lib.Lens.html#lens_compose_get_simpl"><span class="id" title="lemma">lens_compose_get_simpl</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.lib.Lens.html#lens_compose_set_simpl"><span class="id" title="lemma">lens_compose_set_simpl</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">lens</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="lens_compose_set_set"><span class="id" title="instance">lens_compose_set_set</span></a>: <a class="idref" href="liblayers.lib.Lens.html#LensSetSet"><span class="id" title="class">LensSetSet</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#compose"><span class="id" title="definition">compose</span></a> <a class="idref" href="liblayers.lib.Lens.html#033fc81facb0cd0ce4b57d33b31e7d32"><span class="id" title="variable">ρ</span></a> <a class="idref" href="liblayers.lib.Lens.html#af96978f30061d409e3e3ad8f65f40c3"><span class="id" title="variable">π</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>; <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> !<a class="idref" href="liblayers.lib.Lens.html#lens_compose_set_simpl"><span class="id" title="lemma">lens_compose_set_simpl</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">lens</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="lens_compose"><span class="id" title="instance">lens_compose</span></a>: <a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#compose"><span class="id" title="definition">compose</span></a> <a class="idref" href="liblayers.lib.Lens.html#033fc81facb0cd0ce4b57d33b31e7d32"><span class="id" title="variable">ρ</span></a> <a class="idref" href="liblayers.lib.Lens.html#af96978f30061d409e3e3ad8f65f40c3"><span class="id" title="variable">π</span></a>) := {}.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lens.html#COMPOSE"><span class="id" title="section">COMPOSE</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Rewrite</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="liblayers.lib.Lens.html#lens_compose_get_simpl"><span class="id" title="lemma">lens_compose_get_simpl</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="liblayers.lib.Lens.html#lens_compose_set_simpl"><span class="id" title="lemma">lens_compose_set_simpl</span></a><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">using</span> <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span> : <span class="id" title="var">lens_simpl</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab390"></a><h2 class="section">Initial and terminal objects</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="INITIAL"><span class="id" title="section">INITIAL</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">V</span>: <span class="id" title="keyword">Type</span>} (π: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Empty_set"><span class="id" title="inductive">Empty_set</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="lens_empty_ops"><span class="id" title="instance">lens_empty_ops</span></a>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#a5c6543323bece344c83da96a568b3be"><span class="id" title="variable">π</span></a> := {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <span class="id" title="var">a</span> := <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Empty_set_rect"><span class="id" title="definition">Empty_set_rect</span></a> <span class="id" title="var">_</span><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="lens_empty"><span class="id" title="instance">lens_empty</span></a>: <a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <a class="idref" href="liblayers.lib.Lens.html#a5c6543323bece344c83da96a568b3be"><span class="id" title="variable">π</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">tauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lens.html#INITIAL"><span class="id" title="section">INITIAL</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="COPRODUCT"><span class="id" title="section">COPRODUCT</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">V</span>} {<span class="id" title="var">α</span>: <a class="idref" href="liblayers.lib.Lens.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a>} {<span class="id" title="var">β</span>: <a class="idref" href="liblayers.lib.Lens.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#V"><span class="id" title="variable">V</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<span class="id" title="var">αops</span>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#COPRODUCT.A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.lib.Lens.html#COPRODUCT.V"><span class="id" title="variable">V</span></a> <a class="idref" href="liblayers.lib.Lens.html#3e80cd4807a103e8641c4c0f94e10faf"><span class="id" title="variable">α</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<span class="id" title="var">βops</span>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#COPRODUCT.B"><span class="id" title="variable">B</span></a> <a class="idref" href="liblayers.lib.Lens.html#COPRODUCT.V"><span class="id" title="variable">V</span></a> <a class="idref" href="liblayers.lib.Lens.html#04291f0bbdfb6b0541f38925a98b9bed"><span class="id" title="variable">β</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="fcoprod"><span class="id" title="definition">fcoprod</span></a> (<span class="id" title="var">f</span>: <a class="idref" href="liblayers.lib.Lens.html#COPRODUCT.A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#COPRODUCT.V"><span class="id" title="variable">V</span></a>) (<span class="id" title="var">g</span>: <a class="idref" href="liblayers.lib.Lens.html#COPRODUCT.B"><span class="id" title="variable">B</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#COPRODUCT.V"><span class="id" title="variable">V</span></a>): <a class="idref" href="liblayers.lib.Lens.html#COPRODUCT.A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="liblayers.lib.Lens.html#COPRODUCT.B"><span class="id" title="variable">B</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#COPRODUCT.V"><span class="id" title="variable">V</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">s</span> ⇒ <span class="id" title="keyword">match</span> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <span class="id" title="var">a</span> ⇒ <a class="idref" href="liblayers.lib.Lens.html#f"><span class="id" title="variable">f</span></a> <span class="id" title="var">a</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <span class="id" title="var">b</span> ⇒ <a class="idref" href="liblayers.lib.Lens.html#g"><span class="id" title="variable">g</span></a> <span class="id" title="var">b</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Notation</span> <a name="c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">&quot;</span></a>[ f , g ]" := (<a class="idref" href="liblayers.lib.Lens.html#fcoprod"><span class="id" title="definition">fcoprod</span></a> <span class="id" title="var">f</span> <span class="id" title="var">g</span>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="lens_coprod_ops"><span class="id" title="instance">lens_coprod_ops</span></a>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">[</span></a><a class="idref" href="liblayers.lib.Lens.html#3e80cd4807a103e8641c4c0f94e10faf"><span class="id" title="variable">α</span></a><a class="idref" href="liblayers.lib.Lens.html#c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.lib.Lens.html#04291f0bbdfb6b0541f38925a98b9bed"><span class="id" title="variable">β</span></a><a class="idref" href="liblayers.lib.Lens.html#c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">]</span></a> := {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <span class="id" title="var">v</span> <span class="id" title="var">ab</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="liblayers.lib.Lens.html#ab"><span class="id" title="variable">ab</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <span class="id" title="var">a</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#3e80cd4807a103e8641c4c0f94e10faf"><span class="id" title="variable">α</span></a> <a class="idref" href="liblayers.lib.Lens.html#v"><span class="id" title="variable">v</span></a> <span class="id" title="var">a</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <span class="id" title="var">b</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#04291f0bbdfb6b0541f38925a98b9bed"><span class="id" title="variable">β</span></a> <a class="idref" href="liblayers.lib.Lens.html#v"><span class="id" title="variable">v</span></a> <span class="id" title="var">b</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="lens_coprod_get_set"><span class="id" title="instance">lens_coprod_get_set</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensGetSet"><span class="id" title="class">LensGetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#3e80cd4807a103e8641c4c0f94e10faf"><span class="id" title="variable">α</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensGetSet"><span class="id" title="class">LensGetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#04291f0bbdfb6b0541f38925a98b9bed"><span class="id" title="variable">β</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensGetSet"><span class="id" title="class">LensGetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">[</span></a><a class="idref" href="liblayers.lib.Lens.html#3e80cd4807a103e8641c4c0f94e10faf"><span class="id" title="variable">α</span></a><a class="idref" href="liblayers.lib.Lens.html#c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">,</span></a><a class="idref" href="liblayers.lib.Lens.html#04291f0bbdfb6b0541f38925a98b9bed"><span class="id" title="variable">β</span></a><a class="idref" href="liblayers.lib.Lens.html#c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">]</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">v</span> [<span class="id" title="var">a</span>|<span class="id" title="var">b</span>];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="var">lens_norm</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="var">lens_norm</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="lens_coprod_set_get"><span class="id" title="instance">lens_coprod_set_get</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensSetGet"><span class="id" title="class">LensSetGet</span></a> <a class="idref" href="liblayers.lib.Lens.html#3e80cd4807a103e8641c4c0f94e10faf"><span class="id" title="variable">α</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensSetGet"><span class="id" title="class">LensSetGet</span></a> <a class="idref" href="liblayers.lib.Lens.html#04291f0bbdfb6b0541f38925a98b9bed"><span class="id" title="variable">β</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensSetGet"><span class="id" title="class">LensSetGet</span></a> <a class="idref" href="liblayers.lib.Lens.html#c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">[</span></a><a class="idref" href="liblayers.lib.Lens.html#3e80cd4807a103e8641c4c0f94e10faf"><span class="id" title="variable">α</span></a><a class="idref" href="liblayers.lib.Lens.html#c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">,</span></a><a class="idref" href="liblayers.lib.Lens.html#04291f0bbdfb6b0541f38925a98b9bed"><span class="id" title="variable">β</span></a><a class="idref" href="liblayers.lib.Lens.html#c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">]</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">a</span>|<span class="id" title="var">b</span>];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="var">lens_norm</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="var">lens_norm</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="lens_coprod_set_set"><span class="id" title="instance">lens_coprod_set_set</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensSetSet"><span class="id" title="class">LensSetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#3e80cd4807a103e8641c4c0f94e10faf"><span class="id" title="variable">α</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensSetSet"><span class="id" title="class">LensSetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#04291f0bbdfb6b0541f38925a98b9bed"><span class="id" title="variable">β</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensSetSet"><span class="id" title="class">LensSetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">[</span></a><a class="idref" href="liblayers.lib.Lens.html#3e80cd4807a103e8641c4c0f94e10faf"><span class="id" title="variable">α</span></a><a class="idref" href="liblayers.lib.Lens.html#c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">,</span></a><a class="idref" href="liblayers.lib.Lens.html#04291f0bbdfb6b0541f38925a98b9bed"><span class="id" title="variable">β</span></a><a class="idref" href="liblayers.lib.Lens.html#c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">]</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">u</span> <span class="id" title="var">v</span> [<span class="id" title="var">a</span>|<span class="id" title="var">b</span>];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a>; <span class="id" title="tactic">simpl</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">f_equal</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="var">lens_norm</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="var">lens_norm</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="lens_coprod"><span class="id" title="instance">lens_coprod</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <a class="idref" href="liblayers.lib.Lens.html#3e80cd4807a103e8641c4c0f94e10faf"><span class="id" title="variable">α</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <a class="idref" href="liblayers.lib.Lens.html#04291f0bbdfb6b0541f38925a98b9bed"><span class="id" title="variable">β</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <a class="idref" href="liblayers.lib.Lens.html#c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">[</span></a><a class="idref" href="liblayers.lib.Lens.html#3e80cd4807a103e8641c4c0f94e10faf"><span class="id" title="variable">α</span></a><a class="idref" href="liblayers.lib.Lens.html#c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">,</span></a><a class="idref" href="liblayers.lib.Lens.html#04291f0bbdfb6b0541f38925a98b9bed"><span class="id" title="variable">β</span></a><a class="idref" href="liblayers.lib.Lens.html#c869a6d60824168b22cc0bb692dfb508"><span class="id" title="notation">]</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lens.html#COPRODUCT"><span class="id" title="section">COPRODUCT</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="TERMINAL"><span class="id" title="section">TERMINAL</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">S</span>: <span class="id" title="keyword">Type</span>} (π: <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#unit"><span class="id" title="inductive">unit</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="lens_unit_ops"><span class="id" title="instance">lens_unit_ops</span></a>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> (<span class="id" title="var">S</span> := <a class="idref" href="liblayers.lib.Lens.html#TERMINAL.S"><span class="id" title="variable">S</span></a>) <a class="idref" href="liblayers.lib.Lens.html#9cb89c87a4b9d4b4d0857232753fae70"><span class="id" title="variable">π</span></a> := {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <span class="id" title="var">u</span> <span class="id" title="var">s</span> := <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="lens_unit"><span class="id" title="instance">lens_unit</span></a>: <a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <a class="idref" href="liblayers.lib.Lens.html#9cb89c87a4b9d4b4d0857232753fae70"><span class="id" title="variable">π</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="keyword">∀</span> <span class="id" title="var">u</span> <span class="id" title="var">v</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#unit"><span class="id" title="inductive">unit</span></a>, <a class="idref" href="liblayers.lib.Lens.html#u"><span class="id" title="variable">u</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Lens.html#v"><span class="id" title="variable">v</span></a>) <span class="id" title="tactic">by</span> (<span class="id" title="tactic">intros</span> [] []; <span class="id" title="tactic">reflexivity</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">firstorder</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lens.html#TERMINAL"><span class="id" title="section">TERMINAL</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Interestingly, the product only works for orthogonal lenses. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="PRODUCT"><span class="id" title="section">PRODUCT</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">S</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>} {<span class="id" title="var">α</span>: <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#A"><span class="id" title="variable">A</span></a>} {<span class="id" title="var">β</span>: <a class="idref" href="liblayers.lib.Lens.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#B"><span class="id" title="variable">B</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<span class="id" title="var">αops</span>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#PRODUCT.S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lens.html#PRODUCT.A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.lib.Lens.html#622bcf0e93c0ff7346d1222e8e10bf77"><span class="id" title="variable">α</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<span class="id" title="var">βops</span>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#PRODUCT.S"><span class="id" title="variable">S</span></a> <a class="idref" href="liblayers.lib.Lens.html#PRODUCT.B"><span class="id" title="variable">B</span></a> <a class="idref" href="liblayers.lib.Lens.html#749e0d59ff4a1f125f2ebb095b7d14d9"><span class="id" title="variable">β</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="fprod"><span class="id" title="definition">fprod</span></a> (<span class="id" title="var">f</span>: <a class="idref" href="liblayers.lib.Lens.html#PRODUCT.S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#PRODUCT.A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">g</span>: <a class="idref" href="liblayers.lib.Lens.html#PRODUCT.S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#PRODUCT.B"><span class="id" title="variable">B</span></a>): <a class="idref" href="liblayers.lib.Lens.html#PRODUCT.S"><span class="id" title="variable">S</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Lens.html#PRODUCT.A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#d19c7eafd0e2d195d10df94b392087b5"><span class="id" title="notation">×</span></a> <a class="idref" href="liblayers.lib.Lens.html#PRODUCT.B"><span class="id" title="variable">B</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">s</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Lens.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.lib.Lens.html#g"><span class="id" title="variable">g</span></a> <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Notation</span> <a name="e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">&quot;</span></a>〈  f , g 〉" := (<a class="idref" href="liblayers.lib.Lens.html#fprod"><span class="id" title="definition">fprod</span></a> <span class="id" title="var">f</span> <span class="id" title="var">g</span>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="lens_prod_ops"><span class="id" title="instance">lens_prod_ops</span></a>: <a class="idref" href="liblayers.lib.Lens.html#LensOps"><span class="id" title="class">LensOps</span></a> <a class="idref" href="liblayers.lib.Lens.html#e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">〈</span></a><a class="idref" href="liblayers.lib.Lens.html#622bcf0e93c0ff7346d1222e8e10bf77"><span class="id" title="variable">α</span></a><a class="idref" href="liblayers.lib.Lens.html#e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.lib.Lens.html#749e0d59ff4a1f125f2ebb095b7d14d9"><span class="id" title="variable">β</span></a><a class="idref" href="liblayers.lib.Lens.html#e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">〉</span></a> := {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <span class="id" title="var">ab</span> <span class="id" title="var">s</span> := <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#622bcf0e93c0ff7346d1222e8e10bf77"><span class="id" title="variable">α</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="liblayers.lib.Lens.html#ab"><span class="id" title="variable">ab</span></a>) (<a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a> <a class="idref" href="liblayers.lib.Lens.html#749e0d59ff4a1f125f2ebb095b7d14d9"><span class="id" title="variable">β</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#snd"><span class="id" title="definition">snd</span></a> <a class="idref" href="liblayers.lib.Lens.html#ab"><span class="id" title="variable">ab</span></a>) <a class="idref" href="liblayers.lib.Lens.html#s"><span class="id" title="variable">s</span></a>)<br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Ltac</span> <span class="id" title="var">go</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Lens.html#set"><span class="id" title="method">set</span></a>, <a class="idref" href="liblayers.lib.Lens.html#fprod"><span class="id" title="definition">fprod</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">lens_norm</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">try</span> <span class="id" title="tactic">reflexivity</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="lens_prod_get_set"><span class="id" title="instance">lens_prod_get_set</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#Orthogonal"><span class="id" title="class">Orthogonal</span></a> <a class="idref" href="liblayers.lib.Lens.html#622bcf0e93c0ff7346d1222e8e10bf77"><span class="id" title="variable">α</span></a> <a class="idref" href="liblayers.lib.Lens.html#749e0d59ff4a1f125f2ebb095b7d14d9"><span class="id" title="variable">β</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensSetGet"><span class="id" title="class">LensSetGet</span></a> <a class="idref" href="liblayers.lib.Lens.html#749e0d59ff4a1f125f2ebb095b7d14d9"><span class="id" title="variable">β</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensGetSet"><span class="id" title="class">LensGetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#622bcf0e93c0ff7346d1222e8e10bf77"><span class="id" title="variable">α</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensGetSet"><span class="id" title="class">LensGetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#749e0d59ff4a1f125f2ebb095b7d14d9"><span class="id" title="variable">β</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensGetSet"><span class="id" title="class">LensGetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">〈</span></a><a class="idref" href="liblayers.lib.Lens.html#622bcf0e93c0ff7346d1222e8e10bf77"><span class="id" title="variable">α</span></a><a class="idref" href="liblayers.lib.Lens.html#e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">,</span></a><a class="idref" href="liblayers.lib.Lens.html#749e0d59ff4a1f125f2ebb095b7d14d9"><span class="id" title="variable">β</span></a><a class="idref" href="liblayers.lib.Lens.html#e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">〉</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">a</span> <span class="id" title="var">b</span>] <span class="id" title="var">s</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">go</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="lens_prod_set_get"><span class="id" title="instance">lens_prod_set_get</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensSetGet"><span class="id" title="class">LensSetGet</span></a> <a class="idref" href="liblayers.lib.Lens.html#622bcf0e93c0ff7346d1222e8e10bf77"><span class="id" title="variable">α</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensSetGet"><span class="id" title="class">LensSetGet</span></a> <a class="idref" href="liblayers.lib.Lens.html#749e0d59ff4a1f125f2ebb095b7d14d9"><span class="id" title="variable">β</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensSetGet"><span class="id" title="class">LensSetGet</span></a> <a class="idref" href="liblayers.lib.Lens.html#e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">〈</span></a><a class="idref" href="liblayers.lib.Lens.html#622bcf0e93c0ff7346d1222e8e10bf77"><span class="id" title="variable">α</span></a><a class="idref" href="liblayers.lib.Lens.html#e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">,</span></a><a class="idref" href="liblayers.lib.Lens.html#749e0d59ff4a1f125f2ebb095b7d14d9"><span class="id" title="variable">β</span></a><a class="idref" href="liblayers.lib.Lens.html#e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">〉</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">s</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">go</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="lens_prod_set_set"><span class="id" title="instance">lens_prod_set_set</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#Orthogonal"><span class="id" title="class">Orthogonal</span></a> <a class="idref" href="liblayers.lib.Lens.html#622bcf0e93c0ff7346d1222e8e10bf77"><span class="id" title="variable">α</span></a> <a class="idref" href="liblayers.lib.Lens.html#749e0d59ff4a1f125f2ebb095b7d14d9"><span class="id" title="variable">β</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensSetSet"><span class="id" title="class">LensSetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#622bcf0e93c0ff7346d1222e8e10bf77"><span class="id" title="variable">α</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensSetSet"><span class="id" title="class">LensSetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#749e0d59ff4a1f125f2ebb095b7d14d9"><span class="id" title="variable">β</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#LensSetSet"><span class="id" title="class">LensSetSet</span></a> <a class="idref" href="liblayers.lib.Lens.html#e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">〈</span></a><a class="idref" href="liblayers.lib.Lens.html#622bcf0e93c0ff7346d1222e8e10bf77"><span class="id" title="variable">α</span></a><a class="idref" href="liblayers.lib.Lens.html#e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">,</span></a><a class="idref" href="liblayers.lib.Lens.html#749e0d59ff4a1f125f2ebb095b7d14d9"><span class="id" title="variable">β</span></a><a class="idref" href="liblayers.lib.Lens.html#e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">〉</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">a1</span> <span class="id" title="var">b1</span>] [<span class="id" title="var">a2</span> <span class="id" title="var">b2</span>] <span class="id" title="var">s</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">go</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="lens_prod"><span class="id" title="instance">lens_prod</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#Orthogonal"><span class="id" title="class">Orthogonal</span></a> <a class="idref" href="liblayers.lib.Lens.html#622bcf0e93c0ff7346d1222e8e10bf77"><span class="id" title="variable">α</span></a> <a class="idref" href="liblayers.lib.Lens.html#749e0d59ff4a1f125f2ebb095b7d14d9"><span class="id" title="variable">β</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <a class="idref" href="liblayers.lib.Lens.html#622bcf0e93c0ff7346d1222e8e10bf77"><span class="id" title="variable">α</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <a class="idref" href="liblayers.lib.Lens.html#749e0d59ff4a1f125f2ebb095b7d14d9"><span class="id" title="variable">β</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#Lens"><span class="id" title="class">Lens</span></a> <a class="idref" href="liblayers.lib.Lens.html#e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">〈</span></a><a class="idref" href="liblayers.lib.Lens.html#622bcf0e93c0ff7346d1222e8e10bf77"><span class="id" title="variable">α</span></a><a class="idref" href="liblayers.lib.Lens.html#e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">,</span></a><a class="idref" href="liblayers.lib.Lens.html#749e0d59ff4a1f125f2ebb095b7d14d9"><span class="id" title="variable">β</span></a><a class="idref" href="liblayers.lib.Lens.html#e8a4dba1fbcbfc7fabd32e791bda57bf"><span class="id" title="notation">〉</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Lens.html#PRODUCT"><span class="id" title="section">PRODUCT</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

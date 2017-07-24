@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>compcert.common.Memory</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library compcert.common.Memory</h1>
+
+<div class="code">
+
+<br/>
+</div>
+
+<div class="doc">
+This file develops the memory model that is used in the dynamic
+  semantics of all the languages used in the compiler.
+  It defines a type <span class="inlinecode"><a class="idref" href="liblayers.simrel.MemWithData.html#mem"><span class="id" title="projection">mem</span></a></span> of memory states, the following 4 basic
+  operations over memory states, and their properties:
+<ul class="doclist">
+<li> <span class="inlinecode"><a class="idref" href="compcert.common.Memtype.html#Mem.load"><span class="id" title="projection">load</span></a></span>: read a memory chunk at a given address;
+
+</li>
+<li> <span class="inlinecode"><a class="idref" href="compcert.common.Memtype.html#Mem.store"><span class="id" title="projection">store</span></a></span>: store a memory chunk at a given address;
+
+</li>
+<li> <span class="inlinecode"><a class="idref" href="compcert.common.Memtype.html#Mem.alloc"><span class="id" title="projection">alloc</span></a></span>: allocate a fresh memory block;
+
+</li>
+<li> <span class="inlinecode"><a class="idref" href="compcert.common.Memtype.html#Mem.free"><span class="id" title="projection">free</span></a></span>: invalidate a memory block.
+
+</li>
+</ul>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.ZArith.Zwf.html#"><span class="id" title="library">Zwf</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="keyword">Axioms</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="compcert.lib.Coqlib.html#"><span class="id" title="library">Coqlib</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <a class="idref" href="compcert.lib.Intv.html#"><span class="id" title="library">Intv</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="compcert.lib.Maps.html#"><span class="id" title="library">Maps</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <a class="idref" href="compcert.x86_64.Archi.html#"><span class="id" title="library">Archi</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="compcert.common.AST.html#"><span class="id" title="library">AST</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="compcert.lib.Integers.html#"><span class="id" title="library">Integers</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="compcert.lib.Floats.html#"><span class="id" title="library">Floats</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="compcert.common.Values.html#"><span class="id" title="library">Values</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="compcert.common.Memdata.html#"><span class="id" title="library">Memdata</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="compcert.common.Memtype.html#"><span class="id" title="library">Memtype</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Unset</span> <span class="id" title="var">Elimination</span> <span class="id" title="var">Schemes</span>.<br/>
+<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Unset</span> <span class="id" title="var">Case</span> <span class="id" title="var">Analysis</span> <span class="id" title="var">Schemes</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Resolve</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_not_valid_diff</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_implies</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_cur</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_max</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_valid_block</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.range_perm_implies</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.range_perm_cur</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.range_perm_max</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_access_implies</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_access_valid_block</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_access_perm</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_access_load</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.load_valid_access</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.loadbytes_range_perm</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_access_store</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_store_1</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_store_2</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.nextblock_store</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.store_valid_block_1</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.store_valid_block_2</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.store_valid_access_1</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.store_valid_access_2</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.store_valid_access_3</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.storebytes_range_perm</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_storebytes_1</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_storebytes_2</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.storebytes_valid_access_1</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.storebytes_valid_access_2</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.nextblock_storebytes</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.storebytes_valid_block_1</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.storebytes_valid_block_2</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.nextblock_alloc</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.alloc_result</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_block_alloc</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.fresh_block_alloc</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_new_block</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_alloc_1</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_alloc_2</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_alloc_3</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_alloc_4</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_alloc_inv</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_access_alloc_other</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_access_alloc_same</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_access_alloc_inv</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.range_perm_free</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.free_range_perm</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.nextblock_free</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_block_free_1</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_block_free_2</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_free_1</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_free_2</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.perm_free_3</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_access_free_1</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_access_free_2</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_access_free_inv_1</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.valid_access_free_inv_2</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">Mem.unchanged_on_refl</span><br/>
+: <span class="id" title="var">mem</span>.<br/>
+
+<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

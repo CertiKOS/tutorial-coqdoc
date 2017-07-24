@@ -1,0 +1,2781 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>Table of contents</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<div id="toc">
+<a href="compcert.lib.Coqlib.html"><h2>Library compcert.lib.Coqlib</h2></a>
+<ul class="doclist">
+<li><a href="compcert.lib.Coqlib.html#lab1">Useful tactics</a>
+
+</li>
+<li><a href="compcert.lib.Coqlib.html#lab2">Definitions and theorems over the type <span class="inlinecode"><span class="id" title="var">positive</span></span></a>
+
+</li>
+<li><a href="compcert.lib.Coqlib.html#lab3">Definitions and theorems over the type <span class="inlinecode"><span class="id" title="var">Z</span></span></a>
+
+</li>
+<li><a href="compcert.lib.Coqlib.html#lab4">Definitions and theorems on the data types <span class="inlinecode"><span class="id" title="var">option</span></span>, <span class="inlinecode"><span class="id" title="var">sum</span></span> and <span class="inlinecode"><span class="id" title="var">list</span></span></a>
+
+</li>
+<li><a href="compcert.lib.Coqlib.html#lab5">Definitions and theorems over boolean types</a>
+
+</li>
+<li><a href="compcert.lib.Coqlib.html#lab6">Well-founded orderings</a>
+
+</li>
+<li><a href="compcert.lib.Coqlib.html#lab7">Nonempty lists</a>
+
+</li>
+</ul>
+<a href="compcert.lib.Maps.html"><h2>Library compcert.lib.Maps</h2></a>
+<ul class="doclist">
+<li><a href="compcert.lib.Maps.html#lab8">The abstract signatures of trees</a>
+
+</li>
+<li><a href="compcert.lib.Maps.html#lab9">The abstract signatures of maps</a>
+
+</li>
+<li><a href="compcert.lib.Maps.html#lab10">An implementation of trees over type <span class="inlinecode"><span class="id" title="var">positive</span></span></a>
+
+</li>
+<li><a href="compcert.lib.Maps.html#lab11">An implementation of maps over type <span class="inlinecode"><span class="id" title="var">positive</span></span></a>
+
+</li>
+<li><a href="compcert.lib.Maps.html#lab12">An implementation of maps over any type that injects into type <span class="inlinecode"><span class="id" title="var">positive</span></span></a>
+
+</li>
+<li><a href="compcert.lib.Maps.html#lab13">An implementation of maps over any type with decidable equality</a>
+
+</li>
+<li><a href="compcert.lib.Maps.html#lab14">A partial implementation of trees over any type that injects into type <span class="inlinecode"><span class="id" title="var">positive</span></span></a>
+
+</li>
+<li><a href="compcert.lib.Maps.html#lab15">Additional properties over trees</a>
+
+</li>
+<li><a href="compcert.lib.Maps.html#lab16">Useful notations</a>
+
+</li>
+</ul>
+<a href="compcert.common.Errors.html"><h2>Library compcert.common.Errors</h2></a>
+<ul class="doclist">
+<li><a href="compcert.common.Errors.html#lab17">Representation of error messages.</a>
+
+</li>
+<li><a href="compcert.common.Errors.html#lab18">The error monad</a>
+
+</li>
+<li><a href="compcert.common.Errors.html#lab19">Reasoning over monadic computations</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Core.Fcore_Zaux.html"><h2>Library compcert.flocq.Core.Fcore_Zaux</h2></a>
+<a href="compcert.flocq.Core.Fcore_Raux.html"><h2>Library compcert.flocq.Core.Fcore_Raux</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Core.Fcore_Raux.html#lab20">Missing definitions/lemmas</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Core.Fcore_defs.html"><h2>Library compcert.flocq.Core.Fcore_defs</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Core.Fcore_defs.html#lab21">Basic definitions: float and rounding property</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Core.Fcore_float_prop.html"><h2>Library compcert.flocq.Core.Fcore_float_prop</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Core.Fcore_float_prop.html#lab22">Basic properties of floating-point formats: lemmas about mantissa, exponent...</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Core.Fcore_rnd.html"><h2>Library compcert.flocq.Core.Fcore_rnd</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Core.Fcore_rnd.html#lab23">Roundings: properties and/or functions</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Core.Fcore_generic_fmt.html"><h2>Library compcert.flocq.Core.Fcore_generic_fmt</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Core.Fcore_generic_fmt.html#lab24">What is a real number belonging to a format, and many properties.</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Core.Fcore_ulp.html"><h2>Library compcert.flocq.Core.Fcore_ulp</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Core.Fcore_ulp.html#lab25">Unit in the Last Place: our definition using fexp and its properties, successor and predecessor</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Core.Fcore_rnd_ne.html"><h2>Library compcert.flocq.Core.Fcore_rnd_ne</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Core.Fcore_rnd_ne.html#lab26">Rounding to nearest, ties to even: existence, unicity...</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Core.Fcore_FIX.html"><h2>Library compcert.flocq.Core.Fcore_FIX</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Core.Fcore_FIX.html#lab27">Fixed-point format</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Core.Fcore_FLX.html"><h2>Library compcert.flocq.Core.Fcore_FLX</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Core.Fcore_FLX.html#lab28">Floating-point format without underflow</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Core.Fcore_FLT.html"><h2>Library compcert.flocq.Core.Fcore_FLT</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Core.Fcore_FLT.html#lab29">Floating-point format with gradual underflow</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Core.Fcore.html"><h2>Library compcert.flocq.Core.Fcore</h2></a>
+<a href="compcert.flocq.Core.Fcore_digits.html"><h2>Library compcert.flocq.Core.Fcore_digits</h2></a>
+<a href="compcert.flocq.Calc.Fcalc_digits.html"><h2>Library compcert.flocq.Calc.Fcalc_digits</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Calc.Fcalc_digits.html#lab30">Functions for computing the number of digits of integers and related theorems.</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Calc.Fcalc_bracket.html"><h2>Library compcert.flocq.Calc.Fcalc_bracket</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Calc.Fcalc_bracket.html#lab31">Locations: where a real number is positioned with respect to its rounded-down value in an arbitrary format.</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Calc.Fcalc_round.html"><h2>Library compcert.flocq.Calc.Fcalc_round</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Calc.Fcalc_round.html#lab32">Helper function for computing the rounded value of a real number.</a>
+
+</li>
+<li><a href="compcert.flocq.Calc.Fcalc_round.html#lab33">Instances of the theorems above, for the usual rounding modes.</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Calc.Fcalc_ops.html"><h2>Library compcert.flocq.Calc.Fcalc_ops</h2></a>
+<a href="compcert.flocq.Calc.Fcalc_div.html"><h2>Library compcert.flocq.Calc.Fcalc_div</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Calc.Fcalc_div.html#lab34">Helper function and theorem for computing the rounded quotient of two floating-point numbers.</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Calc.Fcalc_sqrt.html"><h2>Library compcert.flocq.Calc.Fcalc_sqrt</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Calc.Fcalc_sqrt.html#lab35">Helper functions and theorems for computing the rounded square root of a floating-point number.</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Prop.Fprop_relative.html"><h2>Library compcert.flocq.Prop.Fprop_relative</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Prop.Fprop_relative.html#lab36">Relative error of the roundings</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Appli.Fappli_IEEE.html"><h2>Library compcert.flocq.Appli.Fappli_IEEE</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Appli.Fappli_IEEE.html#lab37">IEEE-754 arithmetic</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Appli.Fappli_IEEE_bits.html"><h2>Library compcert.flocq.Appli.Fappli_IEEE_bits</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Appli.Fappli_IEEE_bits.html#lab38">IEEE-754 encoding of binary floating-point data</a>
+
+</li>
+</ul>
+<a href="compcert.x86_64.Archi.html"><h2>Library compcert.x86_64.Archi</h2></a>
+<a href="compcert.lib.Integers.html"><h2>Library compcert.lib.Integers</h2></a>
+<ul class="doclist">
+<li><a href="compcert.lib.Integers.html#lab39">Comparisons</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab40">Parameterization by the word size, in bits.</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab41">Representation of machine integers</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab42">Arithmetic and logical operations over machine integers</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab43">Properties of integers and integer arithmetic</a>
+<ul class="doclist">
+<li><a href="compcert.lib.Integers.html#lab44">Properties of <span class="inlinecode"><span class="id" title="var">modulus</span></span>, <span class="inlinecode"><span class="id" title="var">max_unsigned</span></span>, etc.</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab45">Modulo arithmetic</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab46">Properties of the coercions between <span class="inlinecode"><span class="id" title="var">Z</span></span> and <span class="inlinecode"><span class="id" title="var">int</span></span></a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab47">Properties of zero, one, minus one</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab48">Properties of equality</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab49">Properties of addition</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab50">Properties of negation</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab51">Properties of subtraction</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab52">Properties of multiplication</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab53">Properties of division and modulus</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab54">Bit-level properties</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab55">Properties of bit-level operations over <span class="inlinecode"><span class="id" title="var">Z</span></span></a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab56">Bit-level reasoning over type <span class="inlinecode"><span class="id" title="var">int</span></span></a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab57">Properties of bitwise and, or, xor</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab58">Properties of shifts</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab59">Properties of rotations</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab60">Properties of <span class="inlinecode"><span class="id" title="var">Z_one_bits</span></span> and <span class="inlinecode"><span class="id" title="var">is_power2</span></span>.</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab61">Relation between bitwise operations and multiplications / divisions by powers of 2</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab62">Properties of <span class="inlinecode"><span class="id" title="var">shrx</span></span> (signed division by a power of 2)</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab63">Properties of integer zero extension and sign extension.</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab64">Properties of <span class="inlinecode"><span class="id" title="var">one_bits</span></span> (decomposition in sum of powers of two)</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab65">Properties of comparisons</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab66">Specialization to integers of size 8, 32, and 64 bits</a>
+
+</li>
+<li><a href="compcert.lib.Integers.html#lab67">Specialization to offsets in pointer values</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Prop.Fprop_Sterbenz.html"><h2>Library compcert.flocq.Prop.Fprop_Sterbenz</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Prop.Fprop_Sterbenz.html#lab68">Sterbenz conditions for exact subtraction</a>
+
+</li>
+</ul>
+<a href="compcert.flocq.Appli.Fappli_rnd_odd.html"><h2>Library compcert.flocq.Appli.Fappli_rnd_odd</h2></a>
+<ul class="doclist">
+<li><a href="compcert.flocq.Appli.Fappli_rnd_odd.html#lab69">Rounding to odd and its properties, including the equivalence</a>
+
+</li>
+</ul>
+<a href="compcert.lib.Fappli_IEEE_extra.html"><h2>Library compcert.lib.Fappli_IEEE_extra</h2></a>
+<ul class="doclist">
+<li><ul class="doclist">
+<li><a href="compcert.lib.Fappli_IEEE_extra.html#lab70">Decidable equality</a>
+
+</li>
+<li><a href="compcert.lib.Fappli_IEEE_extra.html#lab71">Conversion from an integer to a FP number</a>
+
+</li>
+<li><a href="compcert.lib.Fappli_IEEE_extra.html#lab72">Conversion from a FP number to an integer</a>
+
+</li>
+<li><a href="compcert.lib.Fappli_IEEE_extra.html#lab73">Algebraic identities</a>
+
+</li>
+<li><a href="compcert.lib.Fappli_IEEE_extra.html#lab74">Conversion from scientific notation</a>
+
+</li>
+<li><a href="compcert.lib.Fappli_IEEE_extra.html#lab75">Conversions between two FP formats</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="compcert.lib.Floats.html"><h2>Library compcert.lib.Floats</h2></a>
+<ul class="doclist">
+<li><a href="compcert.lib.Floats.html#lab76">Double-precision FP numbers</a>
+<ul class="doclist">
+<li><a href="compcert.lib.Floats.html#lab77">NaN payload manipulations</a>
+
+</li>
+<li><a href="compcert.lib.Floats.html#lab78">Operations over double-precision floats</a>
+
+</li>
+<li><a href="compcert.lib.Floats.html#lab79">Properties</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.lib.Floats.html#lab80">Single-precision FP numbers</a>
+<ul class="doclist">
+<li><a href="compcert.lib.Floats.html#lab81">NaN payload manipulations</a>
+
+</li>
+<li><a href="compcert.lib.Floats.html#lab82">Operations over single-precision floats</a>
+
+</li>
+<li><a href="compcert.lib.Floats.html#lab83">Properties</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="compcert.common.AST.html"><h2>Library compcert.common.AST</h2></a>
+<ul class="doclist">
+<li><a href="compcert.common.AST.html#lab84">Syntactic elements</a>
+
+</li>
+<li><a href="compcert.common.AST.html#lab85">Generic transformations over programs</a>
+
+</li>
+<li><a href="compcert.common.AST.html#lab86">External functions</a>
+
+</li>
+<li><a href="compcert.common.AST.html#lab87">Register pairs</a>
+
+</li>
+<li><a href="compcert.common.AST.html#lab88">Arguments and results to builtin functions</a>
+
+</li>
+</ul>
+<a href="compcert.common.Values.html"><h2>Library compcert.common.Values</h2></a>
+<ul class="doclist">
+<li><a href="compcert.common.Values.html#lab89">Operations over values</a>
+
+</li>
+<li><a href="compcert.common.Values.html#lab90">Values and memory injections</a>
+
+</li>
+</ul>
+<a href="compcert.lib.Axioms.html"><h2>Library compcert.lib.Axioms</h2></a>
+<ul class="doclist">
+<li><a href="compcert.lib.Axioms.html#lab91">Extensionality axioms</a>
+
+</li>
+<li><a href="compcert.lib.Axioms.html#lab92">Proof irrelevance</a>
+
+</li>
+</ul>
+<a href="compcert.common.Linking.html"><h2>Library compcert.common.Linking</h2></a>
+<ul class="doclist">
+<li><a href="compcert.common.Linking.html#lab93">Syntactic linking</a>
+
+</li>
+<li><a href="compcert.common.Linking.html#lab94">Matching between two programs</a>
+
+</li>
+<li><a href="compcert.common.Linking.html#lab95">Commutation between linking and program transformations</a>
+
+</li>
+<li><a href="compcert.common.Linking.html#lab96">Linking a set of compilation units</a>
+
+</li>
+<li><a href="compcert.common.Linking.html#lab97">Linking and composition of compilation passes</a>
+
+</li>
+</ul>
+<a href="compcert.lib.Intv.html"><h2>Library compcert.lib.Intv</h2></a>
+<ul class="doclist">
+<li><a href="compcert.lib.Intv.html#lab98">Membership</a>
+
+</li>
+<li><a href="compcert.lib.Intv.html#lab99">Emptyness</a>
+
+</li>
+<li><a href="compcert.lib.Intv.html#lab100">Disjointness</a>
+
+</li>
+<li><a href="compcert.lib.Intv.html#lab101">Shifting an interval by some amount</a>
+
+</li>
+<li><a href="compcert.lib.Intv.html#lab102">Enumerating the elements of an interval</a>
+
+</li>
+<li><a href="compcert.lib.Intv.html#lab103">Checking properties on all elements of an interval</a>
+
+</li>
+<li><a href="compcert.lib.Intv.html#lab104">Folding a function over all elements of an interval</a>
+
+</li>
+</ul>
+<a href="compcert.common.Memdata.html"><h2>Library compcert.common.Memdata</h2></a>
+<ul class="doclist">
+<li><a href="compcert.common.Memdata.html#lab105">Properties of memory chunks</a>
+
+</li>
+<li><a href="compcert.common.Memdata.html#lab106">Memory values</a>
+
+</li>
+<li><a href="compcert.common.Memdata.html#lab107">Encoding and decoding integers</a>
+
+</li>
+<li><a href="compcert.common.Memdata.html#lab108">Encoding and decoding values</a>
+
+</li>
+<li><a href="compcert.common.Memdata.html#lab109">Compatibility with memory injections</a>
+
+</li>
+<li><a href="compcert.common.Memdata.html#lab110">Breaking 64-bit memory accesses into two 32-bit accesses</a>
+
+</li>
+</ul>
+<a href="compcert.common.Memtype.html"><h2>Library compcert.common.Memtype</h2></a>
+<ul class="doclist">
+<li><a href="compcert.common.Memtype.html#lab111">Operations on memory states</a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab112">Permissions, block validity, access validity, and bounds</a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab113">Relating two memory states.</a>
+<ul class="doclist">
+<li><a href="compcert.common.Memtype.html#lab114">Memory extensions</a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab115">Memory injections</a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab116">Invariance properties between two memory states</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab117">Properties of the memory operations</a>
+<ul class="doclist">
+<li><a href="compcert.common.Memtype.html#lab118">Properties of the initial memory state.</a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab119">Properties of <span class="inlinecode"><span class="id" title="var">load</span></span>.</a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab120">Properties of <span class="inlinecode"><span class="id" title="var">loadbytes</span></span>.</a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab121">Properties of <span class="inlinecode"><span class="id" title="var">store</span></span>.</a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab122">Properties of <span class="inlinecode"><span class="id" title="var">storebytes</span></span>.</a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab123">Properties of <span class="inlinecode"><span class="id" title="var">alloc</span></span>.</a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab124">Properties of <span class="inlinecode"><span class="id" title="var">free</span></span>.</a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab125">Properties of <span class="inlinecode"><span class="id" title="var">drop_perm</span></span>.</a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab126">Properties of <span class="inlinecode"><span class="id" title="var">extends</span></span>.</a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab127">Properties of <span class="inlinecode"><span class="id" title="var">magree</span></span>.</a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab128">Properties of <span class="inlinecode"><span class="id" title="var">inject</span></span>.</a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab129">Properties of <span class="inlinecode"><span class="id" title="var">inject_neutral</span></span></a>
+
+</li>
+<li><a href="compcert.common.Memtype.html#lab130">Properties of <span class="inlinecode"><span class="id" title="var">unchanged_on</span></span> and <span class="inlinecode"><span class="id" title="var">strong_unchanged_on</span></span></a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="compcert.common.Memory.html"><h2>Library compcert.common.Memory</h2></a>
+<a href="compcert.common.Globalenvs.html"><h2>Library compcert.common.Globalenvs</h2></a>
+<ul class="doclist">
+<li><a href="compcert.common.Globalenvs.html#lab131">Symbol environments</a>
+
+</li>
+<li><a href="compcert.common.Globalenvs.html#lab132">Global environments</a>
+<ul class="doclist">
+<li><a href="compcert.common.Globalenvs.html#lab133">Lookup functions</a>
+
+</li>
+<li><a href="compcert.common.Globalenvs.html#lab134">Constructing the global environment</a>
+
+</li>
+<li><a href="compcert.common.Globalenvs.html#lab135">Properties of the operations over global environments</a>
+
+</li>
+<li><a href="compcert.common.Globalenvs.html#lab136">Coercing a global environment into a symbol environment</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.common.Globalenvs.html#lab137">Construction of the initial memory state</a>
+<ul class="doclist">
+<li><a href="compcert.common.Globalenvs.html#lab138">Compatibility with memory injections</a>
+
+</li>
+<li><a href="compcert.common.Globalenvs.html#lab139">Sufficient and necessary conditions for the initial memory to exist.</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.common.Globalenvs.html#lab140">Commutation with program transformations</a>
+
+</li>
+</ul>
+<a href="compcert.common.Events.html"><h2>Library compcert.common.Events</h2></a>
+<ul class="doclist">
+<li><a href="compcert.common.Events.html#lab141">Events and traces</a>
+
+</li>
+<li><a href="compcert.common.Events.html#lab142">Relating values and event values</a>
+
+</li>
+<li><a href="compcert.common.Events.html#lab143">Matching traces.</a>
+
+</li>
+<li><a href="compcert.common.Events.html#lab144">Semantics of volatile memory accesses</a>
+
+</li>
+<li><a href="compcert.common.Events.html#lab145">Semantics of external functions</a>
+<ul class="doclist">
+<li><a href="compcert.common.Events.html#lab146">Semantics of volatile loads</a>
+
+</li>
+<li><a href="compcert.common.Events.html#lab147">Semantics of volatile stores</a>
+
+</li>
+<li><a href="compcert.common.Events.html#lab148">Semantics of dynamic memory allocation (malloc)</a>
+
+</li>
+<li><a href="compcert.common.Events.html#lab149">Semantics of dynamic memory deallocation (free)</a>
+
+</li>
+<li><a href="compcert.common.Events.html#lab150">Semantics of <span class="inlinecode"><span class="id" title="var">memcpy</span></span> operations.</a>
+
+</li>
+<li><a href="compcert.common.Events.html#lab151">Semantics of annotations.</a>
+
+</li>
+<li><a href="compcert.common.Events.html#lab152">Semantics of external functions.</a>
+
+</li>
+<li><a href="compcert.common.Events.html#lab153">Combined semantics of external calls</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.common.Events.html#lab154">Evaluation of builtin arguments</a>
+
+</li>
+</ul>
+<a href="compcert.common.Smallstep.html"><h2>Library compcert.common.Smallstep</h2></a>
+<ul class="doclist">
+<li><a href="compcert.common.Smallstep.html#lab155">Closures of transitions relations</a>
+
+</li>
+<li><a href="compcert.common.Smallstep.html#lab156">Transition semantics</a>
+
+</li>
+<li><a href="compcert.common.Smallstep.html#lab157">Forward simulations between two transition semantics.</a>
+<ul class="doclist">
+<li><a href="compcert.common.Smallstep.html#lab158">Forward simulation diagrams.</a>
+
+</li>
+<li><a href="compcert.common.Smallstep.html#lab159">Forward simulation of transition sequences</a>
+
+</li>
+<li><a href="compcert.common.Smallstep.html#lab160">Composing two forward simulations</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.common.Smallstep.html#lab161">Receptiveness and determinacy</a>
+
+</li>
+<li><a href="compcert.common.Smallstep.html#lab162">Backward simulations between two transition semantics.</a>
+<ul class="doclist">
+<li><a href="compcert.common.Smallstep.html#lab163">Backward simulation diagrams.</a>
+
+</li>
+<li><a href="compcert.common.Smallstep.html#lab164">Backward simulation of transition sequences</a>
+
+</li>
+<li><a href="compcert.common.Smallstep.html#lab165">Composing two backward simulations</a>
+
+</li>
+<li><a href="compcert.common.Smallstep.html#lab166">Converting a forward simulation to a backward simulation</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.common.Smallstep.html#lab167">Transforming a semantics into a single-event, equivalent semantics</a>
+
+</li>
+<li><a href="compcert.common.Smallstep.html#lab168">Connections with big-step semantics</a>
+
+</li>
+</ul>
+<a href="compcert.cfrontend.Ctypes.html"><h2>Library compcert.cfrontend.Ctypes</h2></a>
+<ul class="doclist">
+<li><a href="compcert.cfrontend.Ctypes.html#lab169">Syntax of types</a>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab170">Operations over types</a>
+<ul class="doclist">
+<li><a href="compcert.cfrontend.Ctypes.html#lab171">Conversions</a>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab172">Complete types</a>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab173">Alignment of a type</a>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab174">Size of a type</a>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab175">Size and alignment for composite definitions</a>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab176">Byte offset for a field of a structure</a>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab177">Access modes</a>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab178">Alignment for block copy operations</a>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab179">C types and back-end types</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab180">Construction of the composite environment</a>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab181">Programs and compilation units</a>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab182">Separate compilation and linking</a>
+<ul class="doclist">
+<li><a href="compcert.cfrontend.Ctypes.html#lab183">Linking types</a>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab184">Linking composite definitions</a>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab185">Linking function definitions</a>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab186">Linking programs</a>
+
+</li>
+<li><a href="compcert.cfrontend.Ctypes.html#lab187">Commutation between linking and program transformations</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="compcert.cfrontend.Cop.html"><h2>Library compcert.cfrontend.Cop</h2></a>
+<ul class="doclist">
+<li><a href="compcert.cfrontend.Cop.html#lab188">Syntax of operators.</a>
+
+</li>
+<li><a href="compcert.cfrontend.Cop.html#lab189">Type classification and semantics of operators.</a>
+<ul class="doclist">
+<li><a href="compcert.cfrontend.Cop.html#lab190">Casts and truth values</a>
+
+</li>
+<li><a href="compcert.cfrontend.Cop.html#lab191">Unary operators</a>
+<ul class="doclist">
+<li><a href="compcert.cfrontend.Cop.html#lab192">Boolean negation</a>
+
+</li>
+<li><a href="compcert.cfrontend.Cop.html#lab193">Opposite and absolute value</a>
+
+</li>
+<li><a href="compcert.cfrontend.Cop.html#lab194">Bitwise complement</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.cfrontend.Cop.html#lab195">Binary operators</a>
+<ul class="doclist">
+<li><a href="compcert.cfrontend.Cop.html#lab196">Addition</a>
+
+</li>
+<li><a href="compcert.cfrontend.Cop.html#lab197">Subtraction</a>
+
+</li>
+<li><a href="compcert.cfrontend.Cop.html#lab198">Multiplication, division, modulus</a>
+
+</li>
+<li><a href="compcert.cfrontend.Cop.html#lab199">Shifts</a>
+
+</li>
+<li><a href="compcert.cfrontend.Cop.html#lab200">Comparisons</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.cfrontend.Cop.html#lab201">Function applications</a>
+
+</li>
+<li><a href="compcert.cfrontend.Cop.html#lab202">Argument of a <span class="inlinecode"><span class="id" title="var">switch</span></span> statement</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.cfrontend.Cop.html#lab203">Combined semantics of unary and binary operators</a>
+
+</li>
+<li><a href="compcert.cfrontend.Cop.html#lab204">Compatibility with extensions and injections</a>
+
+</li>
+<li><a href="compcert.cfrontend.Cop.html#lab205">Some properties of operator semantics</a>
+
+</li>
+</ul>
+<a href="compcert.cfrontend.Clight.html"><h2>Library compcert.cfrontend.Clight</h2></a>
+<ul class="doclist">
+<li><a href="compcert.cfrontend.Clight.html#lab206">Abstract syntax</a>
+<ul class="doclist">
+<li><a href="compcert.cfrontend.Clight.html#lab207">Expressions</a>
+
+</li>
+<li><a href="compcert.cfrontend.Clight.html#lab208">Statements</a>
+
+</li>
+<li><a href="compcert.cfrontend.Clight.html#lab209">Functions</a>
+
+</li>
+<li><a href="compcert.cfrontend.Clight.html#lab210">Programs</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.cfrontend.Clight.html#lab211">Operational semantics</a>
+<ul class="doclist">
+<li><a href="compcert.cfrontend.Clight.html#lab212">Evaluation of expressions</a>
+
+</li>
+<li><a href="compcert.cfrontend.Clight.html#lab213">Transition semantics for statements and functions</a>
+
+</li>
+<li><a href="compcert.cfrontend.Clight.html#lab214">Whole-program semantics</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.lib.Decision.html"><h2>Library liblayers.lib.Decision</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.lib.Decision.html#lab215">MathClasses-style "Decision" class.</a>
+
+</li>
+<li><a href="liblayers.lib.Decision.html#lab216">Instances</a>
+
+</li>
+<li><a href="liblayers.lib.Decision.html#lab217">Decision procedures for lists</a>
+
+</li>
+<li><a href="liblayers.lib.Decision.html#lab218">Decision procedures from <span class="inlinecode"><span class="id" title="var">compare</span></span></a>
+
+</li>
+</ul>
+<a href="coqrel.Delay.html"><h2>Library coqrel.Delay</h2></a>
+<ul class="doclist">
+<li><a href="coqrel.Delay.html#lab219">The <span class="inlinecode"><span class="id" title="var">delayed</span></span>/<span class="inlinecode"><span class="id" title="var">delay</span></span> tactics</a>
+
+</li>
+<li><a href="coqrel.Delay.html#lab220">Hints</a>
+
+</li>
+<li><a href="coqrel.Delay.html#lab221">Example: reifying <span class="inlinecode"><span class="id" title="tactic">eapply</span></span></a>
+
+</li>
+</ul>
+<a href="coqrel.RelDefinitions.html"><h2>Library coqrel.RelDefinitions</h2></a>
+<ul class="doclist">
+<li><a href="coqrel.RelDefinitions.html#lab222">Prerequisites</a>
+
+</li>
+<li><a href="coqrel.RelDefinitions.html#lab223">Relations</a>
+<ul class="doclist">
+<li><a href="coqrel.RelDefinitions.html#lab224">Proof step</a>
+
+</li>
+<li><a href="coqrel.RelDefinitions.html#lab225">Proof automation</a>
+
+</li>
+<li><a href="coqrel.RelDefinitions.html#lab226">Introduction rules</a>
+
+</li>
+<li><a href="coqrel.RelDefinitions.html#lab227">Using relations</a>
+
+</li>
+<li><a href="coqrel.RelDefinitions.html#lab228">Destructing relational hypotheses</a>
+
+</li>
+<li><a href="coqrel.RelDefinitions.html#lab229">Monotonicity properties</a>
+
+</li>
+<li><a href="coqrel.RelDefinitions.html#lab230">Order on relations</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="coqrel.RelDefinitions.html#lab231">Core relators</a>
+<ul class="doclist">
+<li><ul class="doclist">
+<li><a href="coqrel.RelDefinitions.html#lab232">Non-dependent function types</a>
+
+</li>
+<li><a href="coqrel.RelDefinitions.html#lab233">Dependent products</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="coqrel.RelDefinitions.html#lab234">Inverse relation</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="coqrel.RelClasses.html"><h2>Library coqrel.RelClasses</h2></a>
+<ul class="doclist">
+<li><a href="coqrel.RelClasses.html#lab235">More classes for relation properties</a>
+<ul class="doclist">
+<li><a href="coqrel.RelClasses.html#lab236">Coreflexive relations</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="coqrel.Relators.html"><h2>Library coqrel.Relators</h2></a>
+<ul class="doclist">
+<li><a href="coqrel.Relators.html#lab237">Relators</a>
+<ul class="doclist">
+<li><a href="coqrel.Relators.html#lab238">A note about universes</a>
+
+</li>
+<li><a href="coqrel.Relators.html#lab239">Relators for function types</a>
+<ul class="doclist">
+<li><a href="coqrel.Relators.html#lab240">Pointwise extension of a relation</a>
+
+</li>
+<li><a href="coqrel.Relators.html#lab241">Dependent pointwise extension</a>
+
+</li>
+<li><a href="coqrel.Relators.html#lab242">Dependent products (restricted version)</a>
+
+</li>
+<li><a href="coqrel.Relators.html#lab243">Sets (<span class="inlinecode"><span class="id" title="var">A</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span>)</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="coqrel.Relators.html#lab244">Inductive types</a>
+<ul class="doclist">
+<li><a href="coqrel.Relators.html#lab245">Nullary type constructors</a>
+
+</li>
+<li><a href="coqrel.Relators.html#lab246">Sum types</a>
+
+</li>
+<li><a href="coqrel.Relators.html#lab247">Pairs</a>
+
+</li>
+<li><a href="coqrel.Relators.html#lab248">Option types</a>
+
+</li>
+<li><a href="coqrel.Relators.html#lab249">Lists</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="coqrel.Relators.html#lab250">Monotonicity of logical connectives</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="coqrel.RelOperators.html"><h2>Library coqrel.RelOperators</h2></a>
+<ul class="doclist">
+<li><ul class="doclist">
+<li><a href="coqrel.RelOperators.html#lab251">Union of relations</a>
+
+</li>
+<li><a href="coqrel.RelOperators.html#lab252">Intersection of relations</a>
+
+</li>
+<li><a href="coqrel.RelOperators.html#lab253">Implication</a>
+
+</li>
+<li><a href="coqrel.RelOperators.html#lab254">The bottom and top relations</a>
+
+</li>
+<li><a href="coqrel.RelOperators.html#lab255">Relation equivalence</a>
+
+</li>
+<li><a href="coqrel.RelOperators.html#lab256">Relation composition</a>
+
+</li>
+<li><a href="coqrel.RelOperators.html#lab257">Pulling a relation along functions</a>
+
+</li>
+<li><a href="coqrel.RelOperators.html#lab258">Pushing a relation along functions</a>
+
+</li>
+<li><a href="coqrel.RelOperators.html#lab259">Relation currying</a>
+
+</li>
+<li><a href="coqrel.RelOperators.html#lab260">The <span class="inlinecode"><span class="id" title="var">req</span></span> relation</a>
+
+</li>
+<li><a href="coqrel.RelOperators.html#lab261">Checking predicates on the left and right elements</a>
+
+</li>
+<li><a href="coqrel.RelOperators.html#lab262">Relation versions of <span class="inlinecode"><span class="id" title="var">ex</span></span> and <span class="inlinecode"><span class="id" title="var">all</span></span></a>
+
+</li>
+<li><a href="coqrel.RelOperators.html#lab263">The <span class="inlinecode"><span class="id" title="var">rel_incr</span></span> construction</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="coqrel.Monotonicity.html"><h2>Library coqrel.Monotonicity</h2></a>
+<ul class="doclist">
+<li><ul class="doclist">
+<li><a href="coqrel.Monotonicity.html#lab264">The <span class="inlinecode"><span class="id" title="var">monotonicity</span></span> tactic</a>
+<ul class="doclist">
+<li><a href="coqrel.Monotonicity.html#lab265">Truncating applications</a>
+
+</li>
+<li><a href="coqrel.Monotonicity.html#lab266">Selecting a relational property</a>
+
+</li>
+<li><a href="coqrel.Monotonicity.html#lab267">Using <span class="inlinecode"><span class="id" title="var">subrel</span></span></a>
+
+</li>
+<li><a href="coqrel.Monotonicity.html#lab268">Main tactic</a>
+
+</li>
+<li><a href="coqrel.Monotonicity.html#lab269"><span class="inlinecode"><span class="id" title="var">subrel</span></span> constraint as a subgoal</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="coqrel.Monotonicity.html#lab270">Generic instances</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="coqrel.RDestruct.html"><h2>Library coqrel.RDestruct</h2></a>
+<ul class="doclist">
+<li><a href="coqrel.RDestruct.html#lab271">The <span class="inlinecode"><span class="id" title="var">RDestruct</span></span> class</a>
+<ul class="doclist">
+<li><a href="coqrel.RDestruct.html#lab272">Introducing the hypothesis to be destructed</a>
+
+</li>
+<li><a href="coqrel.RDestruct.html#lab273"><span class="inlinecode"><span class="id" title="var">RDestruct</span></span> steps</a>
+
+</li>
+<li><a href="coqrel.RDestruct.html#lab274">Choosing to discard or keep equations</a>
+
+</li>
+<li><a href="coqrel.RDestruct.html#lab275">Default instance</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="coqrel.MorphismsInterop.html"><h2>Library coqrel.MorphismsInterop</h2></a>
+<ul class="doclist">
+<li><a href="coqrel.MorphismsInterop.html#lab276">Interoperation with <span class="inlinecode"><span class="id" title="var">Coq.Classes.Morphisms</span></span></a>
+<ul class="doclist">
+<li><a href="coqrel.MorphismsInterop.html#lab277">Using <span class="inlinecode"><span class="id" title="var">Morphisms</span></span>-style relational properties</a>
+<ul class="doclist">
+<li><a href="coqrel.MorphismsInterop.html#lab278">Relators</a>
+
+</li>
+<li><a href="coqrel.MorphismsInterop.html#lab279"><span class="inlinecode"><span class="id" title="var">Morphisms.Proper</span></span> instances</a>
+
+</li>
+<li><a href="coqrel.MorphismsInterop.html#lab280"><span class="inlinecode"><span class="id" title="var">subrelation</span></span> instances</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="coqrel.MorphismsInterop.html#lab281">Satisfying <span class="inlinecode"><span class="id" title="var">Morphisms.Proper</span></span> queries</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="coqrel.Transport.html"><h2>Library coqrel.Transport</h2></a>
+<ul class="doclist">
+<li><ul class="doclist">
+<li><a href="coqrel.Transport.html#lab282">The <span class="inlinecode"><span class="id" title="var">transport</span></span> tactic</a>
+<ul class="doclist">
+<li><a href="coqrel.Transport.html#lab283">Transportable hypotheses</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="coqrel.PreOrderTactic.html"><h2>Library coqrel.PreOrderTactic</h2></a>
+<a href="coqrel.LogicalRelations.html"><h2>Library coqrel.LogicalRelations</h2></a>
+<a href="liblayers.logic.Structures.html"><h2>Library liblayers.logic.Structures</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.logic.Structures.html#lab284">Generic operations</a>
+
+</li>
+<li><a href="liblayers.logic.Structures.html#lab285">Generic properties</a>
+<ul class="doclist">
+<li><a href="liblayers.logic.Structures.html#lab286">Heterogenous transitivity</a>
+
+</li>
+<li><a href="liblayers.logic.Structures.html#lab287">Hints for <span class="inlinecode"><span class="id" title="tactic">eauto</span></span> and <span class="inlinecode"><span class="id" title="tactic">autorewrite</span></span></a>
+
+</li>
+<li><a href="liblayers.logic.Structures.html#lab288">Some properties of properties</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.logic.Structures.html#lab289">Logical relationish kind of things</a>
+<ul class="doclist">
+<li><a href="liblayers.logic.Structures.html#lab290">Generic instances for relation properties</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.logic.Structures.html#lab291">Basic instances</a>
+<ul class="doclist">
+<li><a href="liblayers.logic.Structures.html#lab292"><span class="inlinecode"><span class="id" title="keyword">Prop</span></span></a>
+
+</li>
+<li><a href="liblayers.logic.Structures.html#lab293">Booleans</a>
+
+</li>
+<li><a href="liblayers.logic.Structures.html#lab294">The <span class="inlinecode"><span class="id" title="var">Equivalence</span></span> derived from a <span class="inlinecode"><span class="id" title="var">PreOrder</span></span></a>
+
+</li>
+<li><a href="liblayers.logic.Structures.html#lab295">Trivial order</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.logic.LayerData.html"><h2>Library liblayers.logic.LayerData</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.logic.LayerData.html#lab296">Categories of abstract data and simulation relations</a>
+
+</li>
+<li><a href="liblayers.logic.LayerData.html#lab297">Associated concrete simulation relations</a>
+
+</li>
+</ul>
+<a href="liblayers.logic.PseudoJoin.html"><h2>Library liblayers.logic.PseudoJoin</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.logic.PseudoJoin.html#lab298">Pseudo-joins and some properties</a>
+
+</li>
+<li><a href="liblayers.logic.PseudoJoin.html#lab299">Data-indexed version</a>
+<ul class="doclist">
+<li><a href="liblayers.logic.PseudoJoin.html#lab300">Deriving the <span class="inlinecode"><span class="id" title="var">PseudoJoin</span></span>s on <span class="inlinecode">(<span class="id" title="var">T</span></span> <span class="inlinecode"><span class="id" title="var">D</span>)</span></a>
+
+</li>
+<li><a href="liblayers.logic.PseudoJoin.html#lab301">A more complete join</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.logic.PseudoJoin.html#lab302">Normalization procedure</a>
+
+</li>
+<li><a href="liblayers.logic.PseudoJoin.html#lab303">Booleans have a pseudo-join structure</a>
+
+</li>
+<li><a href="liblayers.logic.PseudoJoin.html#lab304">Product of pseudo-join structures</a>
+
+</li>
+<li><a href="liblayers.logic.PseudoJoin.html#lab305">Adjoining an extra element</a>
+
+</li>
+</ul>
+<a href="liblayers.logic.PseudoJoinReflection.html"><h2>Library liblayers.logic.PseudoJoinReflection</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.logic.PseudoJoinReflection.html#lab306">Syntax</a>
+
+</li>
+<li><a href="liblayers.logic.PseudoJoinReflection.html#lab307">Semantics</a>
+
+</li>
+<li><a href="liblayers.logic.PseudoJoinReflection.html#lab308">Verification conditions</a>
+
+</li>
+</ul>
+<a href="liblayers.lib.ExtensionalityAxioms.html"><h2>Library liblayers.lib.ExtensionalityAxioms</h2></a>
+<a href="liblayers.lib.Functor.html"><h2>Library liblayers.lib.Functor</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.lib.Functor.html#lab309">Interface of functors</a>
+
+</li>
+<li><a href="liblayers.lib.Functor.html#lab310">Simple instances</a>
+<ul class="doclist">
+<li><a href="liblayers.lib.Functor.html#lab311">Constant</a>
+
+</li>
+<li><a href="liblayers.lib.Functor.html#lab312">Identity</a>
+
+</li>
+<li><a href="liblayers.lib.Functor.html#lab313">Product</a>
+
+</li>
+<li><a href="liblayers.lib.Functor.html#lab314">Option</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.lib.Functor.html#lab315">Some helper instances</a>
+
+</li>
+</ul>
+<a href="liblayers.lib.Monad.html"><h2>Library liblayers.lib.Monad</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.lib.Monad.html#lab316">Interface of monads</a>
+
+</li>
+<li><a href="liblayers.lib.Monad.html#lab317">Normalization</a>
+
+</li>
+<li><a href="liblayers.lib.Monad.html#lab318">Monad inversion</a>
+
+</li>
+<li><a href="liblayers.lib.Monad.html#lab319">Properties</a>
+
+</li>
+<li><a href="liblayers.lib.Monad.html#lab320">Some instances</a>
+
+</li>
+</ul>
+<a href="liblayers.lib.OptionMonad.html"><h2>Library liblayers.lib.OptionMonad</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.lib.OptionMonad.html#lab321">The <span class="inlinecode"><span class="id" title="var">option</span></span> monad</a>
+<ul class="doclist">
+<li><a href="liblayers.lib.OptionMonad.html#lab322"><span class="inlinecode"><span class="id" title="var">option</span></span> is a fully invertible monad</a>
+
+</li>
+<li><a href="liblayers.lib.OptionMonad.html#lab323">Some <span class="inlinecode"><span class="id" title="var">option</span></span>-specific rewrite rule</a>
+
+</li>
+<li><a href="liblayers.lib.OptionMonad.html#lab324">Some <span class="inlinecode"><span class="id" title="var">option</span></span>-specific definition</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.lib.OptionMonad.html#lab325"><span class="inlinecode"><span class="id" title="var">option</span></span>-related decision procedures</a>
+
+</li>
+</ul>
+<a href="liblayers.logic.OptionOrders.html"><h2>Library liblayers.logic.OptionOrders</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.logic.OptionOrders.html#lab326">Discussion</a>
+
+</li>
+<li><a href="liblayers.logic.OptionOrders.html#lab327">Simple order</a>
+<ul class="doclist">
+<li><a href="liblayers.logic.OptionOrders.html#lab328">Option predicates</a>
+
+</li>
+<li><a href="liblayers.logic.OptionOrders.html#lab329">Monad operations</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.ErrorMonad.html"><h2>Library liblayers.compcertx.ErrorMonad</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.ErrorMonad.html#lab330"><span class="inlinecode"><span class="id" title="var">res</span></span> is a monad</a>
+
+</li>
+<li><a href="liblayers.compcertx.ErrorMonad.html#lab331">Lifting orders on <span class="inlinecode"><span class="id" title="var">res</span></span></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.ErrorMonad.html#lab332">Data-indexed version</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.compcertx.ErrorMonad.html#lab333">Orders for <span class="inlinecode"><span class="id" title="var">res</span></span> <span class="inlinecode">∘</span> <span class="inlinecode"><span class="id" title="var">option</span></span></a>
+
+</li>
+<li><a href="liblayers.compcertx.ErrorMonad.html#lab334">Decision-related definitions</a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.ErrorMonad.html#lab335">The <span class="inlinecode"><span class="id" title="var">res</span></span> version of <span class="inlinecode"><span class="id" title="tactic">assert</span></span>.</a>
+
+</li>
+<li><a href="liblayers.compcertx.ErrorMonad.html#lab336">Whether a <span class="inlinecode"><span class="id" title="var">res</span></span> <span class="inlinecode"><span class="id" title="var">A</span></span> is <span class="inlinecode"><span class="id" title="var">OK</span></span> or <span class="inlinecode"><span class="id" title="var">Error</span></span></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.ErrorMonad.html#lab337">Some lemmas and <span class="inlinecode"><span class="id" title="tactic">eauto</span></span> hints.</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.compcertx.ErrorMonad.html#lab338">Miscellaneous helpers</a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.ErrorMonad.html#lab339">Flip <span class="inlinecode"><span class="id" title="var">option</span></span> <span class="inlinecode">(<span class="id" title="var">res</span></span> <span class="inlinecode">-)</span> &lt;-&gt; <span class="inlinecode"><span class="id" title="var">res</span></span> <span class="inlinecode">(<span class="id" title="var">option</span></span> <span class="inlinecode">-)</span></a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.compcertx.ErrorMonad.html#lab340"><span class="inlinecode"><span class="id" title="var">PseudoJoin</span></span> structure for <span class="inlinecode"><span class="id" title="var">res</span></span> <span class="inlinecode">(<span class="id" title="var">option</span></span> <span class="inlinecode">-)</span></a>
+
+</li>
+</ul>
+<a href="liblayers.logic.GlobalVars.html"><h2>Library liblayers.logic.GlobalVars</h2></a>
+<a href="liblayers.logic.Modules.html"><h2>Library liblayers.logic.Modules</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.logic.Modules.html#lab341">Modules</a>
+
+</li>
+<li><a href="liblayers.logic.Modules.html#lab342">Properties of modules</a>
+
+</li>
+<li><a href="liblayers.logic.Modules.html#lab343">Well-formed modules</a>
+<ul class="doclist">
+<li><a href="liblayers.logic.Modules.html#lab344"><span class="inlinecode"><span class="id" title="var">ModuleOK</span></span> is decidable</a>
+
+</li>
+<li><a href="liblayers.logic.Modules.html#lab345">Monotonicity</a>
+
+</li>
+<li><a href="liblayers.logic.Modules.html#lab346">Basic instances</a>
+
+</li>
+<li><a href="liblayers.logic.Modules.html#lab347">Other lemmas</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.logic.Primitives.html"><h2>Library liblayers.logic.Primitives</h2></a>
+<a href="liblayers.logic.Layers.html"><h2>Library liblayers.logic.Layers</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.logic.Layers.html#lab348">Layers</a>
+
+</li>
+<li><a href="liblayers.logic.Layers.html#lab349">Asserting a property for all primitives</a>
+
+</li>
+<li><a href="liblayers.logic.Layers.html#lab350">Well-formed layers</a>
+<ul class="doclist">
+<li><a href="liblayers.logic.Layers.html#lab351">Monotonicity</a>
+
+</li>
+<li><a href="liblayers.logic.Layers.html#lab352">Basic instances</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.logic.Layers.html#lab353">Other properties</a>
+
+</li>
+</ul>
+<a href="liblayers.logic.Semantics.html"><h2>Library liblayers.logic.Semantics</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.logic.Semantics.html#lab354">Semantics of modules</a>
+
+</li>
+<li><a href="liblayers.logic.Semantics.html#lab355">Semantics of individual function definitions</a>
+
+</li>
+<li><a href="liblayers.logic.Semantics.html#lab356">Specification</a>
+
+</li>
+<li><a href="liblayers.logic.Semantics.html#lab357">Properties</a>
+<ul class="doclist">
+<li><a href="liblayers.logic.Semantics.html#lab358">Propeties of <span class="inlinecode"><span class="id" title="var">semof_fundef</span></span></a>
+
+</li>
+<li><a href="liblayers.logic.Semantics.html#lab359">Properties of <span class="inlinecode"><span class="id" title="var">semof</span></span></a>
+
+</li>
+<li><a href="liblayers.logic.Semantics.html#lab360">Disjointness of modules and layers</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.logic.PTrees.html"><h2>Library liblayers.logic.PTrees</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.logic.PTrees.html#lab361">Generic operations on <span class="inlinecode"><span class="id" title="var">PTree</span></span>s</a>
+
+</li>
+<li><a href="liblayers.logic.PTrees.html#lab362">Decidable properties of <span class="inlinecode"><span class="id" title="var">PTree</span></span>s</a>
+<ul class="doclist">
+<li><a href="liblayers.logic.PTrees.html#lab363">Some property holds for all bindings</a>
+
+</li>
+<li><a href="liblayers.logic.PTrees.html#lab364">Two <span class="inlinecode"><span class="id" title="var">PTree</span></span>s have disjoint domains</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.logic.PTrees.html#lab365">Applying a partial function to all data of a tree.</a>
+<ul class="doclist">
+<li><a href="liblayers.logic.PTrees.html#lab366">Monotonicity wrt. <span class="inlinecode"><span class="id" title="var">ptree_rel</span></span></a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.logic.PTreeModules.html"><h2>Library liblayers.logic.PTreeModules</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.logic.PTreeModules.html#lab367">Construction of modules</a>
+<ul class="doclist">
+<li><a href="liblayers.logic.PTreeModules.html#lab368">Querying functions</a>
+
+</li>
+<li><a href="liblayers.logic.PTreeModules.html#lab369">Instance of <span class="inlinecode"><span class="id" title="var">Modules</span></span></a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.logic.PTreeModules.html#lab370">Enumeration of module functions and variables.</a>
+
+</li>
+</ul>
+<a href="liblayers.logic.PTreeLayers.html"><h2>Library liblayers.logic.PTreeLayers</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.logic.PTreeLayers.html#lab371">Construction of layers</a>
+<ul class="doclist">
+<li><a href="liblayers.logic.PTreeLayers.html#lab372">Querying functions</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.logic.PTreeLayers.html#lab373">Additional properties</a>
+
+</li>
+</ul>
+<a href="liblayers.logic.PTreeSemantics.html"><h2>Library liblayers.logic.PTreeSemantics</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.logic.PTreeSemantics.html#lab374">Preliminaries</a>
+
+</li>
+<li><a href="liblayers.logic.PTreeSemantics.html#lab375">Semantics of <span class="inlinecode"><span class="id" title="var">ptree_module</span></span>s</a>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.GenSem.html"><h2>Library liblayers.compcertx.GenSem</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.GenSem.html#lab376">Generic semantics from abstract functions</a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.GenSem.html#lab377">Basic instances</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="compcertx.common.MemoryX.html"><h2>Library compcertx.common.MemoryX</h2></a>
+<a href="liblayers.lib.Lens.html"><h2>Library liblayers.lib.Lens</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.lib.Lens.html#lab378">Interface</a>
+
+</li>
+<li><a href="liblayers.lib.Lens.html#lab379">Theory</a>
+<ul class="doclist">
+<li><a href="liblayers.lib.Lens.html#lab380">Getters are measures, cf. <span class="inlinecode"><span class="id" title="var">Coq.Classes.RelationPairs</span></span></a>
+
+</li>
+<li><a href="liblayers.lib.Lens.html#lab381">The <span class="inlinecode"><span class="id" title="var">modify</span></span> operation</a>
+
+</li>
+<li><a href="liblayers.lib.Lens.html#lab382">The <span class="inlinecode"><span class="id" title="var">same_context</span></span> relation</a>
+
+</li>
+<li><a href="liblayers.lib.Lens.html#lab383">Consequences of <span class="inlinecode"><span class="id" title="var">LensGetSet</span></span></a>
+
+</li>
+<li><a href="liblayers.lib.Lens.html#lab384">Consequences of <span class="inlinecode"><span class="id" title="var">LensSetGet</span></span></a>
+
+</li>
+<li><a href="liblayers.lib.Lens.html#lab385">Orthogonal lenses</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.lib.Lens.html#lab386">Tactics</a>
+
+</li>
+<li><a href="liblayers.lib.Lens.html#lab387">Instances</a>
+<ul class="doclist">
+<li><a href="liblayers.lib.Lens.html#lab388">Pairs</a>
+
+</li>
+<li><a href="liblayers.lib.Lens.html#lab389">Composing lens</a>
+
+</li>
+<li><a href="liblayers.lib.Lens.html#lab390">Initial and terminal objects</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.lib.PowersetMonad.html"><h2>Library liblayers.lib.PowersetMonad</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.lib.PowersetMonad.html#lab391"><span class="inlinecode">-</span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span> is a <span class="inlinecode"><span class="id" title="var">Functor</span></span></a>
+
+</li>
+<li><a href="liblayers.lib.PowersetMonad.html#lab392"><span class="inlinecode">-</span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span> is also a monad</a>
+
+</li>
+</ul>
+<a href="liblayers.lib.Lift.html"><h2>Library liblayers.lib.Lift</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.lib.Lift.html#lab393">Lifting operations</a>
+<ul class="doclist">
+<li><a href="liblayers.lib.Lift.html#lab394">The <span class="inlinecode"><span class="id" title="var">lift_peel</span></span> tactic</a>
+
+</li>
+<li><a href="liblayers.lib.Lift.html#lab395">Expressing everything in terms of <span class="inlinecode"><span class="id" title="var">lift</span></span></a>
+
+</li>
+<li><a href="liblayers.lib.Lift.html#lab396">Simplifying occurences of <span class="inlinecode"><span class="id" title="var">lift</span></span></a>
+
+</li>
+<li><a href="liblayers.lib.Lift.html#lab397">Solving the residual goals</a>
+
+</li>
+<li><a href="liblayers.lib.Lift.html#lab398">Properties of lifted operations</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="compcert.lib.Ordered.html"><h2>Library compcert.lib.Ordered</h2></a>
+<a href="compcert.lib.Decidableplus.html"><h2>Library compcert.lib.Decidableplus</h2></a>
+<a href="compcert.lib.BoolEqual.html"><h2>Library compcert.lib.BoolEqual</h2></a>
+<a href="compcert.x86.Op.html"><h2>Library compcert.x86.Op</h2></a>
+<ul class="doclist">
+<li><a href="compcert.x86.Op.html#lab399">Evaluation functions</a>
+
+</li>
+<li><a href="compcert.x86.Op.html#lab400">Static typing of conditions, operators and addressing modes.</a>
+
+</li>
+<li><a href="compcert.x86.Op.html#lab401">Manipulating and transforming operations</a>
+
+</li>
+<li><a href="compcert.x86.Op.html#lab402">Invariance and compatibility properties.</a>
+
+</li>
+</ul>
+<a href="compcert.x86.Machregs.html"><h2>Library compcert.x86.Machregs</h2></a>
+<ul class="doclist">
+<li><ul class="doclist">
+<li><a href="compcert.x86.Machregs.html#lab403">Machine registers</a>
+
+</li>
+<li><a href="compcert.x86.Machregs.html#lab404">Names of registers</a>
+
+</li>
+<li><a href="compcert.x86.Machregs.html#lab405">Destroyed registers, preferred registers</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="compcert.backend.Locations.html"><h2>Library compcert.backend.Locations</h2></a>
+<ul class="doclist">
+<li><a href="compcert.backend.Locations.html#lab406">Representation of locations</a>
+<ul class="doclist">
+<li><a href="compcert.backend.Locations.html#lab407">Processor registers</a>
+
+</li>
+<li><a href="compcert.backend.Locations.html#lab408">Slots in activation records</a>
+
+</li>
+<li><a href="compcert.backend.Locations.html#lab409">Locations</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.backend.Locations.html#lab410">Mappings from locations to values</a>
+
+</li>
+<li><a href="compcert.backend.Locations.html#lab411">Total ordering over locations</a>
+
+</li>
+</ul>
+<a href="compcert.common.Separation.html"><h2>Library compcert.common.Separation</h2></a>
+<ul class="doclist">
+<li><a href="compcert.common.Separation.html#lab412">Assertions about memory</a>
+
+</li>
+<li><a href="compcert.common.Separation.html#lab413">Separating conjunction</a>
+
+</li>
+<li><a href="compcert.common.Separation.html#lab414">Basic memory assertions.</a>
+
+</li>
+</ul>
+<a href="compcert.x86.Conventions1.html"><h2>Library compcert.x86.Conventions1</h2></a>
+<ul class="doclist">
+<li><a href="compcert.x86.Conventions1.html#lab415">Classification of machine registers</a>
+
+</li>
+<li><a href="compcert.x86.Conventions1.html#lab416">Function calling conventions</a>
+<ul class="doclist">
+<li><a href="compcert.x86.Conventions1.html#lab417">Location of function result</a>
+
+</li>
+<li><a href="compcert.x86.Conventions1.html#lab418">Location of function arguments</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="compcert.backend.Conventions.html"><h2>Library compcert.backend.Conventions</h2></a>
+<ul class="doclist">
+<li><ul class="doclist">
+<li><a href="compcert.backend.Conventions.html#lab419">Location of function parameters</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.backend.Conventions.html#lab420">Tail calls</a>
+
+</li>
+</ul>
+<a href="compcert.backend.LTL.html"><h2>Library compcert.backend.LTL</h2></a>
+<ul class="doclist">
+<li><a href="compcert.backend.LTL.html#lab421">Abstract syntax</a>
+
+</li>
+<li><a href="compcert.backend.LTL.html#lab422">Operational semantics</a>
+
+</li>
+<li><a href="compcert.backend.LTL.html#lab423">Operations over LTL</a>
+
+</li>
+</ul>
+<a href="compcert.backend.Linear.html"><h2>Library compcert.backend.Linear</h2></a>
+<ul class="doclist">
+<li><a href="compcert.backend.Linear.html#lab424">Abstract syntax</a>
+
+</li>
+<li><a href="compcert.backend.Linear.html#lab425">Operational semantics</a>
+
+</li>
+</ul>
+<a href="compcert.backend.Bounds.html"><h2>Library compcert.backend.Bounds</h2></a>
+<ul class="doclist">
+<li><a href="compcert.backend.Bounds.html#lab426">Resource bounds for a function</a>
+
+</li>
+<li><a href="compcert.backend.Bounds.html#lab427">Inference of resource bounds for a function</a>
+
+</li>
+</ul>
+<a href="compcert.x86.Stacklayout.html"><h2>Library compcert.x86.Stacklayout</h2></a>
+<a href="compcert.backend.EraseArgs.html"><h2>Library compcert.backend.EraseArgs</h2></a>
+<a href="compcert.x86.Asm.html"><h2>Library compcert.x86.Asm</h2></a>
+<ul class="doclist">
+<li><a href="compcert.x86.Asm.html#lab428">Abstract syntax</a>
+<ul class="doclist">
+<li><a href="compcert.x86.Asm.html#lab429">Registers.</a>
+
+</li>
+<li><a href="compcert.x86.Asm.html#lab430">Instruction set.</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="compcert.x86.Asm.html#lab431">Operational semantics</a>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.CompcertStructures.html"><h2>Library liblayers.compcertx.CompcertStructures</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.CompcertStructures.html#lab432">Prerequisites</a>
+
+</li>
+<li><a href="liblayers.compcertx.CompcertStructures.html#lab433">Relations on programs and global environments</a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.CompcertStructures.html#lab434">The <span class="inlinecode"><span class="id" title="var">glob_threshold</span></span> constant</a>
+
+</li>
+<li><a href="liblayers.compcertx.CompcertStructures.html#lab435">Programs</a>
+
+</li>
+<li><a href="liblayers.compcertx.CompcertStructures.html#lab436">Global environments</a>
+
+</li>
+<li><a href="liblayers.compcertx.CompcertStructures.html#lab437">Monotonicity of <span class="inlinecode"><span class="id" title="var">Genv.globalenv</span></span></a>
+
+</li>
+<li><a href="liblayers.compcertx.CompcertStructures.html#lab438">Additional definitions</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.compcertx.CompcertStructures.html#lab439">Clight signatures</a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.CompcertStructures.html#lab440">Decision procedures</a>
+
+</li>
+<li><a href="liblayers.compcertx.CompcertStructures.html#lab441">Helper functions</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.compcertx.CompcertStructures.html#lab442">Injection-related properties</a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.CompcertStructures.html#lab443">Lemmas about <span class="inlinecode"><span class="id" title="var">extcall_arguments</span></span></a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.compcertx.CompcertStructures.html#lab444">Names of external functions</a>
+
+</li>
+<li><a href="liblayers.compcertx.CompcertStructures.html#lab445">Lists</a>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.LiftMem.html"><h2>Library liblayers.compcertx.LiftMem</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.LiftMem.html#lab446">Prerequisites</a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.LiftMem.html#lab447">Properties of the <span class="inlinecode"><span class="id" title="var">inject_incr</span></span> relation</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.compcertx.LiftMem.html#lab448">Lifting the properties</a>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.LiftMemX.html"><h2>Library liblayers.compcertx.LiftMemX</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.LiftMemX.html#lab449">Prerequisites</a>
+
+</li>
+</ul>
+<a href="liblayers.simrel.AbstractData.html"><h2>Library liblayers.simrel.AbstractData</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.AbstractData.html#lab450">Types of abstract data</a>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.InitMem.html"><h2>Library liblayers.compcertx.InitMem</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.InitMem.html#lab451">Miscellaneous properties of <span class="inlinecode"><span class="id" title="var">Genv.init_mem</span></span></a>
+
+</li>
+</ul>
+<a href="liblayers.simrel.MemWithData.html"><h2>Library liblayers.simrel.MemWithData</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.MemWithData.html#lab452">Memory with abstract data</a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.MemWithData.html#lab453">Base memory model</a>
+
+</li>
+<li><a href="liblayers.simrel.MemWithData.html#lab454">Memory with data</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="coqrel.BoolRel.html"><h2>Library coqrel.BoolRel</h2></a>
+<ul class="doclist">
+<li><a href="coqrel.BoolRel.html#lab455">Relations for <span class="inlinecode"><span class="id" title="var">sumbool</span></span></a>
+<ul class="doclist">
+<li><a href="coqrel.BoolRel.html#lab456">Symmetric relation</a>
+
+</li>
+<li><a href="coqrel.BoolRel.html#lab457">Directed relation</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="coqrel.BoolRel.html#lab458">Definitions for <span class="inlinecode"><span class="id" title="var">leb</span></span></a>
+<ul class="doclist">
+<li><a href="coqrel.BoolRel.html#lab459">Properties</a>
+
+</li>
+<li><a href="coqrel.BoolRel.html#lab460">Monotonicity of various definitions</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.simrel.SimrelDefinition.html"><h2>Library liblayers.simrel.SimrelDefinition</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab461">Preliminaries</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab462">Simulation relations blueprints</a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab463">Components</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab464">Relations derived from <span class="inlinecode"><span class="id" title="var">simrel_meminj</span></span></a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab465"><span class="inlinecode"><span class="id" title="var">simrel_option_le</span></span></a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab466">Initial memory</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab467">Properties</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab468">Packaging them up</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab469">Properties of derived relations</a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab470">Compatibility with the accessibility relation</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab471">Functionality</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab472">Shift-invariance</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab473">Relationships between <span class="inlinecode"><span class="id" title="var">match_foo</span></span> relations</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab474">Global blocks</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab475">Miscellaneous</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab476">Properties of derived memory operations</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab477">Strengthened properties for memory operations</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.simrel.SimrelDefinition.html#lab478">Tactics</a>
+
+</li>
+</ul>
+<a href="liblayers.simrel.SimrelEquivalence.html"><h2>Library liblayers.simrel.SimrelEquivalence</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.SimrelEquivalence.html#lab479">Equivalences</a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.SimrelEquivalence.html#lab480">Definition</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelEquivalence.html#lab481">Rewriting tactic</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelEquivalence.html#lab482">Basic equivalences</a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.SimrelEquivalence.html#lab483">Identity</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelEquivalence.html#lab484">Composition</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelEquivalence.html#lab485">Inverse</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.simrel.SimrelEquivalence.html#lab486">The <span class="inlinecode"><span class="id" title="var">simrel_equiv</span></span> relation</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.simrel.MemoryRel.html"><h2>Library liblayers.simrel.MemoryRel</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.MemoryRel.html#lab487">Relational version of memory model properties</a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.MemoryRel.html#lab488">Properties of the relations involved</a>
+
+</li>
+<li><a href="liblayers.simrel.MemoryRel.html#lab489"><span class="inlinecode"><span class="id" title="var">Mem.extends</span></span> properties</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.MakeProgramSpec.html"><h2>Library liblayers.compcertx.MakeProgramSpec</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.MakeProgramSpec.html#lab490">Prerequisites</a>
+
+</li>
+<li><a href="liblayers.compcertx.MakeProgramSpec.html#lab491">Relations</a>
+
+</li>
+<li><a href="liblayers.compcertx.MakeProgramSpec.html#lab492">Specification of <span class="inlinecode"><span class="id" title="var">make_program</span></span></a>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.InitMemRel.html"><h2>Library liblayers.compcertx.InitMemRel</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.InitMemRel.html#lab493">Monotonicity of <span class="inlinecode"><span class="id" title="var">Genv.alloc_global</span></span></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.InitMemRel.html#lab494">Helper definitions</a>
+
+</li>
+<li><a href="liblayers.compcertx.InitMemRel.html#lab495">Requirements</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.compcertx.InitMemRel.html#lab496">Relational property for <span class="inlinecode"><span class="id" title="var">Genv.init_mem</span></span></a>
+
+</li>
+</ul>
+<a href="liblayers.simrel.SimrelInitMem.html"><h2>Library liblayers.simrel.SimrelInitMem</h2></a>
+<a href="liblayers.simrel.MemOpv.html"><h2>Library liblayers.simrel.MemOpv</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.MemOpv.html#lab497">Memory operation helpers</a>
+
+</li>
+<li><a href="liblayers.simrel.MemOpv.html#lab498">Monotonicity properties</a>
+
+</li>
+</ul>
+<a href="liblayers.simrel.SimrelCategory.html"><h2>Library liblayers.simrel.SimrelCategory</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.SimrelCategory.html#lab499">Categorical structure</a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.SimrelCategory.html#lab500">Identity</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelCategory.html#lab501">Composition</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelCategory.html#lab502">Categorical properties</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelCategory.html#lab503"><span class="inlinecode"><span class="id" title="var">simrel</span></span> is a <span class="inlinecode"><span class="id" title="var">Category</span></span></a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.simrel.SimrelFunctor.html"><h2>Library liblayers.simrel.SimrelFunctor</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.SimrelFunctor.html#lab504">Simrel functors</a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.SimrelFunctor.html#lab505">Relations without worlds</a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.SimrelFunctor.html#lab506">Definition</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelFunctor.html#lab507">Properties</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.simrel.SimrelFunctor.html#lab508">Relations indexed by <span class="inlinecode"><span class="id" title="var">simrel_world</span></span>s</a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.SimrelFunctor.html#lab509">Definition</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelFunctor.html#lab510">Properties</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.simrel.SimulationRelation.html"><h2>Library liblayers.simrel.SimulationRelation</h2></a>
+<a href="liblayers.simrel.SimrelInvariant.html"><h2>Library liblayers.simrel.SimrelInvariant</h2></a>
+<ul class="doclist">
+<li><ul class="doclist">
+<li><a href="liblayers.simrel.SimrelInvariant.html#lab511">Invariants</a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.SimrelInvariant.html#lab512">Definition</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelInvariant.html#lab513">Properties</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelInvariant.html#lab514">Initial states</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.SimValues.html"><h2>Library liblayers.compcertx.SimValues</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.SimValues.html#lab515">Prerequisites</a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.SimValues.html#lab516">Typeclass version of <span class="inlinecode"><span class="id" title="var">Archi.ptr64</span></span></a>
+
+</li>
+<li><a href="liblayers.compcertx.SimValues.html#lab517">Typed <span class="inlinecode"><span class="id" title="var">match_val</span></span></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.SimValues.html#lab518">Definition</a>
+
+</li>
+<li><a href="liblayers.compcertx.SimValues.html#lab519">Properties</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.compcertx.SimValues.html#lab520">Miscellaneous</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.compcertx.SimValues.html#lab521">Properties of <span class="inlinecode"><span class="id" title="var">match_val_of_type_</span>×</span> wrt. equivalence</a>
+
+</li>
+<li><a href="liblayers.compcertx.SimValues.html#lab522">Operations over values</a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.SimValues.html#lab523">Preparations</a>
+
+</li>
+<li><a href="liblayers.compcertx.SimValues.html#lab524">Constants</a>
+
+</li>
+<li><a href="liblayers.compcertx.SimValues.html#lab525">Arithmetic operations</a>
+
+</li>
+<li><a href="liblayers.compcertx.SimValues.html#lab526">Operations on 64-bit integers</a>
+
+</li>
+<li><a href="liblayers.compcertx.SimValues.html#lab527">Comparisons</a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.SimValues.html#lab528">Prerequisites</a>
+
+</li>
+<li><a href="liblayers.compcertx.SimValues.html#lab529">Comparison operations</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.SimEvents.html"><h2>Library liblayers.compcertx.SimEvents</h2></a>
+<ul class="doclist">
+<li><ul class="doclist">
+<li><a href="liblayers.compcertx.SimEvents.html#lab530">Semantics of volatile memory accesses</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.compcertx.SimEvents.html#lab531">Semantics of external functions</a>
+
+</li>
+</ul>
+<a href="compcert.common.Switch.html"><h2>Library compcert.common.Switch</h2></a>
+<a href="compcert.backend.Cminor.html"><h2>Library compcert.backend.Cminor</h2></a>
+<ul class="doclist">
+<li><a href="compcert.backend.Cminor.html#lab532">Abstract syntax</a>
+
+</li>
+<li><a href="compcert.backend.Cminor.html#lab533">Operational semantics (small-step)</a>
+
+</li>
+<li><a href="compcert.backend.Cminor.html#lab534">Alternate operational semantics (big-step)</a>
+<ul class="doclist">
+<li><a href="compcert.backend.Cminor.html#lab535">Correctness of the big-step semantics with respect to the transition semantics</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="compcert.backend.CminorSel.html"><h2>Library compcert.backend.CminorSel</h2></a>
+<ul class="doclist">
+<li><a href="compcert.backend.CminorSel.html#lab536">Abstract syntax</a>
+
+</li>
+<li><a href="compcert.backend.CminorSel.html#lab537">Operational semantics</a>
+
+</li>
+<li><a href="compcert.backend.CminorSel.html#lab538">Lifting of let-bound variables</a>
+
+</li>
+</ul>
+<a href="compcert.driver.Compopts.html"><h2>Library compcert.driver.Compopts</h2></a>
+<a href="compcert.x86.SelectOp.html"><h2>Library compcert.x86.SelectOp</h2></a>
+<ul class="doclist">
+<li><ul class="doclist">
+<li><a href="compcert.x86.SelectOp.html#lab539">Constants</a>
+
+</li>
+<li><a href="compcert.x86.SelectOp.html#lab540">Integer logical negation</a>
+
+</li>
+<li><a href="compcert.x86.SelectOp.html#lab541">Integer addition and pointer addition</a>
+
+</li>
+<li><a href="compcert.x86.SelectOp.html#lab542">Opposite</a>
+
+</li>
+<li><a href="compcert.x86.SelectOp.html#lab543">Integer and pointer subtraction</a>
+
+</li>
+<li><a href="compcert.x86.SelectOp.html#lab544">Immediate shifts</a>
+
+</li>
+<li><a href="compcert.x86.SelectOp.html#lab545">Integer multiply</a>
+
+</li>
+<li><a href="compcert.x86.SelectOp.html#lab546">Bitwise and, or, xor</a>
+
+</li>
+<li><a href="compcert.x86.SelectOp.html#lab547">Integer division and modulus</a>
+
+</li>
+<li><a href="compcert.x86.SelectOp.html#lab548">General shifts</a>
+
+</li>
+<li><a href="compcert.x86.SelectOp.html#lab549">Floating-point arithmetic</a>
+
+</li>
+<li><a href="compcert.x86.SelectOp.html#lab550">Comparisons</a>
+
+</li>
+<li><a href="compcert.x86.SelectOp.html#lab551">Integer conversions</a>
+
+</li>
+<li><a href="compcert.x86.SelectOp.html#lab552">Addressing modes</a>
+
+</li>
+<li><a href="compcert.x86.SelectOp.html#lab553">Arguments of builtins</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="compcert.x86.SelectOpproof.html"><h2>Library compcert.x86.SelectOpproof</h2></a>
+<ul class="doclist">
+<li><a href="compcert.x86.SelectOpproof.html#lab554">Useful lemmas and tactics</a>
+
+</li>
+<li><a href="compcert.x86.SelectOpproof.html#lab555">Correctness of the smart constructors</a>
+
+</li>
+</ul>
+<a href="compcert.backend.SplitLong.html"><h2>Library compcert.backend.SplitLong</h2></a>
+<a href="compcert.backend.SplitLongproof.html"><h2>Library compcert.backend.SplitLongproof</h2></a>
+<ul class="doclist">
+<li><a href="compcert.backend.SplitLongproof.html#lab556">Axiomatization of the helper functions</a>
+
+</li>
+<li><a href="compcert.backend.SplitLongproof.html#lab557">Correctness of the instruction selection functions for 64-bit operators</a>
+
+</li>
+</ul>
+<a href="compcert.x86.SelectLong.html"><h2>Library compcert.x86.SelectLong</h2></a>
+<a href="compcert.x86.SelectLongproof.html"><h2>Library compcert.x86.SelectLongproof</h2></a>
+<ul class="doclist">
+<li><a href="compcert.x86.SelectLongproof.html#lab558">Correctness of the instruction selection functions for 64-bit operators</a>
+
+</li>
+</ul>
+<a href="compcertx.driver.CompCertBuiltins.html"><h2>Library compcertx.driver.CompCertBuiltins</h2></a>
+<a href="liblayers.compcertx.SimCompCertBuiltins.html"><h2>Library liblayers.compcertx.SimCompCertBuiltins</h2></a>
+<a href="liblayers.compcertx.SimCop.html"><h2>Library liblayers.compcertx.SimCop</h2></a>
+<a href="compcertx.common.EventsX.html"><h2>Library compcertx.common.EventsX</h2></a>
+<a href="liblayers.compcertx.SimClight.html"><h2>Library liblayers.compcertx.SimClight</h2></a>
+<a href="liblayers.compcertx.CompCertGlobalVars.html"><h2>Library liblayers.compcertx.CompCertGlobalVars</h2></a>
+<a href="liblayers.compcertx.CGlobalVars.html"><h2>Library liblayers.compcertx.CGlobalVars</h2></a>
+<a href="liblayers.simrel.SimrelLessdef.html"><h2>Library liblayers.simrel.SimrelLessdef</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.SimrelLessdef.html#lab559"><span class="inlinecode"><span class="id" title="var">lessdef</span></span> (and <span class="inlinecode"><span class="id" title="var">Mem.extends</span></span>) as a simulation relation</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelLessdef.html#lab560">Strong version of extends for <span class="inlinecode"><span class="id" title="var">ec_mem_extends</span></span>. Coincidentally,</a>
+
+</li>
+</ul>
+<a href="liblayers.simrel.SimrelInject.html"><h2>Library liblayers.simrel.SimrelInject</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.SimrelInject.html#lab561"><span class="inlinecode"><span class="id" title="var">inject</span></span> as a simulation relation</a>
+
+</li>
+<li><a href="liblayers.simrel.SimrelInject.html#lab562">Wrap <span class="inlinecode"><span class="id" title="var">simrel_inject</span></span> into a stronger version, for <span class="inlinecode"><span class="id" title="var">ec_mem_inject</span></span></a>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.CPrimitives.html"><h2>Library liblayers.compcertx.CPrimitives</h2></a>
+<ul class="doclist">
+<li><ul class="doclist">
+<li><a href="liblayers.compcertx.CPrimitives.html#lab563">Invariant</a>
+
+</li>
+<li><a href="liblayers.compcertx.CPrimitives.html#lab564">Properties</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.compcertx.CPrimitives.html#lab565">User diagrams</a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.CPrimitives.html#lab566">Identity diagram</a>
+
+</li>
+<li><a href="liblayers.compcertx.CPrimitives.html#lab567">General diagram with invariants</a>
+
+</li>
+<li><a href="liblayers.compcertx.CPrimitives.html#lab568">Inclusion diagram with invariants</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.CGenSem.html"><h2>Library liblayers.compcertx.CGenSem</h2></a>
+<a href="liblayers.logic.Language.html"><h2>Library liblayers.logic.Language</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.logic.Language.html#lab569">Language definitions</a>
+<ul class="doclist">
+<li><a href="liblayers.logic.Language.html#lab570">Layer logic</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.logic.Language.html#lab571">Derived rules</a>
+
+</li>
+</ul>
+<a href="liblayers.logic.LayerLogicImpl.html"><h2>Library liblayers.logic.LayerLogicImpl</h2></a>
+<a href="liblayers.compcertx.ClightModules.html"><h2>Library liblayers.compcertx.ClightModules</h2></a>
+<a href="liblayers.compcertx.MakeProgramFacts.html"><h2>Library liblayers.compcertx.MakeProgramFacts</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.MakeProgramFacts.html#lab572">Preliminaries</a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.MakeProgramFacts.html#lab573">Using <span class="inlinecode"><span class="id" title="var">make_program_noconflict</span></span></a>
+
+</li>
+<li><a href="liblayers.compcertx.MakeProgramFacts.html#lab574">Elementary relations for <span class="inlinecode"><span class="id" title="var">make_program_rel</span></span></a>
+
+</li>
+<li><a href="liblayers.compcertx.MakeProgramFacts.html#lab575">Other useful lemmas</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.compcertx.MakeProgramFacts.html#lab576">Properties relating module-layer pairs with their global environments</a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.MakeProgramFacts.html#lab577">Intensional properties about single-binding module-layer pairs</a>
+
+</li>
+<li><a href="liblayers.compcertx.MakeProgramFacts.html#lab578">Extensional properties</a>
+
+</li>
+<li><a href="liblayers.compcertx.MakeProgramFacts.html#lab579">Consequences of single hypotheses</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="liblayers.compcertx.MakeProgramFacts.html#lab580">Alternative monotonicity theorems</a>
+
+</li>
+<li><a href="liblayers.compcertx.MakeProgramFacts.html#lab581">Other global properties</a>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.MakeProgramInv.html"><h2>Library liblayers.compcertx.MakeProgramInv</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.MakeProgramInv.html#lab582">The <span class="inlinecode"><span class="id" title="var">inv_make_globalenv</span></span> tactic</a>
+
+</li>
+<li><a href="liblayers.compcertx.MakeProgramInv.html#lab583">Test</a>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.MakeProgram.html"><h2>Library liblayers.compcertx.MakeProgram</h2></a>
+<a href="liblayers.compcertx.InitMemMakeProgram.html"><h2>Library liblayers.compcertx.InitMemMakeProgram</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.InitMemMakeProgram.html#lab584">Prerequisites</a>
+
+</li>
+<li><a href="liblayers.compcertx.InitMemMakeProgram.html#lab585">Proving <span class="inlinecode"><span class="id" title="var">simrel_program_rel</span></span></a>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.ClightWellTyped.html"><h2>Library liblayers.compcertx.ClightWellTyped</h2></a>
+<ul class="doclist">
+<li><ul class="doclist">
+<li><a href="liblayers.compcertx.ClightWellTyped.html#lab586">Function execution is well-typed at return.</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.compcertx.ClightXSemantics.html"><h2>Library liblayers.compcertx.ClightXSemantics</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.ClightXSemantics.html#lab587">LayerLib Semantics of ClightX</a>
+<ul class="doclist">
+<li><a href="liblayers.compcertx.ClightXSemantics.html#lab588">Monotonicity in terms of <span class="inlinecode"><span class="id" title="var">genv_sim</span></span></a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="liblayers.simrel.AbstractionRelation.html"><h2>Library liblayers.simrel.AbstractionRelation</h2></a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.AbstractionRelation.html#lab589">Definition</a>
+
+</li>
+<li><a href="liblayers.simrel.AbstractionRelation.html#lab590">Embedding as <span class="inlinecode"><span class="id" title="var">simrel</span></span></a>
+<ul class="doclist">
+<li><a href="liblayers.simrel.AbstractionRelation.html#lab591">Definition</a>
+
+</li>
+<li><a href="liblayers.simrel.AbstractionRelation.html#lab592">Lemmas</a>
+
+</li>
+<li><a href="liblayers.simrel.AbstractionRelation.html#lab593">Initial states</a>
+
+</li>
+<li><a href="liblayers.simrel.AbstractionRelation.html#lab594">Main proof</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="tutorial.common.TutoLib.html"><h2>Library tutorial.common.TutoLib</h2></a>
+<ul class="doclist">
+<li><a href="tutorial.common.TutoLib.html#lab595">TutoLib.v</a>
+
+</li>
+<li><a href="tutorial.common.TutoLib.html#lab596">A library of tactics and lemmas used in the layer tutorial.</a>
+<ul class="doclist">
+<li><a href="tutorial.common.TutoLib.html#lab597">Helper tactics</a>
+<ul class="doclist">
+<li><a href="tutorial.common.TutoLib.html#lab598">Code and Refinement Proof Helpers</a>
+
+</li>
+<li><a href="tutorial.common.TutoLib.html#lab599">General Helpers</a>
+
+</li>
+<li><a href="tutorial.common.TutoLib.html#lab600">Linking Helpers</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="tutorial.container.ContainerType.html"><h2>Library tutorial.container.ContainerType</h2></a>
+<ul class="doclist">
+<li><a href="tutorial.container.ContainerType.html#lab601">ContainerType.v</a>
+
+</li>
+<li><a href="tutorial.container.ContainerType.html#lab602">Definitions and properties of container data.</a>
+<ul class="doclist">
+<li><a href="tutorial.container.ContainerType.html#lab603">Abstract Data</a>
+
+</li>
+<li><a href="tutorial.container.ContainerType.html#lab604">Properties of a Valid Container</a>
+
+</li>
+<li><a href="tutorial.container.ContainerType.html#lab605">Container Properties</a>
+<ul class="doclist">
+<li><a href="tutorial.container.ContainerType.html#lab606">Child Quotas Bounded</a>
+
+</li>
+<li><a href="tutorial.container.ContainerType.html#lab607">Invariant Preservation</a>
+
+</li>
+<li><a href="tutorial.container.ContainerType.html#lab608">Container Struct Field Offsets</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="tutorial.container.Container.html"><h2>Library tutorial.container.Container</h2></a>
+<ul class="doclist">
+<li><a href="tutorial.container.Container.html#lab609">Container.v</a>
+
+</li>
+<li><a href="tutorial.container.Container.html#lab610">Primitives to initialize and manage containers.</a>
+<ul class="doclist">
+<li><a href="tutorial.container.Container.html#lab611">Abstract Data</a>
+
+</li>
+<li><a href="tutorial.container.Container.html#lab612">High Level Specifications</a>
+
+</li>
+<li><a href="tutorial.container.Container.html#lab613">Module Implementation</a>
+
+</li>
+<li><a href="tutorial.container.Container.html#lab614">Low Level Specifications</a>
+
+</li>
+<li><a href="tutorial.container.Container.html#lab615">Code Proofs</a>
+
+</li>
+<li><a href="tutorial.container.Container.html#lab616">Layer Relation</a>
+
+</li>
+<li><a href="tutorial.container.Container.html#lab617">Refinement Proofs</a>
+
+</li>
+<li><a href="tutorial.container.Container.html#lab618">Linking</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="tutorial.container.ContainerIntro.html"><h2>Library tutorial.container.ContainerIntro</h2></a>
+<ul class="doclist">
+<li><a href="tutorial.container.ContainerIntro.html#lab619">ContainerIntro.v</a>
+
+</li>
+<li><a href="tutorial.container.ContainerIntro.html#lab620">Getter/setter layer.</a>
+<ul class="doclist">
+<li><a href="tutorial.container.ContainerIntro.html#lab621">Abstract Data</a>
+<ul class="doclist">
+<li><a href="tutorial.container.ContainerIntro.html#lab622">Underlay</a>
+
+</li>
+<li><a href="tutorial.container.ContainerIntro.html#lab623">Overlay</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="tutorial.container.ContainerIntro.html#lab624">High Level Specifications</a>
+
+</li>
+<li><a href="tutorial.container.ContainerIntro.html#lab625">Module Implementation</a>
+
+</li>
+<li><a href="tutorial.container.ContainerIntro.html#lab626">Low Level Specifications</a>
+
+</li>
+<li><a href="tutorial.container.ContainerIntro.html#lab627">Code Proofs</a>
+
+</li>
+<li><a href="tutorial.container.ContainerIntro.html#lab628">Layer Relation</a>
+
+</li>
+<li><a href="tutorial.container.ContainerIntro.html#lab629">Refinement Proofs</a>
+
+</li>
+<li><a href="tutorial.container.ContainerIntro.html#lab630">Linking</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="tutorial.queue.AbsQueue.html"><h2>Library tutorial.queue.AbsQueue</h2></a>
+<ul class="doclist">
+<li><a href="tutorial.queue.AbsQueue.html#lab631">AbsQueue.v</a>
+
+</li>
+<li><a href="tutorial.queue.AbsQueue.html#lab632">Abstract queue representation.</a>
+<ul class="doclist">
+<li><a href="tutorial.queue.AbsQueue.html#lab633">Abstract Data</a>
+
+</li>
+<li><a href="tutorial.queue.AbsQueue.html#lab634">High Level Specifications</a>
+
+</li>
+<li><a href="tutorial.queue.AbsQueue.html#lab635">Layer Relation</a>
+
+</li>
+<li><a href="tutorial.queue.AbsQueue.html#lab636">Refinement Proofs</a>
+
+</li>
+<li><a href="tutorial.queue.AbsQueue.html#lab637">Linking</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="tutorial.queue.Node.html"><h2>Library tutorial.queue.Node</h2></a>
+<ul class="doclist">
+<li><a href="tutorial.queue.Node.html#lab638">Node.v</a>
+
+</li>
+<li><a href="tutorial.queue.Node.html#lab639">Node getter/setters.</a>
+<ul class="doclist">
+<li><a href="tutorial.queue.Node.html#lab640">High Level Specifications</a>
+
+</li>
+<li><a href="tutorial.queue.Node.html#lab641">Module Implementation</a>
+
+</li>
+<li><a href="tutorial.queue.Node.html#lab642">Low Level Specifications</a>
+
+</li>
+<li><a href="tutorial.queue.Node.html#lab643">Code Proofs</a>
+
+</li>
+<li><a href="tutorial.queue.Node.html#lab644">Refinement Proofs</a>
+
+</li>
+<li><a href="tutorial.queue.Node.html#lab645">Linking.</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="tutorial.queue.Queue.html"><h2>Library tutorial.queue.Queue</h2></a>
+<ul class="doclist">
+<li><a href="tutorial.queue.Queue.html#lab646">Queue.v</a>
+
+</li>
+<li><a href="tutorial.queue.Queue.html#lab647">Low level queue representation.</a>
+<ul class="doclist">
+<li><a href="tutorial.queue.Queue.html#lab648">Abstract Data</a>
+
+</li>
+<li><a href="tutorial.queue.Queue.html#lab649">High Level Specifications</a>
+
+</li>
+<li><a href="tutorial.queue.Queue.html#lab650">Module Implementation</a>
+
+</li>
+<li><a href="tutorial.queue.Queue.html#lab651">Low Level Specifications</a>
+
+</li>
+<li><a href="tutorial.queue.Queue.html#lab652">Code Proofs</a>
+
+</li>
+<li><a href="tutorial.queue.Queue.html#lab653">Layer Relation</a>
+
+</li>
+<li><a href="tutorial.queue.Queue.html#lab654">Refinement Proofs</a>
+
+</li>
+<li><a href="tutorial.queue.Queue.html#lab655">Linking</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="tutorial.queue.QueueData.html"><h2>Library tutorial.queue.QueueData</h2></a>
+<ul class="doclist">
+<li><a href="tutorial.queue.QueueData.html#lab656">QueueData.v</a>
+
+</li>
+<li><a href="tutorial.queue.QueueData.html#lab657">Definitions and properties of queue and node data.</a>
+<ul class="doclist">
+<li><a href="tutorial.queue.QueueData.html#lab658">Node Representations</a>
+<ul class="doclist">
+<li><a href="tutorial.queue.QueueData.html#lab659">Low Level Definition</a>
+
+</li>
+<li><a href="tutorial.queue.QueueData.html#lab660">Abstract Definition</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="tutorial.queue.QueueData.html#lab661">Queue Representations</a>
+<ul class="doclist">
+<li><a href="tutorial.queue.QueueData.html#lab662">Low Level Definition</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="tutorial.queue.QueueData.html#lab663">Abstract Definition</a>
+
+</li>
+<li><a href="tutorial.queue.QueueData.html#lab664">Abstract Data</a>
+
+</li>
+<li><a href="tutorial.queue.QueueData.html#lab665">Node Properties</a>
+
+</li>
+<li><a href="tutorial.queue.QueueData.html#lab666">Composite Environments</a>
+
+</li>
+<li><a href="tutorial.queue.QueueData.html#lab667">Intro Layer Relations</a>
+<ul class="doclist">
+<li><a href="tutorial.queue.QueueData.html#lab668">Node</a>
+
+</li>
+<li><a href="tutorial.queue.QueueData.html#lab669">QueueIntro</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="tutorial.queue.QueueData.html#lab670">Helper Lemmas</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="tutorial.queue.QueueIntro.html"><h2>Library tutorial.queue.QueueIntro</h2></a>
+<ul class="doclist">
+<li><a href="tutorial.queue.QueueIntro.html#lab671">QueueIntro.v</a>
+
+</li>
+<li><a href="tutorial.queue.QueueIntro.html#lab672">Queue getter/setters.</a>
+<ul class="doclist">
+<li><a href="tutorial.queue.QueueIntro.html#lab673">High Level Specifications</a>
+
+</li>
+<li><a href="tutorial.queue.QueueIntro.html#lab674">Module Implementation</a>
+
+</li>
+<li><a href="tutorial.queue.QueueIntro.html#lab675">Low Level Specifications</a>
+
+</li>
+<li><a href="tutorial.queue.QueueIntro.html#lab676">Code Proofs</a>
+
+</li>
+<li><a href="tutorial.queue.QueueIntro.html#lab677">Refinement Proofs</a>
+
+</li>
+<li><a href="tutorial.queue.QueueIntro.html#lab678">Linking</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="tutorial.stack.Stack.html"><h2>Library tutorial.stack.Stack</h2></a>
+<ul class="doclist">
+<li><a href="tutorial.stack.Stack.html#lab679">Stack.v</a>
+
+</li>
+<li><a href="tutorial.stack.Stack.html#lab680">A layer implementing a bounded stack using a bounded counter.</a>
+<ul class="doclist">
+<li><a href="tutorial.stack.Stack.html#lab681">Abstract Data</a>
+
+</li>
+<li><a href="tutorial.stack.Stack.html#lab682">High Level Specifications</a>
+
+</li>
+<li><a href="tutorial.stack.Stack.html#lab683">Module Implementation</a>
+
+</li>
+<li><a href="tutorial.stack.Stack.html#lab684">Low Level Specifications</a>
+
+</li>
+<li><a href="tutorial.stack.Stack.html#lab685">Code Proofs</a>
+
+</li>
+<li><a href="tutorial.stack.Stack.html#lab686">Layer Relation</a>
+
+</li>
+<li><a href="tutorial.stack.Stack.html#lab687">Refinement Proofs</a>
+
+</li>
+<li><a href="tutorial.stack.Stack.html#lab688">Linking</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="tutorial.stack.Counter.html"><h2>Library tutorial.stack.Counter</h2></a>
+<ul class="doclist">
+<li><a href="tutorial.stack.Counter.html#lab689">Counter.v</a>
+
+</li>
+<li><a href="tutorial.stack.Counter.html#lab690">A single layer implementing a bounded counter.</a>
+<ul class="doclist">
+<li><a href="tutorial.stack.Counter.html#lab691">Abstract Data</a>
+<ul class="doclist">
+<li><a href="tutorial.stack.Counter.html#lab692">Underlay</a>
+
+</li>
+<li><a href="tutorial.stack.Counter.html#lab693">Overlay</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="tutorial.stack.Counter.html#lab694">High Level Specifications</a>
+
+</li>
+<li><a href="tutorial.stack.Counter.html#lab695">Module Implementation</a>
+
+</li>
+<li><a href="tutorial.stack.Counter.html#lab696">Low Level Specifications</a>
+
+</li>
+<li><a href="tutorial.stack.Counter.html#lab697">Code Proofs</a>
+
+</li>
+<li><a href="tutorial.stack.Counter.html#lab698">Layer Relation</a>
+
+</li>
+<li><a href="tutorial.stack.Counter.html#lab699">Refinement Proofs</a>
+
+</li>
+<li><a href="tutorial.stack.Counter.html#lab700">Linking</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+</div>
+<hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

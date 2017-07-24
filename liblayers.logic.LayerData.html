@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>liblayers.logic.LayerData</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library liblayers.logic.LayerData</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.logic.Structures.html#"><span class="id" title="library">liblayers.logic.Structures</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab296"></a><h1 class="section">Categories of abstract data and simulation relations</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="CategoryOps"><span class="id" title="record">CategoryOps</span></a> (<span class="id" title="var">V</span>: <span class="id" title="keyword">Type</span>) (<span class="id" title="var">E</span>: <a class="idref" href="liblayers.logic.LayerData.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.logic.LayerData.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Type</span>): <span class="id" title="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="cat_equiv"><span class="id" title="projection">cat_equiv</span></a> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> :&gt; <a class="idref" href="liblayers.logic.Structures.html#Equiv"><span class="id" title="class">Equiv</span></a> (<a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v1"><span class="id" title="variable">v1</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="cat_id"><span class="id" title="projection">cat_id</span></a> <span class="id" title="var">v</span> :&gt; <a class="idref" href="liblayers.logic.Structures.html#Id"><span class="id" title="class">Id</span></a> (<a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v"><span class="id" title="variable">v</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v"><span class="id" title="variable">v</span></a>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="cat_compose"><span class="id" title="projection">cat_compose</span></a> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">v3</span> :&gt; <a class="idref" href="liblayers.logic.Structures.html#Compose"><span class="id" title="class">Compose</span></a> (<a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v1"><span class="id" title="variable">v1</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a>) (<a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v3"><span class="id" title="variable">v3</span></a>) (<a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v1"><span class="id" title="variable">v1</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v3"><span class="id" title="variable">v3</span></a>)<br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+TODO: generalize <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#LeftIdentity"><span class="id" title="record">LeftIdentity</span></a></span>, <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#RightIdentity"><span class="id" title="record">RightIdentity</span></a></span>, and <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#Associative"><span class="id" title="record">Associative</span></a></span>
+  so that we can use them here. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="Category"><span class="id" title="record">Category</span></a> <span class="id" title="var">V</span> <span class="id" title="var">E</span> `{<span class="id" title="var">VEops</span>: <a class="idref" href="liblayers.logic.LayerData.html#CategoryOps"><span class="id" title="class">CategoryOps</span></a> <a class="idref" href="liblayers.logic.LayerData.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a>}: <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="cat_equiv_prf"><span class="id" title="projection">cat_equiv_prf</span></a> {<span class="id" title="var">v1</span> <span class="id" title="var">v2</span>: <a class="idref" href="liblayers.logic.LayerData.html#V"><span class="id" title="variable">V</span></a>} :&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Equivalence"><span class="id" title="class">Equivalence</span></a> (<a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v1"><span class="id" title="variable">v1</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a>) <a class="idref" href="liblayers.logic.Structures.html#8c6ca2ab53ebecec54f62e85b81b50e8"><span class="id" title="notation">(≡)</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="cat_compose_prf"><span class="id" title="projection">cat_compose_prf</span></a> {<span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">v3</span>: <a class="idref" href="liblayers.logic.LayerData.html#V"><span class="id" title="variable">V</span></a>} :&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a> (<a class="idref" href="liblayers.logic.Structures.html#compose"><span class="id" title="method">compose</span></a> (<span class="id" title="var">A</span> := <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v1"><span class="id" title="variable">v1</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a>) (<span class="id" title="var">B</span> := <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v3"><span class="id" title="variable">v3</span></a>)) (<a class="idref" href="liblayers.logic.Structures.html#8c6ca2ab53ebecec54f62e85b81b50e8"><span class="id" title="notation">(≡)</span></a> <a class="idref" href="coqrel.RelDefinitions.html#e7acdf91669d82873f44a60e56ad44ff"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="liblayers.logic.Structures.html#8c6ca2ab53ebecec54f62e85b81b50e8"><span class="id" title="notation">(≡)</span></a> <a class="idref" href="coqrel.RelDefinitions.html#e7acdf91669d82873f44a60e56ad44ff"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="liblayers.logic.Structures.html#8c6ca2ab53ebecec54f62e85b81b50e8"><span class="id" title="notation">(≡)</span></a>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="cat_compose_id_left"><span class="id" title="projection">cat_compose_id_left</span></a> {<span class="id" title="var">v1</span> <span class="id" title="var">v2</span>: <a class="idref" href="liblayers.logic.LayerData.html#V"><span class="id" title="variable">V</span></a>}:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">e</span>: <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v1"><span class="id" title="variable">v1</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#id"><span class="id" title="method">id</span></a> <a class="idref" href="liblayers.logic.Structures.html#28309b4b31fc061cea0bf998329431b2"><span class="id" title="notation">∘</span></a> <a class="idref" href="liblayers.logic.LayerData.html#e"><span class="id" title="variable">e</span></a> <a class="idref" href="liblayers.logic.Structures.html#130feec68326dec2794bb89648a52e90"><span class="id" title="notation">≡</span></a> <a class="idref" href="liblayers.logic.LayerData.html#e"><span class="id" title="variable">e</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="cat_compose_id_right"><span class="id" title="projection">cat_compose_id_right</span></a> {<span class="id" title="var">v1</span> <span class="id" title="var">v2</span>: <a class="idref" href="liblayers.logic.LayerData.html#V"><span class="id" title="variable">V</span></a>}:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">e</span>: <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v1"><span class="id" title="variable">v1</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.LayerData.html#e"><span class="id" title="variable">e</span></a> <a class="idref" href="liblayers.logic.Structures.html#28309b4b31fc061cea0bf998329431b2"><span class="id" title="notation">∘</span></a> <a class="idref" href="liblayers.logic.Structures.html#id"><span class="id" title="method">id</span></a> <a class="idref" href="liblayers.logic.Structures.html#130feec68326dec2794bb89648a52e90"><span class="id" title="notation">≡</span></a> <a class="idref" href="liblayers.logic.LayerData.html#e"><span class="id" title="variable">e</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="cat_compose_assoc"><span class="id" title="projection">cat_compose_assoc</span></a> {<span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">v3</span> <span class="id" title="var">v4</span>: <a class="idref" href="liblayers.logic.LayerData.html#V"><span class="id" title="variable">V</span></a>}:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">e12</span>: <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v1"><span class="id" title="variable">v1</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a>) (<span class="id" title="var">e23</span>: <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v3"><span class="id" title="variable">v3</span></a>) (<span class="id" title="var">e34</span>: <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v3"><span class="id" title="variable">v3</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v4"><span class="id" title="variable">v4</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.LayerData.html#e34"><span class="id" title="variable">e34</span></a> <a class="idref" href="liblayers.logic.Structures.html#28309b4b31fc061cea0bf998329431b2"><span class="id" title="notation">∘</span></a> <a class="idref" href="liblayers.logic.Structures.html#28309b4b31fc061cea0bf998329431b2"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.logic.LayerData.html#e23"><span class="id" title="variable">e23</span></a> <a class="idref" href="liblayers.logic.Structures.html#28309b4b31fc061cea0bf998329431b2"><span class="id" title="notation">∘</span></a> <a class="idref" href="liblayers.logic.LayerData.html#e12"><span class="id" title="variable">e12</span></a><a class="idref" href="liblayers.logic.Structures.html#28309b4b31fc061cea0bf998329431b2"><span class="id" title="notation">)</span></a> <a class="idref" href="liblayers.logic.Structures.html#130feec68326dec2794bb89648a52e90"><span class="id" title="notation">≡</span></a> <a class="idref" href="liblayers.logic.Structures.html#28309b4b31fc061cea0bf998329431b2"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.logic.LayerData.html#e34"><span class="id" title="variable">e34</span></a> <a class="idref" href="liblayers.logic.Structures.html#28309b4b31fc061cea0bf998329431b2"><span class="id" title="notation">∘</span></a> <a class="idref" href="liblayers.logic.LayerData.html#e23"><span class="id" title="variable">e23</span></a><a class="idref" href="liblayers.logic.Structures.html#28309b4b31fc061cea0bf998329431b2"><span class="id" title="notation">)</span></a> <a class="idref" href="liblayers.logic.Structures.html#28309b4b31fc061cea0bf998329431b2"><span class="id" title="notation">∘</span></a> <a class="idref" href="liblayers.logic.LayerData.html#e12"><span class="id" title="variable">e12</span></a><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="cat_compose_params"><span class="id" title="instance">cat_compose_params</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#Params"><span class="id" title="class">Params</span></a> (@<a class="idref" href="liblayers.logic.Structures.html#compose"><span class="id" title="method">compose</span></a>) 2.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab297"></a><h1 class="section">Associated concrete simulation relations</h1>
+
+<div class="paragraph"> </div>
+
+ We map the objects and arrows onto types and relations in some
+  kind of structure-preserving ways. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="CategorySim"><span class="id" title="record">CategorySim</span></a> <span class="id" title="var">V</span> <span class="id" title="var">E</span> <span class="id" title="var">T</span> `{<span class="id" title="var">cat_ops</span>: <a class="idref" href="liblayers.logic.LayerData.html#CategoryOps"><span class="id" title="class">CategoryOps</span></a> <a class="idref" href="liblayers.logic.LayerData.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a>} `{<span class="id" title="var">cat_sim</span>: <a class="idref" href="liblayers.logic.Structures.html#Sim"><span class="id" title="class">Sim</span></a> <a class="idref" href="liblayers.logic.LayerData.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#T"><span class="id" title="variable">T</span></a>} :=<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="cat_sim_cat"><span class="id" title="projection">cat_sim_cat</span></a>: <a class="idref" href="liblayers.logic.LayerData.html#Category"><span class="id" title="class">Category</span></a> <a class="idref" href="liblayers.logic.LayerData.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="cat_sim_proper"><span class="id" title="projection">cat_sim_proper</span></a> :&gt; <a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a> <a class="idref" href="liblayers.logic.Structures.html#simRR"><span class="id" title="method">simRR</span></a> (<a class="idref" href="coqrel.Relators.html#121f19e13d350c3a792fb7c67ae4a001"><span class="id" title="notation">forallr</span></a> <a class="idref" href="coqrel.Relators.html#121f19e13d350c3a792fb7c67ae4a001"><span class="id" title="notation">-,</span></a> <a class="idref" href="coqrel.Relators.html#121f19e13d350c3a792fb7c67ae4a001"><span class="id" title="notation">forallr</span></a> <a class="idref" href="coqrel.Relators.html#121f19e13d350c3a792fb7c67ae4a001"><span class="id" title="notation">-,</span></a> <a class="idref" href="liblayers.logic.Structures.html#8c6ca2ab53ebecec54f62e85b81b50e8"><span class="id" title="notation">(≡)</span></a> <a class="idref" href="coqrel.RelDefinitions.html#e7acdf91669d82873f44a60e56ad44ff"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="coqrel.RelDefinitions.html#subrel"><span class="id" title="definition">subrel</span></a>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="cat_sim_refl"><span class="id" title="projection">cat_sim_refl</span></a> <span class="id" title="var">v</span> :&gt; @<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Reflexive"><span class="id" title="class">Reflexive</span></a> (<a class="idref" href="liblayers.logic.LayerData.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v"><span class="id" title="variable">v</span></a>) (<a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <a class="idref" href="liblayers.logic.Structures.html#id"><span class="id" title="method">id</span></a>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="cat_sim_trans"><span class="id" title="projection">cat_sim_trans</span></a> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">v3</span> (<span class="id" title="var">e12</span>: <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v1"><span class="id" title="variable">v1</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a>) (<span class="id" title="var">e23</span>: <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v3"><span class="id" title="variable">v3</span></a>) :&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#HTransitive"><span class="id" title="class">HTransitive</span></a> (<a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <a class="idref" href="liblayers.logic.LayerData.html#e12"><span class="id" title="variable">e12</span></a>) (<a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <a class="idref" href="liblayers.logic.LayerData.html#e23"><span class="id" title="variable">e23</span></a>) (<a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> (<a class="idref" href="liblayers.logic.LayerData.html#e23"><span class="id" title="variable">e23</span></a> <a class="idref" href="liblayers.logic.Structures.html#28309b4b31fc061cea0bf998329431b2"><span class="id" title="notation">∘</span></a> <a class="idref" href="liblayers.logic.LayerData.html#e12"><span class="id" title="variable">e12</span></a>))<br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="cat_sim_proper_params"><span class="id" title="instance">cat_sim_proper_params</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#Params"><span class="id" title="class">Params</span></a> (@<a class="idref" href="liblayers.logic.Structures.html#simRR"><span class="id" title="method">simRR</span></a>) 5.<br/>
+
+<br/>
+<span class="id" title="keyword">Local</span> <span class="id" title="var">Existing</span> <span class="id" title="keyword">Instance</span> <span class="id" title="var">cat_sim_cat</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We can specialize <span class="inlinecode"><a class="idref" href="liblayers.logic.LayerData.html#cat_sim_trans"><span class="id" title="projection">cat_sim_trans</span></a></span> to account for situations where
+  either <span class="inlinecode"><a class="idref" href="liblayers.logic.LayerData.html#e12"><span class="id" title="variable">e12</span></a></span> or <span class="inlinecode"><a class="idref" href="liblayers.logic.LayerData.html#e23"><span class="id" title="variable">e23</span></a></span> are <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#id"><span class="id" title="projection">id</span></a></span>, in which case the goal does not need
+  to be of the form <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a></span> <span class="inlinecode">(<span class="id" title="var">_</span></span> <span class="inlinecode">∘</span> <span class="inlinecode"><span class="id" title="var">_</span>)</span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="cat_sim_trans_le_left"><span class="id" title="instance">cat_sim_trans_le_left</span></a> `{<a class="idref" href="liblayers.logic.LayerData.html#CategorySim"><span class="id" title="class">CategorySim</span></a>}:<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> (<span class="id" title="var">e12</span>: <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v1"><span class="id" title="variable">v1</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#HTransitive"><span class="id" title="class">HTransitive</span></a> (<a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <a class="idref" href="liblayers.logic.LayerData.html#e12"><span class="id" title="variable">e12</span></a>) (<a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <a class="idref" href="liblayers.logic.Structures.html#id"><span class="id" title="method">id</span></a>) (<a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <a class="idref" href="liblayers.logic.LayerData.html#e12"><span class="id" title="variable">e12</span></a>) | 2.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e12</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> <span class="id" title="var">Hab</span> <span class="id" title="var">Hbc</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <a class="idref" href="liblayers.logic.LayerData.html#cat_compose_id_left"><span class="id" title="method">cat_compose_id_left</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">ehtransitivity</span>; <span class="id" title="var">eassumption</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="cat_sim_trans_le_right"><span class="id" title="instance">cat_sim_trans_le_right</span></a> `{<a class="idref" href="liblayers.logic.LayerData.html#CategorySim"><span class="id" title="class">CategorySim</span></a>}:<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> (<span class="id" title="var">e12</span>: <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v1"><span class="id" title="variable">v1</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#HTransitive"><span class="id" title="class">HTransitive</span></a> (<a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <a class="idref" href="liblayers.logic.Structures.html#id"><span class="id" title="method">id</span></a>) (<a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <a class="idref" href="liblayers.logic.LayerData.html#e12"><span class="id" title="variable">e12</span></a>) (<a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <a class="idref" href="liblayers.logic.LayerData.html#e12"><span class="id" title="variable">e12</span></a>) | 2.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e12</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> <span class="id" title="var">Hab</span> <span class="id" title="var">Hbc</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <a class="idref" href="liblayers.logic.LayerData.html#cat_compose_id_right"><span class="id" title="method">cat_compose_id_right</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">ehtransitivity</span>; <span class="id" title="var">eassumption</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="cat_sim_preorder"><span class="id" title="instance">cat_sim_preorder</span></a> `{<a class="idref" href="liblayers.logic.LayerData.html#CategorySim"><span class="id" title="class">CategorySim</span></a>}:<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">v</span>, @<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#PreOrder"><span class="id" title="class">PreOrder</span></a> (<a class="idref" href="liblayers.logic.LayerData.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v"><span class="id" title="variable">v</span></a>) (<a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <a class="idref" href="liblayers.logic.Structures.html#id"><span class="id" title="method">id</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">v</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.logic.LayerData.html#cat_sim_refl"><span class="id" title="method">cat_sim_refl</span></a>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">z</span> <span class="id" title="var">Hxy</span> <span class="id" title="var">Hyz</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">htransitivity</span> <span class="id" title="var">y</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">eassumption</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We write <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a></span> <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#id"><span class="id" title="projection">id</span></a></span> as <span class="inlinecode">(≤)</span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Global Instance</span> <a name="cat_sim_le_op"><span class="id" title="instance">cat_sim_le_op</span></a> `{<a class="idref" href="liblayers.logic.LayerData.html#CategoryOps"><span class="id" title="class">CategoryOps</span></a>} <span class="id" title="var">T</span> `{<a class="idref" href="liblayers.logic.Structures.html#Sim"><span class="id" title="class">Sim</span></a> <a class="idref" href="liblayers.logic.LayerData.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="liblayers.logic.LayerData.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.logic.LayerData.html#T"><span class="id" title="variable">T</span></a>} <span class="id" title="var">v</span>: <a class="idref" href="liblayers.logic.Structures.html#Le"><span class="id" title="class">Le</span></a> (<a class="idref" href="liblayers.logic.LayerData.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v"><span class="id" title="variable">v</span></a>) :=<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#le"><span class="id" title="method">le</span></a> := <a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <a class="idref" href="liblayers.logic.Structures.html#id"><span class="id" title="method">id</span></a><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.x86.SelectLongproof.html#CMCONSTR.e"><span class="id" title="variable">e</span></a></span> is compatible with <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a></span> <span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#id"><span class="id" title="projection">id</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Global Instance</span> <a name="cat_sim_monotonic"><span class="id" title="instance">cat_sim_monotonic</span></a> `(<a class="idref" href="liblayers.logic.LayerData.html#CategorySim"><span class="id" title="class">CategorySim</span></a>):<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e</span>, <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#Proper"><span class="id" title="class">Proper</span></a> (<a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <a class="idref" href="liblayers.logic.Structures.html#id"><span class="id" title="method">id</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#1319ac35dea6648f5f817efa8c9ac608"><span class="id" title="notation">--&gt;</span></a> <a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <a class="idref" href="liblayers.logic.Structures.html#id"><span class="id" title="method">id</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#8dd5e917cb8f5e8e78f2957a021afbf8"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#impl"><span class="id" title="definition">impl</span></a>) (<a class="idref" href="liblayers.logic.Structures.html#simRR"><span class="id" title="method">simRR</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v1"><span class="id" title="variable">v1</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a> <a class="idref" href="liblayers.logic.LayerData.html#e"><span class="id" title="variable">e</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e</span> <span class="id" title="var">x1</span> <span class="id" title="var">x2</span> <span class="id" title="var">Hx</span> <span class="id" title="var">y1</span> <span class="id" title="var">y2</span> <span class="id" title="var">Hy</span> <span class="id" title="var">Hxy</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">htransitivity</span> <span class="id" title="var">x1</span>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">htransitivity</span> <span class="id" title="var">y1</span>; <span class="id" title="tactic">eauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.x86.SelectLongproof.html#CMCONSTR.e"><span class="id" title="variable">e</span></a></span> is compatible with <span class="inlinecode">≡</span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Global Instance</span> <a name="cat_sim_equiv_compat"><span class="id" title="instance">cat_sim_equiv_compat</span></a> `(<a class="idref" href="liblayers.logic.LayerData.html#CategorySim"><span class="id" title="class">CategorySim</span></a>):<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e</span>, <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#Proper"><span class="id" title="class">Proper</span></a> (<a class="idref" href="liblayers.logic.Structures.html#8c6ca2ab53ebecec54f62e85b81b50e8"><span class="id" title="notation">(≡)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#5bcff5fca4c3a87e683dd8ca07bab63f"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="liblayers.logic.Structures.html#8c6ca2ab53ebecec54f62e85b81b50e8"><span class="id" title="notation">(≡)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#5bcff5fca4c3a87e683dd8ca07bab63f"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#impl"><span class="id" title="definition">impl</span></a>) (<a class="idref" href="liblayers.logic.Structures.html#simRR"><span class="id" title="method">simRR</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v1"><span class="id" title="variable">v1</span></a> <a class="idref" href="liblayers.logic.LayerData.html#v2"><span class="id" title="variable">v2</span></a> <a class="idref" href="liblayers.logic.LayerData.html#e"><span class="id" title="variable">e</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e</span> <span class="id" title="var">x1</span> <span class="id" title="var">x2</span> [<span class="id" title="var">Hx12</span> <span class="id" title="var">Hx21</span>] <span class="id" title="var">y1</span> <span class="id" title="var">y2</span> [<span class="id" title="var">Hy12</span> <span class="id" title="var">Hy21</span>] <span class="id" title="var">Hxy</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">htransitivity</span> <span class="id" title="var">x1</span>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">htransitivity</span> <span class="id" title="var">y1</span>; <span class="id" title="tactic">eauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

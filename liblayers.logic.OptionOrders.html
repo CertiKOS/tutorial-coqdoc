@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>liblayers.logic.OptionOrders</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library liblayers.logic.OptionOrders</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.lib.Functor.html#"><span class="id" title="library">liblayers.lib.Functor</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.lib.OptionMonad.html#"><span class="id" title="library">liblayers.lib.OptionMonad</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.logic.Structures.html#"><span class="id" title="library">liblayers.logic.Structures</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.logic.LayerData.html#"><span class="id" title="library">liblayers.logic.LayerData</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab326"></a><h1 class="section">Discussion</h1>
+
+<div class="paragraph"> </div>
+
+ From a pre-existing order on type <span class="inlinecode"><a class="idref" href="compcert.x86.Op.html#SOUNDNESS.A"><span class="id" title="variable">A</span></a></span>, we can build two different
+  orders on the type <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.x86.Op.html#SOUNDNESS.A"><span class="id" title="variable">A</span></a></span> depending on whether we interpret
+  the new element <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a></span> as ⊥ or ⊤. For our purposes both are useful.
+
+<div class="paragraph"> </div>
+
+  Indeed consider modules for example. We say that <span class="inlinecode"><a class="idref" href="liblayers.logic.Modules.html#M1"><span class="id" title="variable">M1</span></a></span> <span class="inlinecode">≤</span> <span class="inlinecode"><a class="idref" href="liblayers.logic.Modules.html#M2"><span class="id" title="variable">M2</span></a></span> if all of
+  the definitions in <span class="inlinecode"><a class="idref" href="liblayers.logic.Modules.html#M1"><span class="id" title="variable">M1</span></a></span> are present in <span class="inlinecode"><a class="idref" href="liblayers.logic.Modules.html#M2"><span class="id" title="variable">M2</span></a></span>. This means that when we
+  inerpret <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a></span> as the absence of a definition, we should think of
+  it as a ⊥ element: any definition is bigger than no definition.
+
+<div class="paragraph"> </div>
+
+  But for a given symbol defined in <span class="inlinecode"><a class="idref" href="liblayers.logic.Modules.html#M1"><span class="id" title="variable">M1</span></a></span>, in addition to providing the
+  same definition, a larger module <span class="inlinecode"><a class="idref" href="liblayers.logic.Modules.html#M2"><span class="id" title="variable">M2</span></a></span> is also allowed to associate
+  the special value <span class="inlinecode"><span class="id" title="var">magic</span></span> with that symbol. This means that the
+  symbol is "overdefined": <span class="inlinecode"><span class="id" title="var">magic</span></span> is the result of linking two
+  conflicting modules, for instance <span class="inlinecode"><a class="idref" href="compcert.lib.Coqlib.html#i"><span class="id" title="variable">i</span></a></span> <span class="inlinecode">↦</span> <span class="inlinecode">τ</span> <span class="inlinecode">⊕</span> <span class="inlinecode"><a class="idref" href="compcert.lib.Coqlib.html#i"><span class="id" title="variable">i</span></a></span> <span class="inlinecode">↦</span> <span class="inlinecode">τ</span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="compcert.lib.Coqlib.html#i"><span class="id" title="variable">i</span></a></span> <span class="inlinecode">↦</span> <span class="inlinecode"><span class="id" title="var">magic</span></span>.
+  Since we want <span class="inlinecode">⊕</span> to be monotonic, and an upper bound of its
+  arguments, it is natural to interpret <span class="inlinecode"><span class="id" title="var">magic</span></span> as a top element.
+
+<div class="paragraph"> </div>
+
+  Of course, attempting to construct an actual program from a module
+  containing <span class="inlinecode"><span class="id" title="var">magic</span></span> will fail. But this failure fits right in as ⊤,
+  since it results from a module that is in some sense too large.
+  We like to use the option monad to express the program construction
+  process, and if in this context we interpret <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a></span> as a ⊤ element,
+  then we do not need any special side-conditions when stating the
+  monotonicity of program construction. 
+<div class="paragraph"> </div>
+
+<a name="lab327"></a><h1 class="section">Simple order</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="OPTION_LE_BOT"><span class="id" title="section">OPTION_LE_BOT</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Inductive</span> <a name="option_le"><span class="id" title="inductive">option_le</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">R</span>: <a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#B"><span class="id" title="variable">B</span></a>): <a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <span class="id" title="var">A</span>) (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <span class="id" title="var">B</span>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a name="option_le_none"><span class="id" title="constructor">option_le_none</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#LowerBound"><span class="id" title="class">LowerBound</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <span class="id" title="var">R</span>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a name="option_le_some_def"><span class="id" title="constructor">option_le_some_def</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">R</span> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <span class="id" title="var">R</span>)%<span class="id" title="var">rel</span> (@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">_</span>) (@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">_</span>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global</span> <span class="id" title="var">Existing</span> <span class="id" title="keyword">Instance</span> <span class="id" title="var">option_le_none</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="option_le_subrel"><span class="id" title="instance">option_le_subrel</span></a> <span class="id" title="var">A</span> <span class="id" title="var">B</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a> (@<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#B"><span class="id" title="variable">B</span></a>) (<a class="idref" href="coqrel.RelDefinitions.html#subrel"><span class="id" title="definition">subrel</span></a> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="coqrel.RelDefinitions.html#subrel"><span class="id" title="definition">subrel</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">R1</span> <span class="id" title="var">R2</span> <span class="id" title="var">HR</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hxy</span>; <span class="id" title="tactic">constructor</span>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="option_le_subrel_params"><span class="id" title="instance">option_le_subrel_params</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#Params"><span class="id" title="class">Params</span></a> (@<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a>) 3.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="option_le_rel"><span class="id" title="instance">option_le_rel</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">R</span>: <a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#B"><span class="id" title="variable">B</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Related"><span class="id" title="class">Related</span></a> (<a class="idref" href="coqrel.Relators.html#option_rel"><span class="id" title="inductive">option_rel</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#R"><span class="id" title="variable">R</span></a>) (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#R"><span class="id" title="variable">R</span></a>) <a class="idref" href="coqrel.RelDefinitions.html#subrel"><span class="id" title="definition">subrel</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> []; <span class="id" title="tactic">constructor</span>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Instance</span> <a name="option_le_op"><span class="id" title="instance">option_le_op</span></a> `(<span class="id" title="var">Ale</span>: <a class="idref" href="liblayers.logic.Structures.html#Le"><span class="id" title="class">Le</span></a>): <a class="idref" href="liblayers.logic.Structures.html#Le"><span class="id" title="class">Le</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#A"><span class="id" title="variable">A</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <a class="idref" href="liblayers.logic.Structures.html#le"><span class="id" title="method">le</span></a> := <a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.logic.Structures.html#720b83680399fc5a022f578f28e994fa"><span class="id" title="notation">(≤)</span></a> }.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="option_le_refl"><span class="id" title="lemma">option_le_refl</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">R</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Relations.Relation_Definitions.html#relation"><span class="id" title="definition">relation</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#A"><span class="id" title="variable">A</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Reflexive"><span class="id" title="class">Reflexive</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Reflexive"><span class="id" title="class">Reflexive</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#R"><span class="id" title="variable">R</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">x</span>|]; <span class="id" title="tactic">constructor</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="option_le_trans"><span class="id" title="lemma">option_le_trans</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">R</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Relations.Relation_Definitions.html#relation"><span class="id" title="definition">relation</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#A"><span class="id" title="variable">A</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Transitive"><span class="id" title="class">Transitive</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Transitive"><span class="id" title="class">Transitive</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#R"><span class="id" title="variable">R</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">z</span> [<span class="id" title="var">x</span> | <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span>] <span class="id" title="var">Hz</span>; <span class="id" title="tactic">inversion</span> <span class="id" title="var">Hz</span>; <span class="id" title="tactic">subst</span>; <span class="id" title="tactic">clear</span> <span class="id" title="var">Hz</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">etransitivity</span>; <span class="id" title="var">eassumption</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="option_le_htrans"><span class="id" title="instance">option_le_htrans</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>} <span class="id" title="var">RAB</span> <span class="id" title="var">RBC</span> <span class="id" title="var">RAC</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#HTransitive"><span class="id" title="class">HTransitive</span></a> (<span class="id" title="var">A</span>:=<a class="idref" href="liblayers.logic.OptionOrders.html#A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">B</span>:=<a class="idref" href="liblayers.logic.OptionOrders.html#B"><span class="id" title="variable">B</span></a>) (<span class="id" title="var">C</span>:=<a class="idref" href="liblayers.logic.OptionOrders.html#C"><span class="id" title="variable">C</span></a>) <a class="idref" href="liblayers.logic.OptionOrders.html#RAB"><span class="id" title="variable">RAB</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#RBC"><span class="id" title="variable">RBC</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#RAC"><span class="id" title="variable">RAC</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#HTransitive"><span class="id" title="class">HTransitive</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#RAB"><span class="id" title="variable">RAB</span></a>) (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#RBC"><span class="id" title="variable">RBC</span></a>) (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#RAC"><span class="id" title="variable">RAC</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">HR</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">z</span> <span class="id" title="var">Hxy</span> <span class="id" title="var">Hyz</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hxy</span> <span class="id" title="keyword">as</span> [ | <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span> ]; <span class="id" title="tactic">try</span> <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">Hyz</span> <span class="id" title="keyword">as</span> [ | <span class="id" title="var">y'</span> <span class="id" title="var">z'</span> <span class="id" title="var">Hyz'</span> ]; <span class="id" title="tactic">subst</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">htransitivity</span> <span class="id" title="var">y</span>; <span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="option_le_rtrans"><span class="id" title="instance">option_le_rtrans</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>} <span class="id" title="var">RAB</span> <span class="id" title="var">RBC</span> <span class="id" title="var">RAC</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#RTransitive"><span class="id" title="class">RTransitive</span></a> (<span class="id" title="var">A</span>:=<a class="idref" href="liblayers.logic.OptionOrders.html#A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">B</span>:=<a class="idref" href="liblayers.logic.OptionOrders.html#B"><span class="id" title="variable">B</span></a>) (<span class="id" title="var">C</span>:=<a class="idref" href="liblayers.logic.OptionOrders.html#C"><span class="id" title="variable">C</span></a>) <a class="idref" href="liblayers.logic.OptionOrders.html#RAB"><span class="id" title="variable">RAB</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#RBC"><span class="id" title="variable">RBC</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#RAC"><span class="id" title="variable">RAC</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#RTransitive"><span class="id" title="class">RTransitive</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#RAB"><span class="id" title="variable">RAB</span></a>) (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#RBC"><span class="id" title="variable">RBC</span></a>) (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#RAC"><span class="id" title="variable">RAC</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">HR</span> <span class="id" title="var">x</span> <span class="id" title="var">z</span> <span class="id" title="var">Hxz</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hxz</span> <span class="id" title="keyword">as</span> [ | <span class="id" title="var">a</span> <span class="id" title="var">c</span> <span class="id" title="var">Hac</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">∃</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.logic.Structures.html#rtransitivity"><span class="id" title="definition">rtransitivity</span></a> <span class="id" title="keyword">in</span> <span class="id" title="var">Hac</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hac</span> <span class="id" title="keyword">as</span> (<span class="id" title="var">b</span> &amp; <span class="id" title="var">Hab</span> &amp; <span class="id" title="var">Hbc</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">b</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">constructor</span>; <span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="option_le_transport_eq_some"><span class="id" title="instance">option_le_transport_eq_some</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">R</span>: <a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#B"><span class="id" title="variable">B</span></a>) <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">a</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.Transport.html#Transport"><span class="id" title="class">Transport</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#R"><span class="id" title="variable">R</span></a>) <a class="idref" href="liblayers.logic.OptionOrders.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#y"><span class="id" title="variable">y</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#a"><span class="id" title="variable">a</span></a>) (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">∃</span></a> <span class="id" title="var">b</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#y"><span class="id" title="variable">y</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d82a7d96d3659d805ffe732283716822"><span class="id" title="notation">∧</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#b"><span class="id" title="variable">b</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">Hxy</span> <span class="id" title="var">Hx</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">subst</span>; <span class="id" title="tactic">inversion</span> <span class="id" title="var">Hxy</span>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.logic.OptionOrders.html#OPTION_LE_BOT"><span class="id" title="section">OPTION_LE_BOT</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Extern</span> 1 (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Reflexive"><span class="id" title="class">Reflexive</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> ?<span class="id" title="var">R</span>)) ⇒<br/>
+&nbsp;&nbsp;<span class="id" title="var">not_evar</span> <span class="id" title="var">R</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.logic.OptionOrders.html#option_le_refl"><span class="id" title="lemma">option_le_refl</span></a> : <span class="id" title="var">typeclass_instances</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Extern</span> 1 (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Transitive"><span class="id" title="class">Transitive</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> ?<span class="id" title="var">R</span>)) ⇒<br/>
+&nbsp;&nbsp;<span class="id" title="var">not_evar</span> <span class="id" title="var">R</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.logic.OptionOrders.html#option_le_trans"><span class="id" title="lemma">option_le_trans</span></a> : <span class="id" title="var">typeclass_instances</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab328"></a><h2 class="section">Option predicates</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="isSome_le"><span class="id" title="instance">isSome_le</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a> (@<a class="idref" href="liblayers.lib.OptionMonad.html#isSome"><span class="id" title="definition">isSome</span></a>) (<a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">R</span><a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <span class="id" title="var">R</span> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#impl"><span class="id" title="definition">impl</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A1</span> <span class="id" title="var">A2</span> <span class="id" title="var">RA</span> <span class="id" title="var">x1</span> <span class="id" title="var">x2</span> <span class="id" title="var">Hx</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hx</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">discriminate</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">∃</span> <span class="id" title="var">y</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="isNone_le"><span class="id" title="instance">isNone_le</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a> (@<a class="idref" href="liblayers.lib.OptionMonad.html#isNone"><span class="id" title="definition">isNone</span></a>) (<a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">R</span><a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <span class="id" title="var">R</span> <a class="idref" href="coqrel.RelDefinitions.html#28fb2fb3952fac7e01eb907871e1ea99"><span class="id" title="notation">--&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#impl"><span class="id" title="definition">impl</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A1</span> <span class="id" title="var">A2</span> <span class="id" title="var">RA</span> <span class="id" title="var">x1</span> <span class="id" title="var">x2</span> <span class="id" title="var">Hx</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hx</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab329"></a><h2 class="section">Monad operations</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="option_map_le"><span class="id" title="instance">option_map_le</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option_map"><span class="id" title="definition">option_map</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">RA</span><a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">,</span></a> <a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">RB</span><a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">,</span></a> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">(</span></a><span class="id" title="var">RA</span> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <span class="id" title="var">RB</span><a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">)</span></a> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <span class="id" title="var">RA</span> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <span class="id" title="var">RB</span>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option_map"><span class="id" title="definition">option_map</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">rauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+FIXME: We probably want to make one of those have and explicitely
+  higher priority, but it's not clear yet which one would be best.
+  Contexts where <span class="inlinecode"><a class="idref" href="coqrel.Transport.html#transport"><span class="id" title="projection">transport</span></a></span> is used will be particularly telling. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="option_rel_monad"><span class="id" title="instance">option_rel_monad</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Monad.html#MonadRel"><span class="id" title="class">MonadRel</span></a> (@<a class="idref" href="coqrel.Relators.html#option_rel"><span class="id" title="inductive">option_rel</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">simpl</span>; <span class="id" title="var">rauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="option_le_monad"><span class="id" title="instance">option_le_monad</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Monad.html#MonadRel"><span class="id" title="class">MonadRel</span></a> (@<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">simpl</span>; <span class="id" title="var">rauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

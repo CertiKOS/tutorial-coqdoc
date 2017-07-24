@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>liblayers.lib.Functor</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library liblayers.lib.Functor</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Setoids.Setoid.html#"><span class="id" title="library">Coq.Setoids.Setoid</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#"><span class="id" title="library">Coq.Classes.Morphisms</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.lib.ExtensionalityAxioms.html#"><span class="id" title="library">ExtensionalityAxioms</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab309"></a><h1 class="section">Interface of functors</h1>
+
+<div class="paragraph"> </div>
+
+ As in Haskell, by "functor" we mean an endofunctor in the category
+  of types. Which is to say, a map <span class="inlinecode"><a class="idref" href="compcert.x86.Op.html#EVAL_INJECT.F"><span class="id" title="variable">F</span></a>:</span> <span class="inlinecode"><span class="id" title="keyword">Type</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="keyword">Type</span></span>, equipped with
+  an operation <span class="inlinecode"><a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="projection">fmap</span></a></span> which transport functions of type <span class="inlinecode"><a class="idref" href="compcert.x86.Op.html#SOUNDNESS.A"><span class="id" title="variable">A</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="compcert.common.AST.html#TRANSF_PARTIAL_FUNDEF.B"><span class="id" title="variable">B</span></a></span> to
+  functions of type <span class="inlinecode"><a class="idref" href="compcert.x86.Op.html#EVAL_INJECT.F"><span class="id" title="variable">F</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.x86.Op.html#SOUNDNESS.A"><span class="id" title="variable">A</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="compcert.x86.Op.html#EVAL_INJECT.F"><span class="id" title="variable">F</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.common.AST.html#TRANSF_PARTIAL_FUNDEF.B"><span class="id" title="variable">B</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="FunctorOps"><span class="id" title="record">FunctorOps</span></a> (<span class="id" title="var">F</span>: <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Type</span>) := {<br/>
+&nbsp;&nbsp;<a name="fmap"><span class="id" title="projection">fmap</span></a>: <span class="id" title="keyword">∀</span> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>: <span class="id" title="keyword">Type</span>}, <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#B"><span class="id" title="variable">B</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#F"><span class="id" title="variable">F</span></a> <a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#F"><span class="id" title="variable">F</span></a> <a class="idref" href="liblayers.lib.Functor.html#B"><span class="id" title="variable">B</span></a><br/>
+}.<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="Functor"><span class="id" title="record">Functor</span></a> (<span class="id" title="var">F</span>: <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Type</span>) `{<span class="id" title="var">Fmap</span>: <a class="idref" href="liblayers.lib.Functor.html#FunctorOps"><span class="id" title="class">FunctorOps</span></a> <a class="idref" href="liblayers.lib.Functor.html#F"><span class="id" title="variable">F</span></a>} := {<br/>
+&nbsp;&nbsp;<a name="functor_id"><span class="id" title="projection">functor_id</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">x</span>: <a class="idref" href="liblayers.lib.Functor.html#F"><span class="id" title="variable">F</span></a> <a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> (@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#id"><span class="id" title="definition">id</span></a> <a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a>) <a class="idref" href="liblayers.lib.Functor.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Functor.html#x"><span class="id" title="variable">x</span></a>;<br/>
+&nbsp;&nbsp;<a name="functor_compose"><span class="id" title="projection">functor_compose</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>} (<span class="id" title="var">f</span>: <a class="idref" href="liblayers.lib.Functor.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#C"><span class="id" title="variable">C</span></a>) (<span class="id" title="var">g</span>: <a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#B"><span class="id" title="variable">B</span></a>) (<span class="id" title="var">x</span>: <a class="idref" href="liblayers.lib.Functor.html#F"><span class="id" title="variable">F</span></a> <a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">y</span> ⇒ <a class="idref" href="liblayers.lib.Functor.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="liblayers.lib.Functor.html#g"><span class="id" title="variable">g</span></a> <a class="idref" href="liblayers.lib.Functor.html#y"><span class="id" title="variable">y</span></a>)) <a class="idref" href="liblayers.lib.Functor.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <a class="idref" href="liblayers.lib.Functor.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <a class="idref" href="liblayers.lib.Functor.html#g"><span class="id" title="variable">g</span></a> <a class="idref" href="liblayers.lib.Functor.html#x"><span class="id" title="variable">x</span></a>)<br/>
+}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab310"></a><h1 class="section">Simple instances</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Notation</span> <a name="3bf07a8dc255b89c696e153776cbe80e"><span class="id" title="notation">&quot;</span></a>( A  ×)" := (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#prod"><span class="id" title="inductive">prod</span></a> <span class="id" title="var">A</span>).<br/>
+<span class="id" title="keyword">Infix</span> <a name="3c95d747e965984bdabf05c6b0e23759"><span class="id" title="notation">&quot;</span></a>×" := <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#prod"><span class="id" title="inductive">prod</span></a> (<span class="id" title="tactic">right</span> <span class="id" title="keyword">associativity</span>, <span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 45) : <span class="id" title="var">type_scope</span>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="0fb01e1e86cd5b397b6a1e872003822d"><span class="id" title="notation">&quot;</span></a>(×  A )" := (<span class="id" title="keyword">fun</span> <span class="id" title="var">X</span> ⇒ <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="liblayers.lib.Functor.html#3c95d747e965984bdabf05c6b0e23759"><span class="id" title="notation">×</span></a> <span class="id" title="var">A</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="INSTANCES"><span class="id" title="section">INSTANCES</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab311"></a><h2 class="section">Constant</h2>
+
+<div class="paragraph"> </div>
+
+ The constant functor <span class="inlinecode"><a class="idref" href="compcert.x86.Op.html#SOUNDNESS.A"><span class="id" title="variable">A</span></a></span> maps everything to <span class="inlinecode">@<a class="idref" href="liblayers.logic.Structures.html#id"><span class="id" title="projection">id</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.x86.Op.html#SOUNDNESS.A"><span class="id" title="variable">A</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="const_fmap"><span class="id" title="instance">const_fmap</span></a> <span class="id" title="var">A</span>: <a class="idref" href="liblayers.lib.Functor.html#FunctorOps"><span class="id" title="class">FunctorOps</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">X</span> ⇒ <a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a>) := {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <span class="id" title="var">X</span> <span class="id" title="var">Y</span> <span class="id" title="var">f</span> <span class="id" title="var">a</span> := <a class="idref" href="liblayers.lib.Functor.html#a"><span class="id" title="variable">a</span></a><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="const_functor"><span class="id" title="instance">const_functor</span></a> <span class="id" title="var">A</span>: <a class="idref" href="liblayers.lib.Functor.html#Functor"><span class="id" title="class">Functor</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">X</span> ⇒ <a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">tauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab312"></a><h2 class="section">Identity</h2>
+
+<div class="paragraph"> </div>
+
+ The identity functor maps <span class="inlinecode"><a class="idref" href="compcert.backend.Bounds.html#BOUNDS.f"><span class="id" title="variable">f</span></a></span> to itself. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="id_fmap"><span class="id" title="instance">id_fmap</span></a>: <a class="idref" href="liblayers.lib.Functor.html#FunctorOps"><span class="id" title="class">FunctorOps</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">X</span> ⇒ <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a>) := {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <span class="id" title="var">X</span> <span class="id" title="var">Y</span> <span class="id" title="var">f</span> := <a class="idref" href="liblayers.lib.Functor.html#f"><span class="id" title="variable">f</span></a><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="id_functor"><span class="id" title="instance">id_functor</span></a>: <a class="idref" href="liblayers.lib.Functor.html#Functor"><span class="id" title="class">Functor</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">X</span> ⇒ <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">tauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab313"></a><h2 class="section">Product</h2>
+
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="prodl_fmap"><span class="id" title="instance">prodl_fmap</span></a> <span class="id" title="var">A</span>: <a class="idref" href="liblayers.lib.Functor.html#FunctorOps"><span class="id" title="class">FunctorOps</span></a> <a class="idref" href="liblayers.lib.Functor.html#3bf07a8dc255b89c696e153776cbe80e"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.lib.Functor.html#3bf07a8dc255b89c696e153776cbe80e"><span class="id" title="notation">×)</span></a> := {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <span class="id" title="var">X</span> <span class="id" title="var">Y</span> <span class="id" title="var">f</span> <span class="id" title="var">ax</span> := <span class="id" title="keyword">match</span> <a class="idref" href="liblayers.lib.Functor.html#ax"><span class="id" title="variable">ax</span></a> <span class="id" title="keyword">with</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><span class="id" title="var">a</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <span class="id" title="var">x</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><span class="id" title="var">a</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.lib.Functor.html#f"><span class="id" title="variable">f</span></a> <span class="id" title="var">x</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a> <span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="prodr_fmap"><span class="id" title="instance">prodr_fmap</span></a> <span class="id" title="var">A</span>: <a class="idref" href="liblayers.lib.Functor.html#FunctorOps"><span class="id" title="class">FunctorOps</span></a> <a class="idref" href="liblayers.lib.Functor.html#0fb01e1e86cd5b397b6a1e872003822d"><span class="id" title="notation">(×</span></a> <a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a><a class="idref" href="liblayers.lib.Functor.html#0fb01e1e86cd5b397b6a1e872003822d"><span class="id" title="notation">)</span></a> := {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <span class="id" title="var">X</span> <span class="id" title="var">Y</span> <span class="id" title="var">f</span> <span class="id" title="var">xa</span> := <span class="id" title="keyword">match</span> <a class="idref" href="liblayers.lib.Functor.html#xa"><span class="id" title="variable">xa</span></a> <span class="id" title="keyword">with</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><span class="id" title="var">x</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <span class="id" title="var">a</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Functor.html#f"><span class="id" title="variable">f</span></a> <span class="id" title="var">x</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <span class="id" title="var">a</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a> <span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="prodl_functor"><span class="id" title="instance">prodl_functor</span></a> <span class="id" title="var">A</span>: <a class="idref" href="liblayers.lib.Functor.html#Functor"><span class="id" title="class">Functor</span></a> <a class="idref" href="liblayers.lib.Functor.html#3bf07a8dc255b89c696e153776cbe80e"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.lib.Functor.html#3bf07a8dc255b89c696e153776cbe80e"><span class="id" title="notation">×)</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">tauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="prodr_functor"><span class="id" title="instance">prodr_functor</span></a> <span class="id" title="var">A</span>: <a class="idref" href="liblayers.lib.Functor.html#Functor"><span class="id" title="class">Functor</span></a> <a class="idref" href="liblayers.lib.Functor.html#0fb01e1e86cd5b397b6a1e872003822d"><span class="id" title="notation">(×</span></a> <a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a><a class="idref" href="liblayers.lib.Functor.html#0fb01e1e86cd5b397b6a1e872003822d"><span class="id" title="notation">)</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">tauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab314"></a><h2 class="section">Option</h2>
+
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="option_fmap"><span class="id" title="instance">option_fmap</span></a>: <a class="idref" href="liblayers.lib.Functor.html#FunctorOps"><span class="id" title="class">FunctorOps</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> := {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <span class="id" title="var">X</span> <span class="id" title="var">Y</span> <span class="id" title="var">f</span> <span class="id" title="var">oa</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="liblayers.lib.Functor.html#oa"><span class="id" title="variable">oa</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">a</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="liblayers.lib.Functor.html#f"><span class="id" title="variable">f</span></a> <span class="id" title="var">a</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="option_functor"><span class="id" title="instance">option_functor</span></a>: <a class="idref" href="liblayers.lib.Functor.html#Functor"><span class="id" title="class">Functor</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> [<span class="id" title="var">a</span>|]; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> <span class="id" title="var">f</span> <span class="id" title="var">g</span> [<span class="id" title="var">a</span>|]; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Functor.html#INSTANCES"><span class="id" title="section">INSTANCES</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="COMBINATORS"><span class="id" title="section">COMBINATORS</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> <span class="id" title="var">F</span> <span class="id" title="var">G</span> `{<span class="id" title="var">HF</span>: <a class="idref" href="liblayers.lib.Functor.html#Functor"><span class="id" title="class">Functor</span></a> <a class="idref" href="liblayers.lib.Functor.html#F"><span class="id" title="variable">F</span></a>} `{<span class="id" title="var">HG</span>: <a class="idref" href="liblayers.lib.Functor.html#Functor"><span class="id" title="class">Functor</span></a> <a class="idref" href="liblayers.lib.Functor.html#G"><span class="id" title="variable">G</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="fplus"><span class="id" title="definition">fplus</span></a> := <span class="id" title="keyword">fun</span> <span class="id" title="var">X</span> ⇒ (<a class="idref" href="liblayers.lib.Functor.html#COMBINATORS.F"><span class="id" title="variable">F</span></a> <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="liblayers.lib.Functor.html#COMBINATORS.G"><span class="id" title="variable">G</span></a> <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a>)%<span class="id" title="var">type</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="fplus_fmap"><span class="id" title="instance">fplus_fmap</span></a>: <a class="idref" href="liblayers.lib.Functor.html#FunctorOps"><span class="id" title="class">FunctorOps</span></a> <a class="idref" href="liblayers.lib.Functor.html#fplus"><span class="id" title="definition">fplus</span></a> :=<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <span class="id" title="var">X</span> <span class="id" title="var">Y</span> <span class="id" title="var">f</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> : <a class="idref" href="liblayers.lib.Functor.html#COMBINATORS.F"><span class="id" title="variable">F</span></a> <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="liblayers.lib.Functor.html#COMBINATORS.G"><span class="id" title="variable">G</span></a> <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="liblayers.lib.Functor.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <span class="id" title="var">fx</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> (<a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <a class="idref" href="liblayers.lib.Functor.html#f"><span class="id" title="variable">f</span></a> <span class="id" title="var">fx</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <span class="id" title="var">gx</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> (<a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <a class="idref" href="liblayers.lib.Functor.html#f"><span class="id" title="variable">f</span></a> <span class="id" title="var">gx</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="fplus_functor"><span class="id" title="instance">fplus_functor</span></a>: <a class="idref" href="liblayers.lib.Functor.html#Functor"><span class="id" title="class">Functor</span></a> <a class="idref" href="liblayers.lib.Functor.html#fplus"><span class="id" title="definition">fplus</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>; <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.lib.Functor.html#functor_id"><span class="id" title="method">functor_id</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.lib.Functor.html#functor_compose"><span class="id" title="method">functor_compose</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="fprod"><span class="id" title="definition">fprod</span></a> := <span class="id" title="keyword">fun</span> <span class="id" title="var">X</span> ⇒ (<a class="idref" href="liblayers.lib.Functor.html#COMBINATORS.F"><span class="id" title="variable">F</span></a> <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="liblayers.lib.Functor.html#3c95d747e965984bdabf05c6b0e23759"><span class="id" title="notation">×</span></a> <a class="idref" href="liblayers.lib.Functor.html#COMBINATORS.G"><span class="id" title="variable">G</span></a> <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="fprod_fmap"><span class="id" title="instance">fprod_fmap</span></a>: <a class="idref" href="liblayers.lib.Functor.html#FunctorOps"><span class="id" title="class">FunctorOps</span></a> <a class="idref" href="liblayers.lib.Functor.html#fprod"><span class="id" title="definition">fprod</span></a> :=<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <span class="id" title="var">X</span> <span class="id" title="var">Y</span> <span class="id" title="var">f</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> : <a class="idref" href="liblayers.lib.Functor.html#COMBINATORS.F"><span class="id" title="variable">F</span></a> <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="liblayers.lib.Functor.html#3c95d747e965984bdabf05c6b0e23759"><span class="id" title="notation">×</span></a> <a class="idref" href="liblayers.lib.Functor.html#COMBINATORS.G"><span class="id" title="variable">G</span></a> <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="liblayers.lib.Functor.html#x"><span class="id" title="variable">x</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><span class="id" title="var">fx</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <span class="id" title="var">gx</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <a class="idref" href="liblayers.lib.Functor.html#f"><span class="id" title="variable">f</span></a> <span class="id" title="var">fx</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <a class="idref" href="liblayers.lib.Functor.html#f"><span class="id" title="variable">f</span></a> <span class="id" title="var">gx</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="fprod_functor"><span class="id" title="instance">fprod_functor</span></a>: <a class="idref" href="liblayers.lib.Functor.html#Functor"><span class="id" title="class">Functor</span></a> <a class="idref" href="liblayers.lib.Functor.html#fprod"><span class="id" title="definition">fprod</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>; <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> ?<a class="idref" href="liblayers.lib.Functor.html#functor_id"><span class="id" title="method">functor_id</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (<a class="idref" href="liblayers.lib.Functor.html#functor_compose"><span class="id" title="method">functor_compose</span></a> (<span class="id" title="var">F</span>:=<a class="idref" href="liblayers.lib.Functor.html#COMBINATORS.F"><span class="id" title="variable">F</span></a>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (<a class="idref" href="liblayers.lib.Functor.html#functor_compose"><span class="id" title="method">functor_compose</span></a> (<span class="id" title="var">F</span>:=<a class="idref" href="liblayers.lib.Functor.html#COMBINATORS.G"><span class="id" title="variable">G</span></a>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="fpow"><span class="id" title="definition">fpow</span></a> <span class="id" title="var">A</span> := <span class="id" title="keyword">fun</span> <span class="id" title="var">X</span> ⇒ (<a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#COMBINATORS.F"><span class="id" title="variable">F</span></a> <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="fpow_fmap"><span class="id" title="instance">fpow_fmap</span></a> <span class="id" title="var">A</span>: <a class="idref" href="liblayers.lib.Functor.html#FunctorOps"><span class="id" title="class">FunctorOps</span></a> (<a class="idref" href="liblayers.lib.Functor.html#fpow"><span class="id" title="definition">fpow</span></a> <a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a>) :=<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <span class="id" title="var">X</span> <span class="id" title="var">Y</span> <span class="id" title="var">f</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> (<span class="id" title="var">x</span>: <span class="id" title="var">A</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#COMBINATORS.F"><span class="id" title="variable">F</span></a> <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a>) (<span class="id" title="var">a</span>: <span class="id" title="var">A</span>) ⇒ <a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <a class="idref" href="liblayers.lib.Functor.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="liblayers.lib.Functor.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="liblayers.lib.Functor.html#a"><span class="id" title="variable">a</span></a>)<br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a name="fpow_functor"><span class="id" title="instance">fpow_functor</span></a> <span class="id" title="var">A</span>: <a class="idref" href="liblayers.lib.Functor.html#Functor"><span class="id" title="class">Functor</span></a> (<a class="idref" href="liblayers.lib.Functor.html#fpow"><span class="id" title="definition">fpow</span></a> <a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Functor.html#fpow"><span class="id" title="definition">fpow</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">X</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Logic.FunctionalExtensionality.html#functional_extensionality"><span class="id" title="lemma">functional_extensionality</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">a</span>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Functor.html#functor_id"><span class="id" title="method">functor_id</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">X</span> <span class="id" title="var">Y</span> <span class="id" title="var">Z</span> <span class="id" title="var">f</span> <span class="id" title="var">g</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Logic.FunctionalExtensionality.html#functional_extensionality"><span class="id" title="lemma">functional_extensionality</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">a</span>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Functor.html#functor_compose"><span class="id" title="method">functor_compose</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.lib.Functor.html#COMBINATORS"><span class="id" title="section">COMBINATORS</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab315"></a><h1 class="section">Some helper instances</h1>
+
+<div class="paragraph"> </div>
+
+ Here are some "instance" versions of some of the <span class="inlinecode"><span class="id" title="keyword">Axioms</span></span>, for
+  use by the setoid rewrite system. They should be somewhere else,
+  but since in practice we need them in <span class="inlinecode"><a class="idref" href="liblayers.lib.Monad.html#Monad"><span class="id" title="record">Monad</span></a></span> and <span class="inlinecode"><span class="id" title="var">Comonad</span></span>, I'll
+  put them here for now. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="funext_subrel"><span class="id" title="instance">funext_subrel</span></a> {<span class="id" title="var">X</span> <span class="id" title="var">Y</span>}:<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#subrelation"><span class="id" title="class">subrelation</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#pointwise_relation"><span class="id" title="definition">pointwise_relation</span></a> <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a>) (@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a> (<a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#Y"><span class="id" title="variable">Y</span></a>)).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">compute</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Logic.FunctionalExtensionality.html#functional_extensionality"><span class="id" title="lemma">functional_extensionality</span></a>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="funext_mor2"><span class="id" title="instance">funext_mor2</span></a> {<span class="id" title="var">X</span> <span class="id" title="var">Y</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">f</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#Y"><span class="id" title="variable">Y</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#B"><span class="id" title="variable">B</span></a>):<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#Proper"><span class="id" title="class">Proper</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#pointwise_relation"><span class="id" title="definition">pointwise_relation</span></a> <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#5bcff5fca4c3a87e683dd8ca07bab63f"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#5bcff5fca4c3a87e683dd8ca07bab63f"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a>) <a class="idref" href="liblayers.lib.Functor.html#f"><span class="id" title="variable">f</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">x1</span> <span class="id" title="var">x2</span> <span class="id" title="var">Hx</span> <span class="id" title="var">y1</span> <span class="id" title="var">y2</span> <span class="id" title="var">Hy</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Functor.html#funext_subrel"><span class="id" title="instance">funext_subrel</span></a> <span class="id" title="keyword">in</span> <span class="id" title="var">Hx</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#f_equal2"><span class="id" title="lemma">f_equal2</span></a>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">now</span> <span class="id" title="tactic">assumption</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="funext_mor4"><span class="id" title="instance">funext_mor4</span></a> {<span class="id" title="var">X</span> <span class="id" title="var">Y</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> <span class="id" title="var">D</span>} (<span class="id" title="var">f</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#Y"><span class="id" title="variable">Y</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#C"><span class="id" title="variable">C</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.lib.Functor.html#D"><span class="id" title="variable">D</span></a>):<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#Proper"><span class="id" title="class">Proper</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#pointwise_relation"><span class="id" title="definition">pointwise_relation</span></a> <a class="idref" href="liblayers.lib.Functor.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#5bcff5fca4c3a87e683dd8ca07bab63f"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#5bcff5fca4c3a87e683dd8ca07bab63f"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#5bcff5fca4c3a87e683dd8ca07bab63f"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#5bcff5fca4c3a87e683dd8ca07bab63f"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a>) <a class="idref" href="liblayers.lib.Functor.html#f"><span class="id" title="variable">f</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">x1</span> <span class="id" title="var">x2</span> <span class="id" title="var">Hx</span> <span class="id" title="var">y1</span> <span class="id" title="var">y2</span> <span class="id" title="var">Hy</span> <span class="id" title="var">z1</span> <span class="id" title="var">z2</span> <span class="id" title="var">Hz</span> <span class="id" title="var">t1</span> <span class="id" title="var">t2</span> <span class="id" title="var">Ht</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Functor.html#funext_subrel"><span class="id" title="instance">funext_subrel</span></a> <span class="id" title="keyword">in</span> <span class="id" title="var">Hx</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#f_equal4"><span class="id" title="lemma">f_equal4</span></a>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">now</span> <span class="id" title="tactic">assumption</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

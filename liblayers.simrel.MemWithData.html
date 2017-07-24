@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>liblayers.simrel.MemWithData</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library liblayers.simrel.MemWithData</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.compcertx.LiftMem.html#"><span class="id" title="library">LiftMem</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.simrel.AbstractData.html#"><span class="id" title="library">AbstractData</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab452"></a><h1 class="section">Memory with abstract data</h1>
+
+<div class="paragraph"> </div>
+
+ Our own code always mentions abstract data and manipulates
+  abstract states explicitely. This is especially important in
+  relational contexts where two or more <span class="inlinecode"><a class="idref" href="liblayers.simrel.AbstractData.html#layerdata"><span class="id" title="record">layerdata</span></a></span> are involved:
+  manipulating two full memory models is annoying; among other things
+  it causes the resolution of <span class="inlinecode"><span class="id" title="var">Mem.MemoryModelOps</span></span> instances to be
+  rather fragile (because often the context holds multiple instances,
+  which must be correctly assigned to multiple constraints, which
+  requires backtracking until we hit the right combination).
+
+<div class="paragraph"> </div>
+
+  However, in order to seemlessly reuse Compcert, we sometimes *do*
+  need to construct derived memory models which package the underlying
+  concrete memory states together with our abstract states. This is so
+  that the abstract state can be manipulated by Compcert as a
+  transparent component of its memory states. 
+<div class="paragraph"> </div>
+
+<a name="lab453"></a><h2 class="section">Base memory model</h2>
+
+<div class="paragraph"> </div>
+
+ For convenience, and to avoid confusion, typeclass resolution
+  loops, etc. we package everything we need for the base memory model
+  into the single class below, and use that class everywhere in our
+  development. We could go further and directly use Compcert's
+  concrete implementation as our base and eliminate that class
+  altogether, but for now we keep it. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="BaseMemoryModel"><span class="id" title="record">BaseMemoryModel</span></a> :=<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="mem"><span class="id" title="projection">mem</span></a> : <span class="id" title="keyword">Type</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="base_mem_ops"><span class="id" title="projection">base_mem_ops</span></a> :&gt; <a class="idref" href="compcert.common.Memtype.html#Mem.MemoryModelOps"><span class="id" title="class">Mem.MemoryModelOps</span></a> <a class="idref" href="liblayers.simrel.MemWithData.html#mem"><span class="id" title="method">mem</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="base_mem_prf"><span class="id" title="projection">base_mem_prf</span></a> :&gt; <a class="idref" href="compcertx.common.MemoryX.html#Mem.MemoryModelX"><span class="id" title="class">Mem.MemoryModelX</span></a> <a class="idref" href="liblayers.simrel.MemWithData.html#mem"><span class="id" title="method">mem</span></a><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab454"></a><h2 class="section">Memory with data</h2>
+
+<div class="paragraph"> </div>
+
+ Given a base memory model, we introduce the type <span class="inlinecode"><a class="idref" href="liblayers.simrel.MemWithData.html#mwd"><span class="id" title="definition">mwd</span></a></span> <span class="inlinecode"><a class="idref" href="coqrel.RelOperators.html#D"><span class="id" title="variable">D</span></a></span> of
+  "memory states with abstract data of type <span class="inlinecode"><a class="idref" href="coqrel.RelOperators.html#D"><span class="id" title="variable">D</span></a></span>", constructed as pairs
+  of a base memory state together with an abstract state of abstract
+  data type <span class="inlinecode"><a class="idref" href="coqrel.RelOperators.html#D"><span class="id" title="variable">D</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="MEM_WITH_DATA"><span class="id" title="section">MEM_WITH_DATA</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<span class="id" title="var">Hmem</span>: <a class="idref" href="liblayers.simrel.MemWithData.html#BaseMemoryModel"><span class="id" title="class">BaseMemoryModel</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> (<span class="id" title="var">D</span>: <a class="idref" href="liblayers.simrel.AbstractData.html#layerdata"><span class="id" title="record">layerdata</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="mwd"><span class="id" title="definition">mwd</span></a> := (<a class="idref" href="liblayers.simrel.MemWithData.html#mem"><span class="id" title="method">mem</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#d19c7eafd0e2d195d10df94b392087b5"><span class="id" title="notation">×</span></a> <a class="idref" href="liblayers.simrel.MemWithData.html#MEM_WITH_DATA.D"><span class="id" title="variable">D</span></a>)%<span class="id" title="var">type</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We can now instantiate a memory model for <span class="inlinecode"><a class="idref" href="liblayers.simrel.MemWithData.html#mwd"><span class="id" title="definition">mwd</span></a></span> <span class="inlinecode"><a class="idref" href="coqrel.RelOperators.html#D"><span class="id" title="variable">D</span></a></span>, by using the
+    lens <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a></span> to lift the base memory model to such pairs. 
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Instance</span> <a name="mwd_liftmem_ops"><span class="id" title="instance">mwd_liftmem_ops</span></a>: <a class="idref" href="liblayers.compcertx.LiftMem.html#LiftMemoryModelOps"><span class="id" title="class">LiftMemoryModelOps</span></a> (@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="liblayers.simrel.MemWithData.html#mem"><span class="id" title="method">mem</span></a> <a class="idref" href="liblayers.simrel.MemWithData.html#MEM_WITH_DATA.D"><span class="id" title="variable">D</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.compcertx.LiftMem.html#liftmem_empty"><span class="id" title="method">liftmem_empty</span></a> := <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="compcert.common.Memtype.html#Mem.empty"><span class="id" title="method">Mem.empty</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.simrel.AbstractData.html#init_data"><span class="id" title="method">init_data</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Instance</span> <a name="mwd_liftmem_prf"><span class="id" title="instance">mwd_liftmem_prf</span></a> `{<a class="idref" href="compcertx.common.MemoryX.html#Mem.MemoryModelX"><span class="id" title="class">Mem.MemoryModelX</span></a>}:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.compcertx.LiftMem.html#LiftMemoryModel"><span class="id" title="class">LiftMemoryModel</span></a> (@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="liblayers.simrel.MemWithData.html#mem"><span class="id" title="method">mem</span></a> <a class="idref" href="liblayers.simrel.MemWithData.html#MEM_WITH_DATA.D"><span class="id" title="variable">D</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="mwd_ops"><span class="id" title="instance">mwd_ops</span></a>: <a class="idref" href="compcert.common.Memtype.html#Mem.MemoryModelOps"><span class="id" title="class">Mem.MemoryModelOps</span></a> <a class="idref" href="liblayers.simrel.MemWithData.html#mwd"><span class="id" title="definition">mwd</span></a> | 5 := <span class="id" title="var">_</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="mwd_prf"><span class="id" title="instance">mwd_prf</span></a>: <a class="idref" href="compcertx.common.MemoryX.html#Mem.MemoryModelX"><span class="id" title="class">Mem.MemoryModelX</span></a> <a class="idref" href="liblayers.simrel.MemWithData.html#mwd"><span class="id" title="definition">mwd</span></a> | 5 := <span class="id" title="var">_</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.simrel.MemWithData.html#MEM_WITH_DATA"><span class="id" title="section">MEM_WITH_DATA</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The following rewriting rule is useful when using the <span class="inlinecode"><span class="id" title="var">lens_unfold</span></span>
+  tactic to reduce Compcert memory operations applied to our composite
+  memory states. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="mwd_same_context_mem_eq_data"><span class="id" title="lemma">mwd_same_context_mem_eq_data</span></a> `{<a class="idref" href="liblayers.simrel.MemWithData.html#BaseMemoryModel"><span class="id" title="class">BaseMemoryModel</span></a>} <span class="id" title="var">D</span> (<span class="id" title="var">m1</span> <span class="id" title="var">m2</span>: <a class="idref" href="liblayers.simrel.MemWithData.html#mwd"><span class="id" title="definition">mwd</span></a> <a class="idref" href="liblayers.simrel.MemWithData.html#D"><span class="id" title="variable">D</span></a>):<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Lens.html#same_context"><span class="id" title="definition">same_context</span></a> (<span class="id" title="var">S</span> := <a class="idref" href="liblayers.simrel.MemWithData.html#mwd"><span class="id" title="definition">mwd</span></a> <a class="idref" href="liblayers.simrel.MemWithData.html#D"><span class="id" title="variable">D</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="liblayers.simrel.MemWithData.html#m1"><span class="id" title="variable">m1</span></a> <a class="idref" href="liblayers.simrel.MemWithData.html#m2"><span class="id" title="variable">m2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#df1ced36fc33ce188051218bca314374"><span class="id" title="notation">↔</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#snd"><span class="id" title="definition">snd</span></a> <a class="idref" href="liblayers.simrel.MemWithData.html#m1"><span class="id" title="variable">m1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#snd"><span class="id" title="definition">snd</span></a> <a class="idref" href="liblayers.simrel.MemWithData.html#m2"><span class="id" title="variable">m2</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.lib.Lens.html#fst_same_context_eq_snd"><span class="id" title="lemma">fst_same_context_eq_snd</span></a>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Rewrite</span> @<a class="idref" href="liblayers.simrel.MemWithData.html#mwd_same_context_mem_eq_data"><span class="id" title="lemma">mwd_same_context_mem_eq_data</span></a> <span class="id" title="keyword">using</span> <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span> : <span class="id" title="var">lens_simpl</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

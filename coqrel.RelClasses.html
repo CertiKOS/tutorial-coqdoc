@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>coqrel.RelClasses</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library coqrel.RelClasses</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#"><span class="id" title="library">Coq.Classes.RelationClasses</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="coqrel.RelDefinitions.html#"><span class="id" title="library">RelDefinitions</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab235"></a><h1 class="section">More classes for relation properties</h1>
+
+<div class="paragraph"> </div>
+
+ In the following we introduce more typeclasses for characterizing
+  properties of relations, in the spirit of the <span class="inlinecode"><span class="id" title="library">RelationClasses</span></span>
+  standard library. 
+<div class="paragraph"> </div>
+
+<a name="lab236"></a><h2 class="section">Coreflexive relations</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="Coreflexive"><span class="id" title="record">Coreflexive</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">R</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Relations.Relation_Definitions.html#relation"><span class="id" title="definition">relation</span></a> <a class="idref" href="coqrel.RelClasses.html#A"><span class="id" title="variable">A</span></a>) :=<br/>
+&nbsp;&nbsp;<a name="coreflexivity"><span class="id" title="projection">coreflexivity</span></a>: <span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>, <a class="idref" href="coqrel.RelClasses.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="coqrel.RelClasses.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="coqrel.RelClasses.html#y"><span class="id" title="variable">y</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="coqrel.RelClasses.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="coqrel.RelClasses.html#y"><span class="id" title="variable">y</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="eq_corefl"><span class="id" title="instance">eq_corefl</span></a> {<span class="id" title="var">A</span>}:<br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelClasses.html#Coreflexive"><span class="id" title="class">Coreflexive</span></a> (@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a> <a class="idref" href="coqrel.RelClasses.html#A"><span class="id" title="variable">A</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">firstorder</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="subrel_eq"><span class="id" title="instance">subrel_eq</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">R</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Relations.Relation_Definitions.html#relation"><span class="id" title="definition">relation</span></a> <a class="idref" href="coqrel.RelClasses.html#A"><span class="id" title="variable">A</span></a>):<br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelClasses.html#Coreflexive"><span class="id" title="class">Coreflexive</span></a> <a class="idref" href="coqrel.RelClasses.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Related"><span class="id" title="class">Related</span></a> <a class="idref" href="coqrel.RelClasses.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a> <a class="idref" href="coqrel.RelDefinitions.html#subrel"><span class="id" title="definition">subrel</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">firstorder</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

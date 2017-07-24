@@ -1,0 +1,845 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>liblayers.compcertx.ErrorMonad</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library liblayers.compcertx.ErrorMonad</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="compcert.lib.Axioms.html#"><span class="id" title="library">compcert.lib.Axioms</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="compcert.common.Errors.html#"><span class="id" title="library">compcert.common.Errors</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.lib.ExtensionalityAxioms.html#"><span class="id" title="library">liblayers.lib.ExtensionalityAxioms</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="liblayers.lib.Functor.html#"><span class="id" title="library">liblayers.lib.Functor</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="liblayers.lib.Monad.html#"><span class="id" title="library">liblayers.lib.Monad</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.lib.Decision.html#"><span class="id" title="library">liblayers.lib.Decision</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.logic.Structures.html#"><span class="id" title="library">liblayers.logic.Structures</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.logic.LayerData.html#"><span class="id" title="library">liblayers.logic.LayerData</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab330"></a><h1 class="section"><span class="inlinecode"><a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a></span> is a monad</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_functor_ops"><span class="id" title="instance">res_functor_ops</span></a>: <a class="idref" href="liblayers.lib.Functor.html#FunctorOps"><span class="id" title="class">FunctorOps</span></a> <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> :=<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">f</span> <span class="id" title="var">x</span> := <a class="idref" href="compcert.common.Errors.html#bind"><span class="id" title="definition">Errors.bind</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> ⇒ <a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">Errors.OK</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a>))<br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_functor_prf"><span class="id" title="instance">res_functor_prf</span></a>: <a class="idref" href="liblayers.lib.Functor.html#Functor"><span class="id" title="class">Functor</span></a> <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> <span class="id" title="var">f</span> <span class="id" title="var">g</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_monad_ops"><span class="id" title="instance">res_monad_ops</span></a>: <a class="idref" href="liblayers.lib.Monad.html#MonadOps"><span class="id" title="class">MonadOps</span></a> <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> :=<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Monad.html#ret"><span class="id" title="method">ret</span></a> := <a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">Errors.OK</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Monad.html#bind"><span class="id" title="method">bind</span></a> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">f</span> <span class="id" title="var">x</span> := <a class="idref" href="compcert.common.Errors.html#bind"><span class="id" title="definition">Errors.bind</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#f"><span class="id" title="variable">f</span></a><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_monad_prf"><span class="id" title="instance">res_monad_prf</span></a>: <a class="idref" href="liblayers.lib.Monad.html#Monad"><span class="id" title="class">Monad</span></a> <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">try</span> <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">f</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">extensionality</span> <span class="id" title="var">mx</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">mx</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">f</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">mx</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">mx</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> <span class="id" title="var">f</span> <span class="id" title="var">g</span> <span class="id" title="var">mx</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">mx</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_monad_inv_ret"><span class="id" title="instance">res_monad_inv_ret</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Monad.html#MonadInvRet"><span class="id" title="class">MonadInvRet</span></a> <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">Hxy</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_monad_inv_bind"><span class="id" title="instance">res_monad_inv_bind</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Monad.html#MonadInvBind"><span class="id" title="class">MonadInvBind</span></a> <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">f</span> <span class="id" title="var">ma</span> <span class="id" title="var">b</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Monad.html#ret"><span class="id" title="method">ret</span></a>, <a class="idref" href="liblayers.lib.Monad.html#bind"><span class="id" title="method">bind</span></a> <span class="id" title="keyword">in</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">simpl</span> <span class="id" title="keyword">in</span> ×.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">ma</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">discriminate</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">eauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="res_bind_error"><span class="id" title="lemma">res_bind_error</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">f</span>: <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#B"><span class="id" title="variable">B</span></a>) <span class="id" title="var">msg</span>:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Monad.html#bind"><span class="id" title="method">bind</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#msg"><span class="id" title="variable">msg</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#msg"><span class="id" title="variable">msg</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Rewrite</span> @<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_bind_error"><span class="id" title="lemma">res_bind_error</span></a> : <span class="id" title="var">monad</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab331"></a><h1 class="section">Lifting orders on <span class="inlinecode"><a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a></span></h1>
+
+<div class="paragraph"> </div>
+
+ TODO: define <span class="inlinecode"><span class="id" title="var">res_rel</span></span> as well? 
+<div class="paragraph"> </div>
+
+ We need failure on top: &lt;explain&gt;. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <a name="res_le"><span class="id" title="inductive">res_le</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">R</span>: <a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#B"><span class="id" title="variable">B</span></a>): <a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a> (<a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <span class="id" title="var">A</span>) (<a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <span class="id" title="var">B</span>) :=<br/>
+&nbsp;&nbsp;| <a name="res_le_ok_def"><span class="id" title="constructor">res_le_ok_def</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">R</span> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <span class="id" title="var">R</span>)%<span class="id" title="var">rel</span> (@<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <span class="id" title="var">A</span>) (@<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <span class="id" title="var">B</span>)<br/>
+&nbsp;&nbsp;| <a name="res_le_error"><span class="id" title="constructor">res_le_error</span></a> (<span class="id" title="var">msg</span>: <a class="idref" href="compcert.common.Errors.html#errmsg"><span class="id" title="definition">errmsg</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#UpperBound"><span class="id" title="class">UpperBound</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <span class="id" title="var">R</span>) (<a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#msg"><span class="id" title="variable">msg</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">Global</span> <span class="id" title="var">Existing</span> <span class="id" title="keyword">Instance</span> <span class="id" title="var">res_le_error</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_le_ok"><span class="id" title="instance">res_le_ok</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a> (@<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a>) (<a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">R</span><a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">,</span></a> <span class="id" title="var">R</span> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <span class="id" title="var">R</span>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> @<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le_ok_def"><span class="id" title="constructor">res_le_ok_def</span></a>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_le_bind"><span class="id" title="instance">res_le_bind</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(@<a class="idref" href="compcert.common.Errors.html#bind"><span class="id" title="definition">Errors.bind</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">RA</span><a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">,</span></a> <a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">RB</span><a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <span class="id" title="var">RA</span> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">(</span></a><span class="id" title="var">RA</span> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <span class="id" title="var">RB</span><a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">)</span></a> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <span class="id" title="var">RB</span>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="compcert.common.Errors.html#bind"><span class="id" title="definition">Errors.bind</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">rauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_le_monad"><span class="id" title="instance">res_le_monad</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Monad.html#MonadRel"><span class="id" title="class">MonadRel</span></a> (@<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">simpl</span>; <span class="id" title="var">rauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Instance</span> <a name="res_le_op"><span class="id" title="instance">res_le_op</span></a> `(<a class="idref" href="liblayers.logic.Structures.html#Le"><span class="id" title="class">Le</span></a>): <a class="idref" href="liblayers.logic.Structures.html#Le"><span class="id" title="class">Le</span></a> (<a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>) :=<br/>
+&nbsp;&nbsp;{ <a class="idref" href="liblayers.logic.Structures.html#le"><span class="id" title="method">le</span></a> := <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <a class="idref" href="liblayers.logic.Structures.html#720b83680399fc5a022f578f28e994fa"><span class="id" title="notation">(≤)</span></a> }.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_le_monotonic"><span class="id" title="instance">res_le_monotonic</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>}:<br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a> (@<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#B"><span class="id" title="variable">B</span></a>) (<a class="idref" href="coqrel.RelDefinitions.html#subrel"><span class="id" title="definition">subrel</span></a> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="coqrel.RelDefinitions.html#subrel"><span class="id" title="definition">subrel</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">R1</span> <span class="id" title="var">R2</span> <span class="id" title="var">HR</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">HR</span>; <span class="id" title="tactic">assumption</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_le_monotonic_params"><span class="id" title="instance">res_le_monotonic_params</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.Morphisms.html#Params"><span class="id" title="class">Params</span></a> (@<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a>) 3.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="res_le_refl"><span class="id" title="lemma">res_le_refl</span></a> `(<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Reflexive"><span class="id" title="class">Reflexive</span></a>):<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Reflexive"><span class="id" title="class">Reflexive</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#R"><span class="id" title="variable">R</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">x</span> | <span class="id" title="var">msg</span>].<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">constructor</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">constructor</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Extern</span> 1 (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Reflexive"><span class="id" title="class">Reflexive</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <span class="id" title="var">_</span>)) ⇒<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le_refl"><span class="id" title="lemma">res_le_refl</span></a> : <span class="id" title="var">typeclass_instances</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="res_le_trans"><span class="id" title="lemma">res_le_trans</span></a> `(<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Transitive"><span class="id" title="class">Transitive</span></a>):<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Transitive"><span class="id" title="class">Transitive</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#R"><span class="id" title="variable">R</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">z</span> <span class="id" title="var">Hxy</span> <span class="id" title="var">Hyz</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hxy</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span> | <span class="id" title="var">x</span> <span class="id" title="var">msg</span>].<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">inversion</span> <span class="id" title="var">Hyz</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">transitivity</span> <span class="id" title="var">y</span>; <span class="id" title="tactic">trivial</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">inversion</span> <span class="id" title="var">Hyz</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Extern</span> 1 (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#Transitive"><span class="id" title="class">Transitive</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <span class="id" title="var">_</span>)) ⇒<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le_trans"><span class="id" title="lemma">res_le_trans</span></a> : <span class="id" title="var">typeclass_instances</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_le_htrans"><span class="id" title="instance">res_le_htrans</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>} <span class="id" title="var">RAB</span> <span class="id" title="var">RBC</span> <span class="id" title="var">RAC</span>:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#HTransitive"><span class="id" title="class">HTransitive</span></a> (<span class="id" title="var">A</span>:=<a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">B</span>:=<a class="idref" href="liblayers.compcertx.ErrorMonad.html#B"><span class="id" title="variable">B</span></a>) (<span class="id" title="var">C</span>:=<a class="idref" href="liblayers.compcertx.ErrorMonad.html#C"><span class="id" title="variable">C</span></a>) <a class="idref" href="liblayers.compcertx.ErrorMonad.html#RAB"><span class="id" title="variable">RAB</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#RBC"><span class="id" title="variable">RBC</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#RAC"><span class="id" title="variable">RAC</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#HTransitive"><span class="id" title="class">HTransitive</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#RAB"><span class="id" title="variable">RAB</span></a>) (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#RBC"><span class="id" title="variable">RBC</span></a>) (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#RAC"><span class="id" title="variable">RAC</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">HR</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">z</span> <span class="id" title="var">Hxy</span> <span class="id" title="var">Hyz</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hyz</span> <span class="id" title="keyword">as</span> [ <span class="id" title="var">y</span> <span class="id" title="var">z</span> <span class="id" title="var">Hyz</span> | ]; <span class="id" title="tactic">try</span> <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">Hxy</span> <span class="id" title="keyword">as</span> [ <span class="id" title="var">x'</span> <span class="id" title="var">y'</span> <span class="id" title="var">Hxy'</span> | ]; <span class="id" title="tactic">subst</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">htransitivity</span> <span class="id" title="var">y</span>; <span class="id" title="tactic">assumption</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_le_rtrans"><span class="id" title="instance">res_le_rtrans</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>} <span class="id" title="var">RAB</span> <span class="id" title="var">RBC</span> <span class="id" title="var">RAC</span>:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#RTransitive"><span class="id" title="class">RTransitive</span></a> (<span class="id" title="var">A</span>:=<a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">B</span>:=<a class="idref" href="liblayers.compcertx.ErrorMonad.html#B"><span class="id" title="variable">B</span></a>) (<span class="id" title="var">C</span>:=<a class="idref" href="liblayers.compcertx.ErrorMonad.html#C"><span class="id" title="variable">C</span></a>) <a class="idref" href="liblayers.compcertx.ErrorMonad.html#RAB"><span class="id" title="variable">RAB</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#RBC"><span class="id" title="variable">RBC</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#RAC"><span class="id" title="variable">RAC</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#RTransitive"><span class="id" title="class">RTransitive</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#RAB"><span class="id" title="variable">RAB</span></a>) (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#RBC"><span class="id" title="variable">RBC</span></a>) (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#RAC"><span class="id" title="variable">RAC</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">HR</span> <span class="id" title="var">x</span> <span class="id" title="var">z</span> <span class="id" title="var">Hxz</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hxz</span> <span class="id" title="keyword">as</span> [ <span class="id" title="var">a</span> <span class="id" title="var">c</span> <span class="id" title="var">Hac</span> | ].<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.logic.Structures.html#rtransitivity"><span class="id" title="definition">rtransitivity</span></a> <span class="id" title="keyword">in</span> <span class="id" title="var">Hac</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hac</span> <span class="id" title="keyword">as</span> (<span class="id" title="var">b</span> &amp; <span class="id" title="var">Hab</span> &amp; <span class="id" title="var">Hbc</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <span class="id" title="var">b</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">constructor</span>; <span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">∃</span> (<a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <span class="id" title="var">msg</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">constructor</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_lower_bound"><span class="id" title="instance">res_lower_bound</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">R</span>: <a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#B"><span class="id" title="variable">B</span></a>) (<span class="id" title="var">x</span>: <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>):<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#LowerBound"><span class="id" title="class">LowerBound</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#LowerBound"><span class="id" title="class">LowerBound</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#R"><span class="id" title="variable">R</span></a>) (<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">H</span> [<span class="id" title="var">y</span>|<span class="id" title="var">m</span>]; <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.logic.Structures.html#lower_bound"><span class="id" title="definition">lower_bound</span></a>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab332"></a><h2 class="section">Data-indexed version</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Instance</span> <a name="res_sim_op"><span class="id" title="instance">res_sim_op</span></a> `(<span class="id" title="var">Tsim</span>: <a class="idref" href="liblayers.logic.Structures.html#Sim"><span class="id" title="class">Sim</span></a>): <a class="idref" href="liblayers.logic.Structures.html#Sim"><span class="id" title="class">Sim</span></a> <span class="id" title="var">_</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">D</span> ⇒ <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#D"><span class="id" title="variable">D</span></a>)) :=<br/>
+&nbsp;&nbsp;{ <a class="idref" href="liblayers.logic.Structures.html#simRR"><span class="id" title="method">simRR</span></a> <span class="id" title="var">D1</span> <span class="id" title="var">D2</span> <span class="id" title="var">R</span> := <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> (<a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#R"><span class="id" title="variable">R</span></a>) }.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+I'm not sure if those are still necessary now that we use the
+  generalized <span class="inlinecode"><a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="OK_sim_monotonic"><span class="id" title="instance">OK_sim_monotonic</span></a> `(<span class="id" title="var">Tsim</span>: <a class="idref" href="liblayers.logic.Structures.html#Sim"><span class="id" title="class">Sim</span></a>):<br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">fun</span> <span class="id" title="var">D</span> ⇒ @<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#D"><span class="id" title="variable">D</span></a>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">R</span><a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <span class="id" title="var">R</span> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.logic.Structures.html#sim"><span class="id" title="abbreviation">sim</span></a> <span class="id" title="var">R</span>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">D1</span> <span class="id" title="var">D2</span> <span class="id" title="var">R</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le_ok"><span class="id" title="instance">res_le_ok</span></a>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_sim_bind"><span class="id" title="instance">res_sim_bind</span></a> {<span class="id" title="var">V</span> <span class="id" title="var">E</span>} {<span class="id" title="var">A</span> <span class="id" title="var">B</span>: <a class="idref" href="liblayers.compcertx.ErrorMonad.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Type</span>}:<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">RA</span>: <a class="idref" href="liblayers.logic.Structures.html#sim_relation"><span class="id" title="definition">sim_relation</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">RB</span>: <a class="idref" href="liblayers.logic.Structures.html#sim_relation"><span class="id" title="definition">sim_relation</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#B"><span class="id" title="variable">B</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">fun</span> (<span class="id" title="var">v</span> : <a class="idref" href="liblayers.compcertx.ErrorMonad.html#V"><span class="id" title="variable">V</span></a>) ⇒ <a class="idref" href="liblayers.lib.Monad.html#bind"><span class="id" title="method">bind</span></a> (<span class="id" title="var">A</span> := <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#v"><span class="id" title="variable">v</span></a>) (<span class="id" title="var">B</span> := <a class="idref" href="liblayers.compcertx.ErrorMonad.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#v"><span class="id" title="variable">v</span></a>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="coqrel.RelDefinitions.html#2f92680c001ef5f82af3e1bfcf843963"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">e</span> <a class="idref" href="coqrel.RelDefinitions.html#2f92680c001ef5f82af3e1bfcf843963"><span class="id" title="notation">@</span></a> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <a class="idref" href="coqrel.RelDefinitions.html#2f92680c001ef5f82af3e1bfcf843963"><span class="id" title="notation">:</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#E"><span class="id" title="variable">E</span></a><a class="idref" href="coqrel.RelDefinitions.html#2f92680c001ef5f82af3e1bfcf843963"><span class="id" title="notation">,</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.compcertx.ErrorMonad.html#RA"><span class="id" title="variable">RA</span></a> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e</span> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#RB"><span class="id" title="variable">RB</span></a> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e</span>)<a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">)</span></a> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#RA"><span class="id" title="variable">RA</span></a> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e</span>) <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#RB"><span class="id" title="variable">RB</span></a> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e</span>)<a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">)</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">RA</span> <span class="id" title="var">RB</span> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">f</span> <span class="id" title="var">g</span> <span class="id" title="var">Hfg</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hxy</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span> | <span class="id" title="var">y</span> <span class="id" title="var">msg</span>].<br/>
+&nbsp;&nbsp;× <span class="id" title="var">monad_norm</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">Hfg</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="var">monad_norm</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_sim_fmap"><span class="id" title="instance">res_sim_fmap</span></a> {<span class="id" title="var">V</span> <span class="id" title="var">E</span>} {<span class="id" title="var">A</span> <span class="id" title="var">B</span>: <a class="idref" href="liblayers.compcertx.ErrorMonad.html#V"><span class="id" title="variable">V</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Type</span>}:<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">RA</span>: <a class="idref" href="liblayers.logic.Structures.html#sim_relation"><span class="id" title="definition">sim_relation</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">RB</span>: <a class="idref" href="liblayers.logic.Structures.html#sim_relation"><span class="id" title="definition">sim_relation</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#B"><span class="id" title="variable">B</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">fun</span> (<span class="id" title="var">v</span> : <a class="idref" href="liblayers.compcertx.ErrorMonad.html#V"><span class="id" title="variable">V</span></a>) ⇒ <a class="idref" href="liblayers.lib.Functor.html#fmap"><span class="id" title="method">fmap</span></a> (<span class="id" title="var">A</span> := <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#v"><span class="id" title="variable">v</span></a>) (<span class="id" title="var">B</span> := <a class="idref" href="liblayers.compcertx.ErrorMonad.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#v"><span class="id" title="variable">v</span></a>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="coqrel.RelDefinitions.html#2f92680c001ef5f82af3e1bfcf843963"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">e</span> <a class="idref" href="coqrel.RelDefinitions.html#2f92680c001ef5f82af3e1bfcf843963"><span class="id" title="notation">@</span></a> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <a class="idref" href="coqrel.RelDefinitions.html#2f92680c001ef5f82af3e1bfcf843963"><span class="id" title="notation">:</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#E"><span class="id" title="variable">E</span></a><a class="idref" href="coqrel.RelDefinitions.html#2f92680c001ef5f82af3e1bfcf843963"><span class="id" title="notation">,</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.compcertx.ErrorMonad.html#RA"><span class="id" title="variable">RA</span></a> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e</span> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#RB"><span class="id" title="variable">RB</span></a> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e</span><a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">)</span></a> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">(</span></a><a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#RA"><span class="id" title="variable">RA</span></a> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e</span>) <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#RB"><span class="id" title="variable">RB</span></a> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e</span>)<a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">)</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">RA</span> <span class="id" title="var">RB</span> <span class="id" title="var">v1</span> <span class="id" title="var">v2</span> <span class="id" title="var">e</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">f</span> <span class="id" title="var">g</span> <span class="id" title="var">Hfg</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hxy</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span> | <span class="id" title="var">y</span> <span class="id" title="var">msg</span>].<br/>
+&nbsp;&nbsp;× <span class="id" title="var">monad_norm</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">Hfg</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="var">monad_norm</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab333"></a><h1 class="section">Orders for <span class="inlinecode"><a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a></span> <span class="inlinecode">∘</span> <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a></span></h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.logic.OptionOrders.html#"><span class="id" title="library">OptionOrders</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="res_option_le_ok_none"><span class="id" title="lemma">res_option_le_ok_none</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">R</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Relations.Relation_Definitions.html#relation"><span class="id" title="definition">relation</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">y</span>: <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>)):<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#R"><span class="id" title="variable">R</span></a>) (<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a>) <a class="idref" href="liblayers.compcertx.ErrorMonad.html#y"><span class="id" title="variable">y</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.logic.Structures.html#lower_bound"><span class="id" title="definition">lower_bound</span></a>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">res_option_le_ok_none</span>: <span class="id" title="var">liblayers</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab334"></a><h1 class="section">Decision-related definitions</h1>
+
+<div class="paragraph"> </div>
+
+<a name="lab335"></a><h2 class="section">The <span class="inlinecode"><a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a></span> version of <span class="inlinecode"><span class="id" title="tactic">assert</span></span>.</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="eassert"><span class="id" title="definition">eassert</span></a> (<span class="id" title="var">e</span>: <a class="idref" href="compcert.common.Errors.html#errmsg"><span class="id" title="definition">errmsg</span></a>) <span class="id" title="var">P</span> `{<span class="id" title="var">HP</span>: <a class="idref" href="liblayers.lib.Decision.html#Decision"><span class="id" title="class">Decision</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#P"><span class="id" title="variable">P</span></a>}: <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#P"><span class="id" title="variable">P</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="liblayers.lib.Decision.html#decide"><span class="id" title="definition">decide</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#P"><span class="id" title="variable">P</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Specif.html#left"><span class="id" title="constructor">left</span></a> <span class="id" title="var">H</span> ⇒ <a class="idref" href="liblayers.lib.Monad.html#ret"><span class="id" title="method">ret</span></a> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Specif.html#right"><span class="id" title="constructor">right</span></a> <span class="id" title="var">H</span> ⇒ <a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#e"><span class="id" title="variable">e</span></a><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="eassert_inv"><span class="id" title="lemma">eassert_inv</span></a> `{<span class="id" title="var">Pdec</span>: <a class="idref" href="liblayers.lib.Decision.html#Decision"><span class="id" title="class">Decision</span></a>} {<span class="id" title="var">A</span>} <span class="id" title="var">m</span> (<span class="id" title="var">f</span>: <a class="idref" href="liblayers.compcertx.ErrorMonad.html#P"><span class="id" title="variable">P</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">r</span>: <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>):<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Monad.html#bind"><span class="id" title="method">bind</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#f"><span class="id" title="variable">f</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#eassert"><span class="id" title="definition">eassert</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#P"><span class="id" title="variable">P</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Monad.html#ret"><span class="id" title="method">ret</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#r"><span class="id" title="variable">r</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#df1ced36fc33ce188051218bca314374"><span class="id" title="notation">↔</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">∃</span></a> <span class="id" title="var">H</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#H"><span class="id" title="variable">H</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.lib.Monad.html#ret"><span class="id" title="method">ret</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#r"><span class="id" title="variable">r</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#eassert"><span class="id" title="definition">eassert</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="liblayers.lib.Decision.html#decide"><span class="id" title="definition">decide</span></a> <span class="id" title="var">P</span>) <span class="id" title="keyword">as</span> [<span class="id" title="var">HP</span> | <span class="id" title="var">HP</span>];<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.lib.Monad.html#bind"><span class="id" title="method">bind</span></a>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">split</span>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">H</span> <span class="id" title="var">Hf</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">H</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <span class="id" title="var">HP</span>) <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="compcert.lib.Axioms.html#proof_irr"><span class="id" title="axiom">proof_irr</span></a>; <span class="id" title="tactic">congruence</span>.<br/>
+&nbsp;&nbsp;× <span class="id" title="tactic">split</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">discriminate</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">H</span> <span class="id" title="var">Hf</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">tauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="eassert_le"><span class="id" title="instance">eassert_le</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#eassert"><span class="id" title="definition">eassert</span></a> (<a class="idref" href="coqrel.RelOperators.html#2ba22b4c3fc52a802af99bc58fee3c46"><span class="id" title="notation">⊤</span></a> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="coqrel.Relators.html#4adbc34bd4a36d15cb3084cd06569b08"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> <a class="idref" href="coqrel.Relators.html#4adbc34bd4a36d15cb3084cd06569b08"><span class="id" title="notation">:</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#flip"><span class="id" title="definition">flip</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#impl"><span class="id" title="definition">impl</span></a><a class="idref" href="coqrel.Relators.html#4adbc34bd4a36d15cb3084cd06569b08"><span class="id" title="notation">,</span></a> <a class="idref" href="coqrel.RelOperators.html#2ba22b4c3fc52a802af99bc58fee3c46"><span class="id" title="notation">⊤</span></a> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <a class="idref" href="coqrel.RelOperators.html#2ba22b4c3fc52a802af99bc58fee3c46"><span class="id" title="notation">⊤</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">msg1</span> <span class="id" title="var">msg2</span> <span class="id" title="var">_</span> <span class="id" title="var">P</span> <span class="id" title="var">Q</span> <span class="id" title="var">HPQ</span> <span class="id" title="var">Pdec</span> <span class="id" title="var">Qdec</span> <span class="id" title="var">_</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#eassert"><span class="id" title="definition">eassert</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#flip"><span class="id" title="definition">flip</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#impl"><span class="id" title="definition">impl</span></a> <span class="id" title="keyword">in</span> ×.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="liblayers.lib.Decision.html#decide"><span class="id" title="definition">decide</span></a> <span class="id" title="var">Q</span>) <span class="id" title="keyword">as</span> [<span class="id" title="var">HQ</span> | <span class="id" title="var">HQ</span>]; <span class="id" title="tactic">try</span> <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="liblayers.lib.Decision.html#decide"><span class="id" title="definition">decide</span></a> <span class="id" title="var">P</span>) <span class="id" title="keyword">as</span> [<span class="id" title="var">HP</span> | <span class="id" title="var">HP</span>]; <span class="id" title="tactic">try</span> <span class="id" title="tactic">tauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#I"><span class="id" title="constructor">I</span></a>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Rewrite</span> @<a class="idref" href="liblayers.compcertx.ErrorMonad.html#eassert_inv"><span class="id" title="lemma">eassert_inv</span></a> <span class="id" title="keyword">using</span> <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span> : <span class="id" title="var">monad</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+These tactics make it easy to reduce subexpressions of the form
+  <span class="inlinecode"><a class="idref" href="compcert.flocq.Core.Fcore_generic_fmt.html#H"><span class="id" title="variable">H</span></a></span> <span class="inlinecode">&lt;-</span> <span class="inlinecode"><a class="idref" href="liblayers.compcertx.ErrorMonad.html#eassert"><span class="id" title="definition">eassert</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.common.Errors.html#msg"><span class="id" title="definition">msg</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.common.Globalenvs.html#Genv.GENV.GLOBALENV_PRINCIPLES.P"><span class="id" title="variable">P</span></a>;</span> <span class="inlinecode"><a class="idref" href="liblayers.lib.Monad.html#M"><span class="id" title="variable">M</span></a></span> in the goal by proving or disproving <span class="inlinecode"><a class="idref" href="compcert.common.Globalenvs.html#Genv.GENV.GLOBALENV_PRINCIPLES.P"><span class="id" title="variable">P</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="eassert_true"><span class="id" title="lemma">eassert_true</span></a> <span class="id" title="var">msg</span> <span class="id" title="var">P</span> `{<span class="id" title="var">Pdec</span>: <a class="idref" href="liblayers.lib.Decision.html#Decision"><span class="id" title="class">Decision</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#P"><span class="id" title="variable">P</span></a>}:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.compcertx.ErrorMonad.html#P"><span class="id" title="variable">P</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">∃</span></a> <span class="id" title="var">H</span><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#eassert"><span class="id" title="definition">eassert</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#msg"><span class="id" title="variable">msg</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#P"><span class="id" title="variable">P</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#H"><span class="id" title="variable">H</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#eassert"><span class="id" title="definition">eassert</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="liblayers.lib.Decision.html#decide"><span class="id" title="definition">decide</span></a> <span class="id" title="var">P</span>); <span class="id" title="tactic">try</span> <span class="id" title="var">contradiction</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">eauto</span>.<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">eassert_true_aux</span> <span class="id" title="var">msg</span> <span class="id" title="var">P</span> <span class="id" title="var">Pdec</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">H</span> := <span class="id" title="tactic">fresh</span> "Hasserted" <span class="id" title="keyword">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">HH</span> := <span class="id" title="tactic">fresh</span> "Hassert_eq" <span class="id" title="keyword">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#eassert_true"><span class="id" title="lemma">eassert_true</span></a> <span class="id" title="var">msg</span> <span class="id" title="var">P</span> (<span class="id" title="var">Pdec</span> := <span class="id" title="var">Pdec</span>)) <span class="id" title="keyword">as</span> [<span class="id" title="var">H</span> <span class="id" title="var">HH</span>];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[ <span class="id" title="tactic">idtac</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="tactic">rewrite</span> !<span class="id" title="var">HH</span> <span class="id" title="keyword">in</span> *;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">clear</span> <span class="id" title="var">HH</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">monad_norm</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">try</span> <span class="id" title="tactic">clear</span> <span class="id" title="var">H</span> ].<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">eassert_true</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| |- <span class="id" title="keyword">context</span> [@<a class="idref" href="liblayers.compcertx.ErrorMonad.html#eassert"><span class="id" title="definition">eassert</span></a> ?<span class="id" title="var">msg</span> ?<span class="id" title="var">P</span> ?<span class="id" title="var">Pdec</span>] ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">eassert_true_aux</span> <span class="id" title="var">msg</span> <span class="id" title="var">P</span> <span class="id" title="var">Pdec</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="eassert_false"><span class="id" title="lemma">eassert_false</span></a> <span class="id" title="var">msg</span> <span class="id" title="var">P</span> `{<span class="id" title="var">Pdec</span>: <a class="idref" href="liblayers.lib.Decision.html#Decision"><span class="id" title="class">Decision</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#P"><span class="id" title="variable">P</span></a>}:<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#611abc97cba304de784fa909dbdea1fa"><span class="id" title="notation">¬</span></a><a class="idref" href="liblayers.compcertx.ErrorMonad.html#P"><span class="id" title="variable">P</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#eassert"><span class="id" title="definition">eassert</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#msg"><span class="id" title="variable">msg</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#P"><span class="id" title="variable">P</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#msg"><span class="id" title="variable">msg</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#eassert"><span class="id" title="definition">eassert</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="liblayers.lib.Decision.html#decide"><span class="id" title="definition">decide</span></a> <span class="id" title="var">P</span>); <span class="id" title="tactic">try</span> <span class="id" title="var">contradiction</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">eauto</span>.<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">eassert_false_aux</span> <span class="id" title="var">msg</span> <span class="id" title="var">P</span> <span class="id" title="var">Pdec</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">H</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="keyword">in</span><br/>
+&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">H</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#611abc97cba304de784fa909dbdea1fa"><span class="id" title="notation">¬</span></a><span class="id" title="var">P</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[ <span class="id" title="tactic">idtac</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="tactic">rewrite</span> !(<a class="idref" href="liblayers.compcertx.ErrorMonad.html#eassert_false"><span class="id" title="lemma">eassert_false</span></a> <span class="id" title="var">msg</span> <span class="id" title="var">P</span> (<span class="id" title="var">Pdec</span>:=<span class="id" title="var">Pdec</span>) <span class="id" title="var">H</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">monad_norm</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">clear</span> <span class="id" title="var">H</span> ].<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">eassert_false</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">lazymatch</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| |- <span class="id" title="keyword">context</span> [@<a class="idref" href="liblayers.compcertx.ErrorMonad.html#eassert"><span class="id" title="definition">eassert</span></a> ?<span class="id" title="var">msg</span> ?<span class="id" title="var">P</span> ?<span class="id" title="var">Pdec</span>] ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">eassert_false_aux</span> <span class="id" title="var">msg</span> <span class="id" title="var">P</span> <span class="id" title="var">Pdec</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab336"></a><h2 class="section">Whether a <span class="inlinecode"><a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a></span> <span class="inlinecode"><a class="idref" href="compcert.x86.Op.html#SOUNDNESS.A"><span class="id" title="variable">A</span></a></span> is <span class="inlinecode"><a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a></span> or <span class="inlinecode"><a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a></span></h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="isOK"><span class="id" title="definition">isOK</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">x</span>: <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>): <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">∃</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">(</span></a><span class="id" title="var">a</span>: <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">),</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#a"><span class="id" title="variable">a</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="isError"><span class="id" title="definition">isError</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">x</span>: <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>): <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">∃</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">(</span></a><span class="id" title="var">m</span>: <a class="idref" href="compcert.common.Errors.html#errmsg"><span class="id" title="definition">errmsg</span></a><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">),</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#m"><span class="id" title="variable">m</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="isOKNone"><span class="id" title="definition">isOKNone</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">x</span>: <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>)) :=<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="isOK_dec"><span class="id" title="instance">isOK_dec</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">x</span>: <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>): <a class="idref" href="liblayers.lib.Decision.html#Decision"><span class="id" title="class">Decision</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#isOK"><span class="id" title="definition">isOK</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">x</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <span class="id" title="var">_</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Specif.html#left"><span class="id" title="constructor">left</span></a> <span class="id" title="var">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <span class="id" title="var">_</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Specif.html#right"><span class="id" title="constructor">right</span></a> <span class="id" title="var">_</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">abstract</span> (<span class="id" title="tactic">red</span>; <span class="id" title="tactic">eauto</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">abstract</span> (<span class="id" title="tactic">intros</span> [<span class="id" title="var">a</span> <span class="id" title="var">Ha</span>]; <span class="id" title="tactic">discriminate</span>).<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="isError_dec"><span class="id" title="instance">isError_dec</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">x</span>: <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>): <a class="idref" href="liblayers.lib.Decision.html#Decision"><span class="id" title="class">Decision</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#isError"><span class="id" title="definition">isError</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">x</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <span class="id" title="var">_</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Specif.html#right"><span class="id" title="constructor">right</span></a> <span class="id" title="var">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <span class="id" title="var">_</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Specif.html#left"><span class="id" title="constructor">left</span></a> <span class="id" title="var">_</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">abstract</span> (<span class="id" title="tactic">intros</span> [<span class="id" title="var">msg</span> <span class="id" title="var">Hmsg</span>]; <span class="id" title="tactic">discriminate</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">abstract</span> (<span class="id" title="tactic">red</span>; <span class="id" title="tactic">eauto</span>).<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="isOKNone_dec"><span class="id" title="instance">isOKNone_dec</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">x</span>: <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>)):<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Decision.html#Decision"><span class="id" title="class">Decision</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#isOKNone"><span class="id" title="definition">isOKNone</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">x</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Specif.html#left"><span class="id" title="constructor">left</span></a> <span class="id" title="var">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">_</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Specif.html#right"><span class="id" title="constructor">right</span></a> <span class="id" title="var">_</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">abstract</span> (<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#isOKNone"><span class="id" title="definition">isOKNone</span></a>; <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">congruence</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">abstract</span> <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">abstract</span> (<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#isOKNone"><span class="id" title="definition">isOKNone</span></a>; <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">congruence</span>).<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="isOK_le"><span class="id" title="instance">isOK_le</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a> (@<a class="idref" href="liblayers.compcertx.ErrorMonad.html#isOK"><span class="id" title="definition">isOK</span></a>) (<a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">R</span><a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <span class="id" title="var">R</span> <a class="idref" href="coqrel.RelDefinitions.html#28fb2fb3952fac7e01eb907871e1ea99"><span class="id" title="notation">--&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#impl"><span class="id" title="definition">impl</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">B</span> <span class="id" title="var">A</span> <span class="id" title="var">R</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span> [<span class="id" title="var">x'</span> <span class="id" title="var">Hx</span>].<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">Hxy</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="isError_le"><span class="id" title="instance">isError_le</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a> (@<a class="idref" href="liblayers.compcertx.ErrorMonad.html#isError"><span class="id" title="definition">isError</span></a>) (<a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">R</span><a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <span class="id" title="var">R</span> <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#impl"><span class="id" title="definition">impl</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">R</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span> <span class="id" title="var">Hx</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hx</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">err</span> <span class="id" title="var">Hx</span>]; <span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">Hxy</span> <span class="id" title="keyword">as</span> [| <span class="id" title="var">err'</span> <span class="id" title="var">x</span>]; <span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">eexists</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="isOKNone_le"><span class="id" title="instance">isOKNone_le</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a> (@<a class="idref" href="liblayers.compcertx.ErrorMonad.html#isOKNone"><span class="id" title="definition">isOKNone</span></a>) (<a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">R</span><a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <span class="id" title="var">R</span>) <a class="idref" href="coqrel.RelDefinitions.html#28fb2fb3952fac7e01eb907871e1ea99"><span class="id" title="notation">--&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Program.Basics.html#impl"><span class="id" title="definition">impl</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#isOKNone"><span class="id" title="definition">isOKNone</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A1</span> <span class="id" title="var">A2</span> <span class="id" title="var">RA</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span> <span class="id" title="var">Hx</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hxy</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span> | ]; <span class="id" title="tactic">try</span> <span class="id" title="tactic">discriminate</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hxy</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span> | ]; <span class="id" title="tactic">try</span> <span class="id" title="tactic">discriminate</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab337"></a><h3 class="section">Some lemmas and <span class="inlinecode"><span class="id" title="tactic">eauto</span></span> hints.</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="isOK_OK"><span class="id" title="lemma">isOK_OK</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">a</span>: <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>):<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.compcertx.ErrorMonad.html#isOK"><span class="id" title="definition">isOK</span></a> (<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#a"><span class="id" title="variable">a</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">eexists</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="isOK_Error"><span class="id" title="lemma">isOK_Error</span></a> {<span class="id" title="var">A</span>} <span class="id" title="var">msg</span>:<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#611abc97cba304de784fa909dbdea1fa"><span class="id" title="notation">¬</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#isOK"><span class="id" title="definition">isOK</span></a> (@<a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#msg"><span class="id" title="variable">msg</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">a</span> <span class="id" title="var">Ha</span>].<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">discriminate</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">isOK_OK</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="isOKNone_OKNone"><span class="id" title="lemma">isOKNone_OKNone</span></a> {<span class="id" title="var">A</span>}:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.compcertx.ErrorMonad.html#isOKNone"><span class="id" title="definition">isOKNone</span></a> (<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> (@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>)).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">isOKNone_OKNone</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="isError_Error"><span class="id" title="lemma">isError_Error</span></a> {<span class="id" title="var">A</span>} <span class="id" title="var">msg</span>:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.compcertx.ErrorMonad.html#isError"><span class="id" title="definition">isError</span></a> (@<a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#msg"><span class="id" title="variable">msg</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">eexists</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">isError_Error</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab338"></a><h1 class="section">Miscellaneous helpers</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="fallback"><span class="id" title="definition">fallback</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">x</span>: <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">y</span>: <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>): <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#y"><span class="id" title="variable">y</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <span class="id" title="var">a</span> ⇒ <span class="id" title="var">a</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <span class="id" title="var">_</span> ⇒ <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab339"></a><h2 class="section">Flip <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a></span> <span class="inlinecode">(<a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a></span> <span class="inlinecode">-)</span> &lt;-&gt; <span class="inlinecode"><a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a></span> <span class="inlinecode">(<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a></span> <span class="inlinecode">-)</span></h2>
+
+<div class="paragraph"> </div>
+
+ Overall, <span class="inlinecode"><a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a></span> <span class="inlinecode">∘</span> <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a></span> is more convenient to manipulate and
+  that's what we have in most places. However, it is more
+  straightforward to store into <span class="inlinecode"><a class="idref" href="liblayers.logic.PTrees.html#PTree"><span class="id" title="module">PTree</span></a></span>s as <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a></span> <span class="inlinecode">∘</span> <span class="inlinecode"><a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a></span>.
+  Fortunately these wrappers can be used to flip between the two
+  representations. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="res_option_flip"><span class="id" title="definition">res_option_flip</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">roa</span>: <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>)): <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> (<a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#roa"><span class="id" title="variable">roa</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">a</span>) ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <span class="id" title="var">a</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <span class="id" title="var">msg</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <span class="id" title="var">msg</span>)<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="res_option_flip_le"><span class="id" title="instance">res_option_flip_le</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(@<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_option_flip"><span class="id" title="definition">res_option_flip</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">R</span><a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <span class="id" title="var">R</span>) <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <span class="id" title="var">R</span>)).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A1</span> <span class="id" title="var">A2</span> <span class="id" title="var">RA</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> [<span class="id" title="var">_</span> <span class="id" title="var">_</span> [<span class="id" title="var">y</span> | <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span>] | <span class="id" title="var">msg</span> [[|]|]];<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">rauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="option_res_flip"><span class="id" title="definition">option_res_flip</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">ora</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> (<a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>)): <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#ora"><span class="id" title="variable">ora</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a> ⇒ <a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <span class="id" title="var">a</span>) ⇒ <a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">a</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <span class="id" title="var">msg</span>) ⇒ <a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <span class="id" title="var">msg</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="option_res_le_flip"><span class="id" title="lemma">option_res_le_flip</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">R</span>: <a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#B"><span class="id" title="variable">B</span></a>) <span class="id" title="var">x</span> <span class="id" title="var">y</span>:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#R"><span class="id" title="variable">R</span></a>) (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#option_res_flip"><span class="id" title="definition">option_res_flip</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a>) (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#option_res_flip"><span class="id" title="definition">option_res_flip</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#y"><span class="id" title="variable">y</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#df1ced36fc33ce188051218bca314374"><span class="id" title="notation">↔</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#R"><span class="id" title="variable">R</span></a>) <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#y"><span class="id" title="variable">y</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span> <span class="id" title="keyword">as</span> [[|]|];<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">y</span> <span class="id" title="keyword">as</span> [[|]|];<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">intro</span> <span class="id" title="var">H</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">subst</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">try</span> (<span class="id" title="tactic">inversion</span> <span class="id" title="var">H2</span>; <span class="id" title="tactic">subst</span>);<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> (<span class="id" title="tactic">constructor</span> || <span class="id" title="tactic">assumption</span>).<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="option_res_flip_le"><span class="id" title="instance">option_res_flip_le</span></a>:<br/>
+&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(@<a class="idref" href="liblayers.compcertx.ErrorMonad.html#option_res_flip"><span class="id" title="definition">option_res_flip</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">forallr</span></a> <span class="id" title="var">R</span><a class="idref" href="coqrel.RelDefinitions.html#1bd22793714b33e291f1b6c3b141e214"><span class="id" title="notation">,</span></a> <a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <span class="id" title="var">R</span>) <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <span class="id" title="var">R</span>)).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">A1</span> <span class="id" title="var">A2</span> <span class="id" title="var">RA</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">Hxy</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#option_res_le_flip"><span class="id" title="lemma">option_res_le_flip</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="res_option_flip_inv"><span class="id" title="lemma">res_option_flip_inv</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">x</span>: <a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>)):<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.compcertx.ErrorMonad.html#option_res_flip"><span class="id" title="definition">option_res_flip</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_option_flip"><span class="id" title="definition">res_option_flip</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span> <span class="id" title="keyword">as</span> [[<span class="id" title="var">x</span>|] | <span class="id" title="var">msg</span>]; <span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="option_res_flip_inv"><span class="id" title="lemma">option_res_flip_inv</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">x</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> (<a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>)):<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_option_flip"><span class="id" title="definition">res_option_flip</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#option_res_flip"><span class="id" title="definition">option_res_flip</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span> <span class="id" title="keyword">as</span> [[<span class="id" title="var">x</span>|<span class="id" title="var">msg</span>] | ]; <span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="res_option_le_flip"><span class="id" title="lemma">res_option_le_flip</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">R</span>: <a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#B"><span class="id" title="variable">B</span></a>) <span class="id" title="var">x</span> <span class="id" title="var">y</span>:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#R"><span class="id" title="variable">R</span></a>) (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_option_flip"><span class="id" title="definition">res_option_flip</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a>) (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_option_flip"><span class="id" title="definition">res_option_flip</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#y"><span class="id" title="variable">y</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#df1ced36fc33ce188051218bca314374"><span class="id" title="notation">↔</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#R"><span class="id" title="variable">R</span></a>) <a class="idref" href="liblayers.compcertx.ErrorMonad.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#y"><span class="id" title="variable">y</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <a class="idref" href="liblayers.compcertx.ErrorMonad.html#option_res_le_flip"><span class="id" title="lemma">option_res_le_flip</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">rewrite</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_option_flip_inv"><span class="id" title="lemma">res_option_flip_inv</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">tauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab340"></a><h1 class="section"><span class="inlinecode"><a class="idref" href="liblayers.logic.PseudoJoin.html#PseudoJoin"><span class="id" title="record">PseudoJoin</span></a></span> structure for <span class="inlinecode"><a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a></span> <span class="inlinecode">(<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a></span> <span class="inlinecode">-)</span></h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="liblayers.logic.PseudoJoin.html#"><span class="id" title="library">PseudoJoin</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="RES_OPTION_PSEUDO_JOIN"><span class="id" title="section">RES_OPTION_PSEUDO_JOIN</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="res_option_oplus_op"><span class="id" title="instance">res_option_oplus_op</span></a> (<span class="id" title="var">A</span>: <span class="id" title="keyword">Type</span>): <a class="idref" href="liblayers.logic.Structures.html#Oplus"><span class="id" title="class">Oplus</span></a> (<a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>)) | 10 :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <a class="idref" href="liblayers.logic.Structures.html#oplus"><span class="id" title="method">oplus</span></a> <span class="id" title="var">rox</span> <span class="id" title="var">roy</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">ox</span> <a class="idref" href="liblayers.lib.Monad.html#9de03680d7b45b7f84bb39e0173c68a2"><span class="id" title="notation">&lt;-</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#rox"><span class="id" title="variable">rox</span></a><a class="idref" href="liblayers.lib.Monad.html#9de03680d7b45b7f84bb39e0173c68a2"><span class="id" title="notation">;</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">oy</span> <a class="idref" href="liblayers.lib.Monad.html#9de03680d7b45b7f84bb39e0173c68a2"><span class="id" title="notation">&lt;-</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#roy"><span class="id" title="variable">roy</span></a><a class="idref" href="liblayers.lib.Monad.html#9de03680d7b45b7f84bb39e0173c68a2"><span class="id" title="notation">;</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">ox</span>, <span class="id" title="var">oy</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a> ⇒ <a class="idref" href="liblayers.lib.Monad.html#ret"><span class="id" title="method">ret</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">x</span>, <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a> ⇒ <a class="idref" href="liblayers.lib.Monad.html#ret"><span class="id" title="method">ret</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">x</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">y</span> ⇒ <a class="idref" href="liblayers.lib.Monad.html#ret"><span class="id" title="method">ret</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">y</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">x</span>, <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">y</span> ⇒ <a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#nil"><span class="id" title="constructor">nil</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span> }.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="res_option_oplus_monotonic"><span class="id" title="instance">res_option_oplus_monotonic</span></a> {<span class="id" title="var">A</span>} (<span class="id" title="var">R</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Relations.Relation_Definitions.html#relation"><span class="id" title="definition">relation</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="coqrel.RelDefinitions.html#Monotonic"><span class="id" title="abbreviation">Monotonic</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#c9316591232be9202fdc70cc92e6cdd5"><span class="id" title="notation">(⊕)</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#R"><span class="id" title="variable">R</span></a>) <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#R"><span class="id" title="variable">R</span></a>) <a class="idref" href="coqrel.RelDefinitions.html#d5d0ad6beccd25d5224442d64ed307d5"><span class="id" title="notation">++&gt;</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#R"><span class="id" title="variable">R</span></a>)).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="compcert.common.Errors.html#bind"><span class="id" title="definition">Errors.bind</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="var">rstep</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">H3</span> <span class="id" title="keyword">as</span> [[<span class="id" title="var">y1</span>|] | <span class="id" title="var">x1</span> <span class="id" title="var">y1</span> <span class="id" title="var">H1</span>];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">H4</span> <span class="id" title="keyword">as</span> [[<span class="id" title="var">y2</span>|] | <span class="id" title="var">x2</span> <span class="id" title="var">y2</span> <span class="id" title="var">H2</span>];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="var">rstep</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="var">Existing</span> <span class="id" title="keyword">Instance</span> <span class="id" title="var">res_le_op</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Existing</span> <span class="id" title="keyword">Instance</span> <span class="id" title="var">option_le_op</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Local Hint Extern</span> 4 ⇒ <span class="id" title="tactic">reflexivity</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="res_option_oplus_prf"><span class="id" title="instance">res_option_oplus_prf</span></a> (<span class="id" title="var">A</span>: <span class="id" title="keyword">Type</span>) `{<span class="id" title="var">Ale</span>: <a class="idref" href="liblayers.logic.Structures.html#Le"><span class="id" title="class">Le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>}:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#PreOrder"><span class="id" title="class">PreOrder</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.logic.Structures.html#720b83680399fc5a022f578f28e994fa"><span class="id" title="notation">(≤)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.PseudoJoin.html#PseudoJoin"><span class="id" title="class">PseudoJoin</span></a> (<a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>)) (<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">with</span> <span class="id" title="tactic">simpl</span>; <span class="id" title="var">monad_norm</span>; <span class="id" title="tactic">repeat</span> <span class="id" title="tactic">constructor</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">Hpre</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">try</span> <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">simpl</span> <a class="idref" href="liblayers.logic.Structures.html#720b83680399fc5a022f578f28e994fa"><span class="id" title="notation">(≤)</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">red</span>; <span class="id" title="var">rauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> [[<span class="id" title="var">y</span>|]|<span class="id" title="var">err</span>]...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> [[<span class="id" title="var">x</span>|]|<span class="id" title="var">xerr</span>] [[<span class="id" title="var">y</span>|]|<span class="id" title="var">yerr</span>] [[<span class="id" title="var">z</span>|]|<span class="id" title="var">zerr</span>]...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> [[<span class="id" title="var">x</span>|]|<span class="id" title="var">xerr</span>] [[<span class="id" title="var">y</span>|]|<span class="id" title="var">yerr</span>]...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> [[<span class="id" title="var">x</span>|]|<span class="id" title="var">xerr</span>] [[<span class="id" title="var">y</span>|]|<span class="id" title="var">yerr</span>]...<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In addition, we have stronger versions of those. 
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="res_option_oplus_id_left"><span class="id" title="instance">res_option_oplus_id_left</span></a> <span class="id" title="var">A</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="liblayers.logic.Structures.html#LeftIdentity"><span class="id" title="class">LeftIdentity</span></a> (<a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>)) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a> <a class="idref" href="liblayers.logic.Structures.html#c9316591232be9202fdc70cc92e6cdd5"><span class="id" title="notation">(⊕)</span></a> (<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [[|]|]; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="res_option_oplus_comm"><span class="id" title="instance">res_option_oplus_comm</span></a> <span class="id" title="var">A</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="liblayers.logic.Structures.html#RightIdentity"><span class="id" title="class">RightIdentity</span></a> (<a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>)) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a> <a class="idref" href="liblayers.logic.Structures.html#c9316591232be9202fdc70cc92e6cdd5"><span class="id" title="notation">(⊕)</span></a> (<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [[|]|]; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#RES_OPTION_PSEUDO_JOIN"><span class="id" title="section">RES_OPTION_PSEUDO_JOIN</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="OPTION_RES_PSEUDO_JOIN"><span class="id" title="section">OPTION_RES_PSEUDO_JOIN</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="option_res_oplus_op"><span class="id" title="instance">option_res_oplus_op</span></a> (<span class="id" title="var">A</span>: <span class="id" title="keyword">Type</span>): <a class="idref" href="liblayers.logic.Structures.html#Oplus"><span class="id" title="class">Oplus</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> (<a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>)) | 10 :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#oplus"><span class="id" title="method">oplus</span></a> <span class="id" title="var">orx</span> <span class="id" title="var">ory</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#orx"><span class="id" title="variable">orx</span></a>, <a class="idref" href="liblayers.compcertx.ErrorMonad.html#ory"><span class="id" title="variable">ory</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">x</span>, <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">x</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">y</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">y</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <span class="id" title="var">e</span>), <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">y</span> ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <span class="id" title="var">e</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <span class="id" title="var">x</span>), <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <span class="id" title="var">e</span>) ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <span class="id" title="var">e</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <span class="id" title="var">x</span>), <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="compcert.common.Errors.html#OK"><span class="id" title="constructor">OK</span></a> <span class="id" title="var">y</span>) ⇒ <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#nil"><span class="id" title="constructor">nil</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="var">Existing</span> <span class="id" title="keyword">Instance</span> <span class="id" title="var">option_le_op</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">Existing</span> <span class="id" title="keyword">Instance</span> <span class="id" title="var">res_le_op</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="option_res_oplus_prf"><span class="id" title="instance">option_res_oplus_prf</span></a> (<span class="id" title="var">A</span>: <span class="id" title="keyword">Type</span>) `{<span class="id" title="var">Ale</span>: <a class="idref" href="liblayers.logic.Structures.html#Le"><span class="id" title="class">Le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>} `{<span class="id" title="var">Hle</span>: <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Classes.RelationClasses.html#PreOrder"><span class="id" title="class">PreOrder</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.logic.Structures.html#720b83680399fc5a022f578f28e994fa"><span class="id" title="notation">(≤)</span></a>}:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.PseudoJoin.html#PseudoJoin"><span class="id" title="class">PseudoJoin</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> (<a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>)) <a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">with</span> <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">eauto</span> <span class="id" title="keyword">with</span> <span class="id" title="var">liblayers</span>; <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">try</span> <span class="id" title="var">solve_monotonic</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">try</span> <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">simpl</span> <a class="idref" href="liblayers.logic.Structures.html#720b83680399fc5a022f578f28e994fa"><span class="id" title="notation">(≤)</span></a>; <span class="id" title="tactic">split</span>; <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> <span class="id" title="var">x1</span> <span class="id" title="var">x2</span> <span class="id" title="var">Hx</span> <span class="id" title="var">y1</span> <span class="id" title="var">y2</span> <span class="id" title="var">Hy</span>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hx</span> <span class="id" title="keyword">as</span> [ [[<span class="id" title="var">x2</span>|<span class="id" title="var">xerr</span>]|] | <span class="id" title="var">_</span> <span class="id" title="var">_</span> [<span class="id" title="var">x1</span> <span class="id" title="var">x2</span> <span class="id" title="var">Hx</span> | <span class="id" title="var">xerr</span> [<span class="id" title="var">x</span>|<span class="id" title="var">xe</span>]]];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">Hy</span> <span class="id" title="keyword">as</span> [ [[<span class="id" title="var">y2</span>|<span class="id" title="var">yerr</span>]|] | <span class="id" title="var">_</span> <span class="id" title="var">_</span> [<span class="id" title="var">y1</span> <span class="id" title="var">y2</span> <span class="id" title="var">Hy</span> | <span class="id" title="var">yerr</span> [<span class="id" title="var">y</span>|<span class="id" title="var">ye</span>]]]...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> [[?|?]|]...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> [[?|?]|] [[?|?]|] [[?|?]|]...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> [[?|?]|] [[?|?]|]...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" title="tactic">intros</span> [[?|?]|] [[?|?]|]...<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In addition, we have a top element. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="option_res_top"><span class="id" title="instance">option_res_top</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">R</span>: <a class="idref" href="coqrel.RelDefinitions.html#rel"><span class="id" title="definition">rel</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#B"><span class="id" title="variable">B</span></a>) <span class="id" title="var">errmsg</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="liblayers.logic.Structures.html#UpperBound"><span class="id" title="class">UpperBound</span></a> (<a class="idref" href="liblayers.logic.OptionOrders.html#option_le"><span class="id" title="inductive">option_le</span></a> (<a class="idref" href="liblayers.compcertx.ErrorMonad.html#res_le"><span class="id" title="inductive">res_le</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#R"><span class="id" title="variable">R</span></a>)) (<a class="idref" href="http://coq.inria.fr/distrib/8.6/stdlib/Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> (<a class="idref" href="compcert.common.Errors.html#Error"><span class="id" title="constructor">Error</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#errmsg"><span class="id" title="variable">errmsg</span></a>)).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intro</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span> <span class="id" title="keyword">as</span> [|]; <span class="id" title="tactic">repeat</span> <span class="id" title="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#OPTION_RES_PSEUDO_JOIN"><span class="id" title="section">OPTION_RES_PSEUDO_JOIN</span></a>.<br/>
+
+<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="decide_res_eq"><span class="id" title="instance">decide_res_eq</span></a> `{<a class="idref" href="liblayers.lib.Decision.html#EqDec"><span class="id" title="class">EqDec</span></a>}:<br/>
+&nbsp;&nbsp;<a class="idref" href="liblayers.lib.Decision.html#EqDec"><span class="id" title="class">EqDec</span></a> (<a class="idref" href="compcert.common.Errors.html#res"><span class="id" title="inductive">res</span></a> <a class="idref" href="liblayers.compcertx.ErrorMonad.html#A"><span class="id" title="variable">A</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">red</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="var">decide</span> <span class="id" title="var">equality</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (<a class="idref" href="liblayers.lib.Decision.html#decide"><span class="id" title="definition">decide</span></a> <span class="id" title="var">_</span>).<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>
